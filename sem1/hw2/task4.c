@@ -4,7 +4,7 @@ int gettingNumber(int *listOfDigits, const length)
 {
     int number = 0;
     int multiplier = 1;
-    for (int i = length - 1; i >= 0; --i)
+    for (int i = length - 1; i > 0; --i)
     {
         number += listOfDigits[i] * multiplier;
         multiplier *= 10;
@@ -14,7 +14,7 @@ int gettingNumber(int *listOfDigits, const length)
 
 int sortingNumber(int number, const length)
 {
-    int listOfDigits[length];
+    int* listOfDigits = new int[number] {0};
     for (int i = 0; i < length; ++i)
     {
         listOfDigits[i] = number % 10;
@@ -47,4 +47,5 @@ int main()
     scanf("%d", &number);
     printf("Minimal number of that digits is: ");
     printf("%d", sortingNumber(number, length));
+    return 0;
 }
