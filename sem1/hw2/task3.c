@@ -1,49 +1,28 @@
 #include <stdio.h>
-#include <stdbool.h>
 
-bool gcd(int a, int b)
+void newFractor(int maxDenominator, int firstNumerator, int firstDenominator, int secondNumerator, int secondDenominator)
 {
-    while ((a > 0) && (b > 0))
-        if (a > b)
-        {
-            a = a % b;
-        }
-        else
-        {
-            b = b % a;
-        }
-    if ((a == 1) || (b == 1))
-    {
-        return true;
+    int newNumerator = firstNumerator + secondNumerator;
+    int newDenominator = firstDenominator + secondDenominator;
+    if (newDenominator <= maxDenominator) {
+        newFractor(maxDenominator, firstNumerator, firstDenominator, newNumerator, newDenominator);
+        printf("%d/%d ", newNumerator, newDenominator);
+        newFractor(maxDenominator, newNumerator, newDenominator, secondNumerator, secondDenominator);
     }
-    return false;
 }
 
-void countingAllFactors(int maxDenominator)
+void printingFractor(int number)
 {
-    int denominator = 1;
-    int numerator = 0;
-    while (numerator < maxDenominator)
-    {
-        while (denominator <= maxDenominator)
-        {
-            if (gcd(numerator, denominator) == true)
-            {
-                printf("%d/%d ", numerator, denominator);
-            }
-            denominator += 1;
-        }
-        numerator += 1;
-        denominator = numerator + 1;
-    }
-    printf("%d/%d", numerator, numerator);
+    printf("\n%d/%d ", 0, 1);
+    newFractor(number, 0, 1, 1, 1);
+    printf("%d/%d", 1, 1);
 }
 
 int main()
 {
     int maxDenominator = 0;
-    printf("Enter max number of the denominator: ");
+    printf("Enter max denominator: ");
     scanf("%d", &maxDenominator);
-    countingAllFactors(maxDenominator);
+    printingFractor(maxDenominator);
     return 0;
 }
