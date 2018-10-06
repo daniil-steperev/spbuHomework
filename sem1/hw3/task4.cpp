@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 bool matchingCheck(int inputNumber, int *secretNumber)
 {
@@ -24,14 +26,16 @@ bool matchingCheck(int inputNumber, int *secretNumber)
         return true;
     }
     return false;
+ }
 
-}
-
-void gameForTwoPlayers()
+void gameForTwoPlayers(int secretNumber = 0)
 {
-    printf("Enter the secret number: ");
-    int secretNumber = 0;
-    scanf("%d", &secretNumber);
+    if (secretNumber == 0)
+    {
+        printf("Enter the secret number: ");
+        int secretNumber = 0;
+        scanf("%d", &secretNumber);
+    }
     int listOfSecNum[4] = {0};
     for (int i = 0; i < 4; ++i)
     {
@@ -49,8 +53,51 @@ void gameForTwoPlayers()
     printf("YOU WIN!");
 }
 
+int checkingDigits(int secretNumber)
+{
+    int numbers[4] = {0};
+    for (int i = 0; i < 4; ++i)
+    {
+        numbers[i] = secretNumber % 10;
+        secretNumber /= 10;
+    }
+    for (int i = 0; i < 4; ++i)
+    {
+        int j = 0;
+        while (j < i)
+        {
+            if (numbers[i] == numbers[j])
+            {
+                numbers[i] = (numbers[j] + 1) % 10;
+                j = 0;
+            }
+            j += 1;
+        }
+    }
+    for (int i = 0; i < 4; ++i)
+    {
+        secretNumber *= 10;
+        secretNumber += numbers[i];
+    }
+    return secretNumber;
+}
+
+void gameForOnePlayer()
+{
+    srand(time(0));
+    int secretNumber = 1234 + rand() % (10000 - 1234 + 1);
+    secretNumber = checkingDigits(secretNumber);
+    gameForTwoPlayers(secretNumber);
+}
+
 int main()
 {
-    gameForTwoPlayers();
+    printf("Do you want to play with computer? (Yes/no) ");
+    char answer[3] = {0};
+    scanf("%s", answer);
+    if (answer[0] == 'Y')
+        gameForOnePlayer();
+    else
+        gameForTwoPlayers();
     return 0;
 }
