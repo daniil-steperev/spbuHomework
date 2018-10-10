@@ -33,7 +33,6 @@ void gameForTwoPlayers(int secretNumber = 0)
     if (secretNumber == 0)
     {
         printf("Enter the secret number: ");
-        int secretNumber = 0;
         scanf("%d", &secretNumber);
     }
     int listOfSecNum[4] = {0};
@@ -95,7 +94,7 @@ int main()
     printf("Do you want to play with computer? (Yes/no) ");
     char answer[3] = {0};
     scanf("%s", answer);
-    if (answer[0] == 'Y')
+    if (answer[0] == 'Y' || answer[0] == 'y')
         gameForOnePlayer();
     else
         gameForTwoPlayers();
