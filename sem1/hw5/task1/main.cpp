@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <iostream>
+
 using namespace std;
 
 void doShift(int **array, int &x, int &y, int shift, char direction)
