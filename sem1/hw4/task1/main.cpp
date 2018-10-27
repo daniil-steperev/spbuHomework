@@ -1,12 +1,14 @@
-#include <stdio.h>
-#include "loopedList.h"
+#include <iostream>
+#include "cycleList.h"
+
+using namespace std;
 
 bool test2()
 {
     int n = 6;
     int m = 3;
-    LoopedList *list = createLoopedList();
-    for (int i = 1; i <= n; ++i)
+    SortedCycleList *list = createSortedCycleList();
+    for (int i = 1; i <= n; ++i) // starting with '1' to get right index (the first one in the task called '1' but not '0'
     {
         add(list, i);
     }
@@ -24,8 +26,8 @@ bool test1()
 {
     int n = 10;
     int m = 4;
-    LoopedList *list = createLoopedList();
-    for (int i = 1; i <= n; ++i)
+    SortedCycleList *list = createSortedCycleList();
+    for (int i = 1; i <= n; ++i) // starting with '1' to get right index (the first one in the task called '1' but not '0'
     {
         add(list, i);
     }
@@ -41,8 +43,8 @@ bool test1()
 
 void circleOfSikariya(int numberOfPeople, int numberOfKilling)
 {
-    LoopedList *warriors = createLoopedList();
-    for (int i = 1; i <= numberOfPeople; ++i)
+    SortedCycleList *warriors = createSortedCycleList();
+    for (int i = 1; i <= numberOfPeople; ++i) // starting with '1' to get right index (the first one in the task called '1' but not '0'
     {
         add(warriors, i);
     }
@@ -64,25 +66,22 @@ int main()
     int numberOfKilling = 0;
     printf("Enter the number of killing: ");
     scanf("%d", &numberOfKilling);
-    if (test1)
-    {
-        printf("Test 1 successfully passed.\n");
-    }
-    else
-    {
-        printf("Test 1 failed.\n");
-    }
-    if (test2)
-    {
-        printf("Test 2 successfully passed.\n");
-    }
-    else
-    {
-        printf("Test 2 failed.\n");
-    }
     if (test1 && test2)
     {
         circleOfSikariya(numberOfPeople, numberOfKilling);
+    }
+    else
+    {
+        if (!test1())
+        {
+            cout << "Test 1 failed!";
+            if (!test2())
+            cout << "\nTest 2 failed!" << endl;
+        }
+        else
+        {
+            cout << "Test 2 failed!" << endl;
+        }
     }
     return 0;
 }
