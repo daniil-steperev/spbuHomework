@@ -1,34 +1,130 @@
-#include <stdio.h>
-#include <string.h>
+#include <iostream>
+#include "stack.h"
 
-bool checkingForEmpty(char line[])
+using namespace std;
+
+void summing(int firstNumber, int secondNumber)
 {
-    int position = strlen(line) - 1;
-    while ((position >= 0) && ((line[position] == ' ') || (line[position] == '\t') || (line[position] == '\n')))
+    cout << "Sum in 10: "; // FIXME
+    cout << firstNumber + secondNumber;
+}
+
+void printingSummary(int *sumOfBinary, int size)
+{
+    cout << "Sum of binary: ";
+    if (sumOfBinary[0] == 0)
     {
-        position -= 1;
+        for (int i = 1; i < size; i++)
+        {
+            cout << sumOfBinary[i];
+        }
+        cout "/n";
+        return;
     }
-    return position == -1;
+    for (int i = 0; i < size; i++)
+        {
+            cout << sumOfBinary[i];
+        }
+    cout << "\n";
+}
+
+int maxOfTwo(int first, int second)
+{
+    if (first > second)
+    {
+        return first;
+    }
+    return second;
+}
+
+void summingBinary(Stack *firstBinary, Stack *secondBinary)
+{
+    int sizeOfFirst = sizeOfStack(firstBinary);
+    int sizeOfSecond = sizeOfStack(secondBinary);
+    int size = maxOfTwo(sizeOfFirst, sizeOfSecond) + 1;
+    int *sumOfBinary = new int[size] {0};
+
+    int degree = 0; // that's for case when '1 + 1 = 2'
+    for (int i = size - 1; i >= 0; i--)
+    {
+        int first = popFromEnd(firstBinary);
+        int second = popFromEnd(secondBinary);
+        int newNumber = first + second + degree;
+        if (newNumber <= 1)
+        {
+            sumOfBinary[i] = newNumber;
+            degree = 0;
+        }
+        else
+        {
+            degree = 1;
+            sumOfBinary[i] = newNumber % 2;
+        }
+    }
+    if (degree == 1)
+    {
+        sumOfBinary[0] = 1;
+    }
+
+    printingSummary(sumOfBinary, size);
+
+    delete[] sumOfBinary;
+}
+
+void printingInBinary(Stack *firstBinary, Stack *secondBinary)
+{
+    cout << "First number in binary code: ";
+    printStack(firstBinary);
+    cout << "\n";
+    cout << "Second number in binary code: ";
+    printStack(secondBinary);
+    cout << "\n" << endl;
+}
+
+void translateToBinary(Stack *stack, int number)
+{
+    while (number > 0)
+    {
+        if (number % 2 == 0)
+        {
+            push(stack, 0);
+        }
+        else
+        {
+            push(stack, 1);
+        }
+        number /= 2;
+    }
+}
+
+void test(Stack *stack)
+{
+    push(stack, 10);
+    push(stack, 15);
+    push(stack, 20);
+    cout << popFromEnd(stack) << " ";
+    cout << popFromEnd(stack) << " ";
+    cout << popFromEnd(stack) << " ";
 }
 
 int main()
 {
-    FILE *file = NULL;
-    char name[] = "string.txt";
-    file = fopen(name, "r");
-    if (file != NULL)
-    {
-        char line[256] = {'\0'};
-        int counter = 0;
-        while (!feof(file))
-        {
-            fgets(line, 256, file);
-            counter += checkingForEmpty(line);
-        }
-        printf("%d", counter);
-    }
-    else
-    {
-        printf("Can not open file :(");
-    }
+    int firstNumber = 0;
+    int secondNumber = 0;
+    cout << "Enter two numbers: ";
+    cin >> firstNumber >> secondNumber;
+    Stack *firstBinary = createStack();
+    Stack *secondBinary = createStack();
+    Stack *stack = createStack();
+    test(stack);
+    translateToBinary(firstBinary, firstNumber);
+    translateToBinary(secondBinary, secondNumber);
+
+    printingInBinary(firstBinary, secondBinary);
+
+    summingBinary(firstBinary, secondBinary);
+    summing(firstNumber, secondNumber);
+
+    deleteStack(firstBinary);
+    deleteStack(secondBinary);
 }
