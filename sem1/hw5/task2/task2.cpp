@@ -37,8 +37,6 @@ void leaveOneLetter(char *string)
         }
     }
     cout << newString << endl;
-    delete[] newString;
-    delete[] arrayLetters;
 }
 
 int main()
