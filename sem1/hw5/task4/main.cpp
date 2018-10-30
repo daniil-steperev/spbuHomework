@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cctype>
 #include <cstdlib>
+#include <limits.h>
 #include "stack.h"
 
 using namespace std;
@@ -58,6 +59,7 @@ void countingExpression(char *expression)
     }
     int result = pop(stack);
     cout << "The result is: " << result;
+    deleteStack(stack);
 }
 
 int main()
