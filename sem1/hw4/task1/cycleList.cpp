@@ -159,7 +159,7 @@ int getLast(SortedCycleList *list, int number)
     return current->value;
 }
 
-void deleteLoopedList(SortedCycleList *list)
+void deleteCycleList(SortedCycleList *list)
 {
     CycleListElement *current = list->first->next;
     while (current != list->first)
