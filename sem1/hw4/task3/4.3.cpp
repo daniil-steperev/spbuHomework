@@ -1,10 +1,18 @@
-#include <stdio.h>
+#include <iostream>
+#include <fstream>
 #include <string.h>
+using namespace std;
+const int length = 256;
 
-int checkingForEmpty(char *line)
+bool isEmptySymbol(char symbol)
+{
+    return ((symbol == ' ') || (symbol == '\t') || (symbol == '\n'));
+}
+
+bool checkingForEmpty(char *line)
 {
     int position = strlen(line) - 1;
-    while ((position >= 0) && ((line[position] == ' ') || (line[position] == '\t') || (line[position] == '\n')))
+    while ((position >= 0) && isEmptySymbol(line[position]))
     {
         position -= 1;
     }
@@ -13,22 +21,24 @@ int checkingForEmpty(char *line)
 
  int main()
 {
-    FILE *file = NULL;
-    char name[] = "string.txt";
-    file = fopen(name, "r");
-    if (file != NULL)
+    ifstream file("file.txt");
+    if (!file.fail())
     {
-        char line[256] = {'\0'};
+        char line[length] {0};
         int counter = 0;
-        while (!feof(file))
+        while (!file.eof())
         {
-            fgets(line, 256, file);
-            counter += checkingForEmpty(line);
+            file.getline(line, length);
+            if (!checkingForEmpty(line))
+            {
+                counter++;
+            }
         }
-        printf("Quantity of not empty strings: %d", counter);
+        cout << "Quantity of not empty strings: " << counter;
     }
     else
     {
-        printf("Can not open file :(");
+        cout << "Can not open file :(";
     }
+    return 0;
 }
