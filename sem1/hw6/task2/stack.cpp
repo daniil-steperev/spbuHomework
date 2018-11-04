@@ -48,15 +48,10 @@ bool isEmpty(Stack *stack)
 
 void deleteStack(Stack *stack)
 {
-    if (isEmpty(stack))
+    while (stack->first != nullptr)
     {
-        return;
-    }
-    StackElement *current = stack->first;
-    while (current)
-    {
-        StackElement *deleteElement = current;
-        current = current->next;
+        StackElement *deleteElement = stack->first;
+        stack->first = deleteElement->next;
         delete deleteElement;
     }
     delete stack;

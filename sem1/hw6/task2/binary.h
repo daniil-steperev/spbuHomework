@@ -2,6 +2,7 @@
 #include "stack.h"
 
 void translateToBinary(Stack *stack, int number);
+void translateNegative(Stack *stack, int number);
 
 void printingInBinary(Stack *firstBinary, Stack *secondBinary);
 void printingSummary(int *sumOfBinary, int size);
