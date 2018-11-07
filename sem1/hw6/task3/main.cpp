@@ -10,12 +10,12 @@ int main()
     cin >> maxDegree;
     cout << endl;
 
-    int *coefficients = new int[maxDegree] {0};
+    int *coefficients = new int[maxDegree + 1] {0};
     cout << "Enter coefficients of polynom: ";
-    for (int i = 0; i < maxDegree; i++)
+    for (int i = 0; i < maxDegree + 1; i++)
     {
         cin >> coefficients[i];
     }
-    fillStrings(maxDegree, coefficients);
+    fillStrings(maxDegree + 1, coefficients);
     delete[] coefficients;
 }
