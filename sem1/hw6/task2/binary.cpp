@@ -4,7 +4,7 @@
 using namespace std;
 const int maxSize = 50;
 
-void summing(int firstNumber, int secondNumber)
+void sum(int firstNumber, int secondNumber)
 {
     cout << "Sum in decimal: ";
     cout << firstNumber + secondNumber;
