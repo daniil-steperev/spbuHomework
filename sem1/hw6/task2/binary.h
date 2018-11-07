@@ -1,15 +1,14 @@
 #pragma once
-#include "stack.h"
 
-void translateToBinary(Stack *stack, int number);
-void translateNegative(Stack *stack, int number);
+void translateToBinary(int *binaryNumber, int number);
+void translateNegative(int *binaryNumber, int number);
 
-void printingInBinary(Stack *firstBinary, Stack *secondBinary);
+void printingInBinary(int *firstBinary, int *secondBinary);
 void printingSummary(int *sumOfBinary, int size);
 
-void summingBinary(Stack *firstBinary, Stack *secondBinary);
+void summingBinary(int *firstBinary, int *secondBinary);
 void summing(int firstNumber, int secondNumber);
 
 int maxOfTwo(int first, int second);
 
-void reverseStack(Stack *oldStack, Stack *reversedStack);
+void print(int *binaryNumber);

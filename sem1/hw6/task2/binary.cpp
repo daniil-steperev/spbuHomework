@@ -1,6 +1,5 @@
 #include <iostream>
 #include "binary.h"
-#include "stack.h"
 
 using namespace std;
 const int maxSize = 50;
@@ -36,40 +35,21 @@ int maxOfTwo(int first, int second)
     return second;
 }
 
-void reverseStack(Stack *oldStack, Stack *reversedStack)
+void summingBinary(int *firstBinary, int *secondBinary)
 {
-    while (!isEmpty(oldStack))
-    {
-        int element = pop(oldStack);
-        push(reversedStack, element);
-    }
-}
-
-void summingBinary(Stack *firstBinary, Stack *secondBinary)
-{
-    int sizeOfFirst = sizeOfStack(firstBinary);
-    int sizeOfSecond = sizeOfStack(secondBinary);
-    int size = maxOfTwo(sizeOfFirst, sizeOfSecond) + 1;
     bool isNegative = false;
-    if (size == maxSize + 1);
+    if (firstBinary[0] == 1 || secondBinary[0] == 1)
     {
         isNegative = true;
     }
 
-    int *sumOfBinary = new int[size] {0};
-
-    Stack *reversedFirst = createStack();
-    reverseStack(firstBinary, reversedFirst);
-
-    Stack *reversedSecond = createStack();
-    reverseStack(secondBinary, reversedSecond);
-
+    int *sumOfBinary = new int[maxSize] {0};
 
     int degree = 0; // that's for case when '1 + 1 = 2'
-    for (int i = size - 1; i > 0; i--)
+    for (int i = maxSize - 1; i >= 0; i--)
     {
-        int first = pop(reversedFirst);
-        int second = pop(reversedSecond);
+        int first = firstBinary[i];
+        int second = secondBinary[i];
         int newNumber = first + second + degree;
         if (newNumber <= 1)
         {
@@ -88,11 +68,11 @@ void summingBinary(Stack *firstBinary, Stack *secondBinary)
         sumOfBinary[0] = 0;
     }
 
-    if (degree && isNegative)
+    if (degree == 1 && isNegative)
     {
-        int i = maxSize + 1;
-        degree = (sumOfBinary[i] + 1) % 2;
-        if (degree == 0)
+        int i = maxSize;
+        degree = sumOfBinary[i] + 1;
+        if (degree == 1)
         {
             sumOfBinary[i] = 1;
         }
@@ -116,20 +96,18 @@ void summingBinary(Stack *firstBinary, Stack *secondBinary)
         }
     }
 
-    printingSummary(sumOfBinary, size);
+    printingSummary(sumOfBinary, maxSize);
 
     delete[] sumOfBinary;
-    deleteStack(reversedFirst);
-    deleteStack(reversedSecond);
 }
 
-void printingInBinary(Stack *firstBinary, Stack *secondBinary)
+void printingInBinary(int *firstBinary, int *secondBinary)
 {
     cout << "First number in binary code: ";
-    printStack(firstBinary);
+    print(firstBinary);
     cout << "\n";
     cout << "Second number in binary code: ";
-    printStack(secondBinary);
+    print(secondBinary);
     cout << "\n" << endl;
 }
 
@@ -140,45 +118,65 @@ int abs(int number)
     return number;
 }
 
-void translateNegative(Stack *stack, int number)
+void translateNegative(int *binaryNumber, int number)
 {
     number = abs(number);
+    int index = maxSize - 1;
     while (number > 0)
     {
         if (number % 2 == 0)
         {
-            push(stack, 1); // invert bit value to get a number representation in reverse code
+            binaryNumber[index] = 1; // invert bit value to get a number representation in reverse code
+            index--;
         }
         else
         {
-            push(stack, 0); // invert bit value to get a number representation in reverse code
+            binaryNumber[index] = 0; // invert bit value to get a number representation in reverse code
+            index--;
         }
         number /= 2;
     }
-    while (sizeOfStack(stack) != maxSize) // invert bit value to get a number representation in reverse code
+    while (index >= 0)
     {
-        push(stack, 1);
+        binaryNumber[index] = 1;
+        index--;
     }
 }
 
-void translateToBinary(Stack *stack, int number)
+void translateToBinary(int *binaryNumber, int number)
 {
     if (number < 0)
     {
-        translateNegative(stack, number);
+        translateNegative(binaryNumber, number);
         return;
     }
 
+    int index = maxSize - 1;
     while (number > 0)
     {
         if (number % 2 == 0)
         {
-            push(stack, 0);
+            binaryNumber[index] = 0;
+            index--;
         }
         else
         {
-            push(stack, 1);
+            binaryNumber[index] = 1;
+            index--;
         }
         number /= 2;
+    }
+}
+
+void print(int *binaryNumber)
+{
+    int i = 0;
+    while (binaryNumber[i] != 1)
+    {
+        i++;
+    }
+    for (i; i < maxSize; i++)
+    {
+        cout << binaryNumber[i];
     }
 }

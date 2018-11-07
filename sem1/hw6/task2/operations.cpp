@@ -1,12 +1,13 @@
 #include <iostream>
-#include "stack.h"
 #include "binary.h"
 #include "operations.h"
 
+const int maxSize = 50;
+
 void binaryOperations(int firstNumber, int secondNumber)
 {
-    Stack *firstBinary = createStack();
-    Stack *secondBinary = createStack();
+    int *firstBinary = new int[maxSize] {0};
+    int *secondBinary = new int[maxSize] {0};
     translateToBinary(firstBinary, firstNumber);
     translateToBinary(secondBinary, secondNumber);
 
@@ -15,6 +16,6 @@ void binaryOperations(int firstNumber, int secondNumber)
     summingBinary(firstBinary, secondBinary);
     summing(firstNumber, secondNumber);
 
-    deleteStack(firstBinary);
-    deleteStack(secondBinary);
+    delete[] firstBinary;
+    delete[] secondBinary;
 }
