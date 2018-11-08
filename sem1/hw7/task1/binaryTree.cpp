@@ -1,6 +1,9 @@
 #include <iostream>
+#include <string.h>
 #include "binaryTree.h"
 using namespace std;
+
+const int length = 256;
 
 struct Node
 {
@@ -251,47 +254,37 @@ void printDescending(BinaryTree *tree)
 
 void printTree(Node *son)
 {
-    if (son == nullptr)
+    cout << "(" << son->value << " "; // printing node of left child
+    if (son->leftChild != nullptr)
     {
-        cout << " null null)";
-        return;
-    }
-
-    cout << " (" << son->value << " ";
-
-    if (son->leftChild == nullptr)
-    {
-        cout << "null ";
+        printTree(son->leftChild);
     }
     else
-        {
-            printTree(son->leftChild);
-        }
-
-    if (son->rightChild == nullptr)
     {
-        cout << "null)";
+        cout << "null";
     }
-    else
+
+    cout << " ";
+    if (son->rightChild != nullptr) // printing node of right child
     {
         printTree(son->rightChild);
-        cout << ")";
     }
+    else
+    {
+        cout << "null";
+    }
+    cout << ")";
 }
 
 void printTree(BinaryTree *tree)
 {
-    if (tree->root == nullptr)
+    if (!isEmpty(tree))
     {
-        cout << "Tree is empty!" << endl;
+        printTree(tree->root);
+        cout << endl;
         return;
     }
-    cout << "Current tree: ";
-    cout << "(" << tree->root->value;
-    printTree(tree->root->leftChild);
-    printTree(tree->root->rightChild);
-    cout << ")";
-    cout << endl;
+    cout << "(null)" << endl;
 }
 
 void deleteTree(Node *son)
