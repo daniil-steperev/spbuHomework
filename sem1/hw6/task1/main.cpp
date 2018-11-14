@@ -1,5 +1,5 @@
 #include <iostream>
-#include "convertToExponential.h"
+#include "printExponential.h"
 
 using namespace std;
 
@@ -9,6 +9,6 @@ int main()
     cout << "Enter a number: ";
     cin >> number;
     cout << endl;
-    convertToExponential(number);
+    printExponential(number);
     return 0;
 }
