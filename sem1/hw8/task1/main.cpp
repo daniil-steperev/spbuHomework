@@ -18,7 +18,6 @@ int findOriginal(int *studentWorks, int student)
         studentWorks[student] = variant;
         return variant;
     }
-
 }
 
 void getPairs(int *studentWorks, int amountOfStudents)
