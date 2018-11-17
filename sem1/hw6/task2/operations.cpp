@@ -13,8 +13,8 @@ void binaryOperations(int firstNumber, int secondNumber)
 
     printingInBinary(firstBinary, secondBinary);
 
-    summingBinary(firstBinary, secondBinary);
-    summing(firstNumber, secondNumber);
+    sumBinary(firstBinary, secondBinary);
+    sum(firstNumber, secondNumber);
 
     delete[] firstBinary;
     delete[] secondBinary;

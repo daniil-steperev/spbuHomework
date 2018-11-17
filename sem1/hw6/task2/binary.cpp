@@ -4,7 +4,7 @@
 using namespace std;
 const int maxSize = 50;
 
-void summing(int firstNumber, int secondNumber)
+void sum(int firstNumber, int secondNumber)
 {
     cout << "Sum in decimal: ";
     cout << firstNumber + secondNumber;
@@ -35,7 +35,7 @@ int maxOfTwo(int first, int second)
     return second;
 }
 
-void summingBinary(int *firstBinary, int *secondBinary)
+void sumBinary(int *firstBinary, int *secondBinary)
 {
     bool isNegative = false;
     if (firstBinary[0] == 1 || secondBinary[0] == 1)
