@@ -13,7 +13,11 @@ void binaryOperations(int firstNumber, int secondNumber)
 
     printingInBinary(firstBinary, secondBinary);
 
+<<<<<<< HEAD
     sumBinary(firstBinary, secondBinary);
+=======
+    summingBinary(firstBinary, secondBinary);
+>>>>>>> d72617ab2b1da9426affa18044d627aa891e07a7
     sum(firstNumber, secondNumber);
 
     delete[] firstBinary;
