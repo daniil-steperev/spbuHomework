@@ -32,7 +32,8 @@ int countingIntermediateResult(Stack *stack, char operation)
     {
         return secondNumber / firstNumber;
     }
- }
+
+}
 
 void countingExpression(char *expression)
 {

@@ -1,13 +1,11 @@
 #include <iostream>
-#include <cctype>
-#include <cstdlib>
-#include <limits.h>
-#include "stack.h"
+#include "countingExpression.h"
 
 using namespace std;
 
 const int length = 256;
 
+<<<<<<< HEAD:sem1/hw5/task5.2/countingExpression.cpp
 int countingIntermediateResult(Stack *stack, char operation)
 {
     int firstNumber = pop(stack);
@@ -59,4 +57,13 @@ void countingExpression(char *expression)
     int result = pop(stack);
     cout << "The result is: " << result;
     deleteStack(stack);
+=======
+int main()
+{
+    char expression[length] = {};
+    cout << "Enter postfix entry: ";
+    cin >> expression;
+    countingExpression(expression);
+    return 0;
+>>>>>>> 8161bf98d6059dbbf3f145e798d2e7adad2b0f4a:sem1/hw5/task4/main.cpp
 }
