@@ -15,4 +15,4 @@ void removeByPosition(SortedCycleList *list);
 void changePosition(SortedCycleList *list, int shift);
 
 int getLast(SortedCycleList *list, int number);
-void deleteLoopedList(SortedCycleList *list);
+void deleteCycleList(SortedCycleList *list);

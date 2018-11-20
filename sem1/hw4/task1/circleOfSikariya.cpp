@@ -18,5 +18,5 @@ void circleOfSikariya(int numberOfPeople, int numberOfKilling)
     }
     int answer = getLast(warriors, 0);
     printf("The position of last warrior: %d", answer);
-    deleteLoopedList(warriors);
+    deleteCycleList(warriors);
 }
