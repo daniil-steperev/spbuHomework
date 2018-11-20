@@ -76,6 +76,7 @@ void addToTree(Node *&son, int element)
     if (element < son->value)
     {
         addToTree(son->leftChild, element);
+        return;
     }
     addToTree(son->rightChild, element);
 }
