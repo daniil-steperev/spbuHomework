@@ -8,6 +8,16 @@ AVLBinaryTree *createAVLBinaryTree()
     return new AVLBinaryTree{nullptr};
 }
 
+Node *createElement(int value)
+{
+    Node *newElement = new Node;
+    newElement->height = 1;
+    newElement->leftChild = nullptr;
+    newElement->rightChild = nullptr;
+    newElement->value = value;
+    return newElement;
+}
+
 bool isEmpty(AVLBinaryTree *tree)
 {
     return tree->root == nullptr;
@@ -15,7 +25,11 @@ bool isEmpty(AVLBinaryTree *tree)
 
 int height(Node *son)
 {
-    return son ? son->height : 0;
+    if (son != nullptr)
+    {
+        return son->height;
+    }
+    return 0;
 }
 
 int balanceFactor(Node *son)
@@ -28,52 +42,63 @@ void updateHeight(Node *son)
     int heightLeft = height(son->leftChild);
     int heightRight = height(son->rightChild);
     if (heightLeft > heightRight)
-    son->height  = ((heightLeft > heightRight) ? heightLeft : heightRight) + 1;
+    {
+        son->height = heightLeft + 1;
+    }
+    else
+    {
+        son->height = heightRight + 1;
+    }
 }
 
 void rotateRight(Node *&son)
 {
-    Node *pivot = son->leftChild;
-    son->leftChild = pivot->rightChild;
-    pivot->rightChild = son;
-
-    updateHeight(son);
-    updateHeight(pivot);
-    son = pivot;
+    Node *original = son;
+	Node *temp = original->leftChild;
+	original->leftChild = temp->rightChild;
+	temp->rightChild = original;
+	updateHeight(original);
+	updateHeight(temp);
+	son = temp;
 }
 
 void rotateLeft(Node *&son)
 {
-    Node *pivot = son->rightChild;
-    son->rightChild = pivot->leftChild;
-    pivot->rightChild = son;
-
-    updateHeight(pivot);
-    updateHeight(son);
-    son = pivot;
+    Node *original = son;
+	Node *temp = original->rightChild;
+	original->rightChild = temp->leftChild;
+	temp->leftChild = original;
+	updateHeight(original);
+	updateHeight(temp);
+	son = temp;
 }
 
 void balance(Node *&son)
 {
-    updateHeight(son);
+	updateHeight(son);
 
-    if (balanceFactor(son) == 2)
-    {
-        if (balanceFactor(son->rightChild) < 0)
-        {
-            rotateRight(son->rightChild);
-        }
-        rotateLeft(son);
-    }
-    if (balanceFactor(son) == -2)
-    {
-        if (balanceFactor(son->leftChild) > 0)
-        {
-            rotateLeft(son->leftChild);
-        }
-        rotateRight(son);
-    }
+	if (balanceFactor(son) == 2)
+	{
+		if (balanceFactor(son->rightChild) < 0)
+			{
+			    rotateRight(son->rightChild);
+			}
+
+		rotateLeft(son);
+		return;
+	}
+
+	if (balanceFactor(son) == -2)
+	{
+		if (balanceFactor(son->leftChild) > 0)
+			{
+			    rotateLeft(son->leftChild);
+			}
+
+		rotateRight(son);
+	}
 }
+
 
 void findInTree(Node *son, int element)
 {
@@ -115,11 +140,14 @@ void addToTree(Node *&son, int element)
 {
     if (son == nullptr)
     {
-        son = new Node {element, 1, nullptr, nullptr};
-        balance(son);
+        son = createElement(element);
         return;
     }
-    if (element < son->value)
+    if (element == son->value)
+    {
+        return;
+    }
+    if (son->value > element)
     {
         addToTree(son->leftChild, element);
     }
@@ -128,6 +156,7 @@ void addToTree(Node *&son, int element)
         addToTree(son->rightChild, element);
     }
 
+    updateHeight(son);
     balance(son);
 }
 
@@ -158,17 +187,20 @@ void removeNode(Node *&son, int value)
 	}
 }
 
-
-Node *searchMinimumNode(Node* node)
+int removeRightest(Node *&son)
 {
-	if (node->leftChild != nullptr)
+	if (son->rightChild != nullptr)
 	{
-		return searchMinimumNode(node->leftChild);
+		int answer = removeRightest(son->rightChild);
+		updateHeight(son);
+		balance(son);
+		return answer;
 	}
 	else
 	{
-		return node;
-		cout << node->value;
+		int answer = son->value;
+		removeNode(son);
+		return answer;
 	}
 }
 
@@ -182,46 +214,53 @@ void removeNode(Node *&son)
 	}
  	if ((son->leftChild != nullptr) && (son->rightChild == nullptr))
 	{
-		Node *toDelete = son;
+		Node *deleteSon = son;
 		son = son->leftChild;
-		delete toDelete;
+		delete deleteSon;
 		return;
 	}
  	if ((son->leftChild == nullptr) && (son->rightChild != nullptr))
 	{
-		Node *toDelete = son;
+		Node *deleteSon = son;
 		son = son->rightChild;
-		delete toDelete;
+		delete deleteSon;
 		return;
 	}
  	if ((son->leftChild != nullptr) && (son->rightChild != nullptr))
 	{
-		Node **temp = &son->rightChild;
-		searchMinimumNode(*temp);
-		son->value = (*temp)->value;
-		removeNode(*temp);
-		updateHeight(son);
-		balance(son);
-		return;
+		son->value = removeRightest(son->leftChild);
+        updateHeight(son);
+        balance(son);
 	}
+}
+
+void removeFromTree(Node *&son, int element)
+{
+    if (son == nullptr)
+    {
+        return;
+    }
+    if (son->value == element)
+    {
+        removeNode(son);
+        return;
+    }
+    if (son->value > element)
+    {
+        removeFromTree(son->leftChild, element);
+    }
+    else
+    {
+        removeFromTree(son->rightChild, element);
+    }
+
+    updateHeight(son);
+    balance(son);
 }
 
 void removeFromTree(AVLBinaryTree *tree, int element)
 {
-    if (isEmpty(tree))
-    {
-        return;
-    }
-    if (element == tree->root->value)
-    {
-        cout << "You can not delete tree root!" << endl;
-    }
-    if (element < tree->root->value)
-    {
-        removeNode(tree->root->leftChild, element);
-        return;
-    }
-    removeNode(tree->root->rightChild, element);
+    removeFromTree(tree->root, element);
 }
 
 void printIncreasing(Node *son)

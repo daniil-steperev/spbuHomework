@@ -17,6 +17,7 @@ AVLBinaryTree *createAVLBinaryTree();
 
 bool isEmpty(AVLBinaryTree *tree);
 void findInTree(AVLBinaryTree *tree, int element);
+Node *createElement(int value);
 
 void addToTree(AVLBinaryTree *tree, int element);
 
@@ -35,6 +36,6 @@ void deleteTree(AVLBinaryTree *tree);
 int height(Node *son);
 int balanceFactor(Node *son);
 void updateHeight(Node *son);
-void rotateRight(Node *&p);
-void rotateLeft(Node *&p);
-void balance(Node *&p);
+void rotateRight(Node *&son);
+void rotateLeft(Node *&son);
+void balance(Node *&son);
