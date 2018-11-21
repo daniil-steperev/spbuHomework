@@ -11,7 +11,8 @@ void test()
     cout << endl;
 
     cout << "Cloned string: '"; // cloned string
-    MyString *cloneString = clone(string);
+    MyString *cloneString = createString();
+    cloneString = clone(string);
     cout << returnChar(string)  << "'"<< endl;
     deleteString(cloneString);
     cout << endl;
@@ -41,7 +42,8 @@ void test()
 
     cout << "Length of '" << returnChar(string) << "' is: " << countLength(string) << endl; // counting length of the string
     cout << endl;
-    MyString *subString = pickOutSubStr(string, 8, 7);
+    MyString *subString = createString();
+    subString = pickOutSubStr(string, 8, 7);
     cout << "Sub string from the ninth index (length = 7): '" << returnChar(subString) << "'" << endl;
     deleteString(subString);
     deleteString(string);

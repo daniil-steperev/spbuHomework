@@ -7,15 +7,15 @@ struct MyString
 };
 
 MyString *createString();
-MyString *createString(const char *str);
-void deleteString(MyString *str);
+MyString *createString(const char *string);
+void deleteString(MyString *string);
 
-MyString *clone(MyString *str);
-MyString *concatenate(MyString *str1, MyString *str2);
+MyString *clone(MyString *string);
+MyString *concatenate(MyString *stringFirst, MyString *stringSecond);
 
-bool are_Equal(MyString *str1, MyString *str2);
-int countLength(MyString *str);
-bool is_Empty(MyString *str);
+bool are_Equal(MyString *stringFirst, MyString *strintSecond);
+int countLength(MyString *string);
+bool is_Empty(MyString *string);
 
-MyString *pickOutSubStr(MyString *str, const int index, const int length);
-char *returnChar(MyString *str);
+MyString *pickOutSubStr(MyString *string, const int index, const int length);
+char *returnChar(MyString *string);
