@@ -1,7 +1,5 @@
 #include <iostream>
 #include "binaryTree.h"
-#include "test.h"
-#include "operations.h"
 
 using namespace std;
 
@@ -19,15 +17,6 @@ void menu()
 int main()
 {
     BinaryTree *tree = createBinaryTree();
-    char answer[3] = {0};
-    cout << "Do you want to run a test? y/n ";
-    cin >> answer;
-    if (answer[0] == 'y' || answer[0] == 'Y')
-    {
-        test();
-        cout << "\n";
-    }
-
     int task = -1;
     while (task != 0)
     {
@@ -37,11 +26,17 @@ int main()
         cout << endl;
         if (task == 1)
         {
-            addElement(tree);
+            int element = 0;
+            cout << "Element to add: ";
+            cin >> element;
+            addToTree(tree, element);
         }
         else if (task == 2)
         {
-            removeElement(tree);
+            int element = 0;
+            cout << "Element to delete: ";
+            cin >> element;
+            removeFromTree(tree, element);
         }
         else if (task == 3)
         {
@@ -57,7 +52,17 @@ int main()
         }
         else if (task == 6)
         {
-            findTree(tree);
+            int element = 0;
+            cout << "Element to find: ";
+            cin >> element;
+            if (findInTree(tree, element))
+            {
+                cout << "Element in tree!" << endl;
+            }
+            else
+            {
+                cout << "Element not found in tree!" << endl;
+            }
         }
         else if (task == 0)
         {
