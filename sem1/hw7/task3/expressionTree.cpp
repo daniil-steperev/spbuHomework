@@ -120,24 +120,19 @@ int calculateTree(ExpressionTree *tree)
     return calculateTree(tree->root);
 }
 
-void deleteExpressionTree(Node *node)
+void deleteExpressionTree(Node *&node)
 {
-    if (node != nullptr)
-    {
-        if (node->leftChild != nullptr)
-        {
-            deleteExpressionTree(node->leftChild);
-        }
-        if (node->rightChild != nullptr)
-        {
-            deleteExpressionTree(node->rightChild);
-        }
-        delete node;
-    }
+	if (node == nullptr)
+	{
+		return;
+	}
+	deleteExpressionTree(node->rightChild);
+	deleteExpressionTree(node->leftChild);
+	delete node;
 }
 
 void deleteExpressionTree(ExpressionTree *tree)
 {
     deleteExpressionTree(tree->root);
-    tree->root = nullptr;
+	delete tree;
 }
