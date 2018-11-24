@@ -27,17 +27,8 @@ MyString *createString(const char *string)
 
 void deleteString(MyString *string)
 {
-    if (string == nullptr)
-    {
-        return;
-    }
-    if (string->content != nullptr)
-    {
-        delete[] string->content;
-        string->content = nullptr;
-    }
-
-    string->size = 0;
+    delete[] string->content;
+    delete string;
 }
 
 MyString *clone(MyString *string)

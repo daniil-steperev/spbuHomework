@@ -24,10 +24,14 @@ int main()
         addToTable(table, newString);
     }
     delete[] word;
+	file.close();
 
     cout << "Load factor: " << loadFactor(table) << endl;
     cout << "Average chain length: " << returnChainLength(table) << endl;
     cout << "Max chain length: " << returnMaxChainLength(table) << endl;
     cout << "Number of different words in table: " << numberOfElements(table) << endl;
     cout << "Number of empty cells: " << emptyCells(table) << endl;
+
+	deleteHashTable(table);
+	return  0;
 }

@@ -9,15 +9,20 @@ List *createList()
     return new List {nullptr, 0};
 }
 
+bool isEmptyList(List *list)
+{
+    return (list->size == 0);
+}
+
 void deleteList(List *list)
 {
-    ListElement *current = list->first;
-    while (current)
+    while (!isEmptyList(list))
     {
-        ListElement *nextElement = current->next;
-        deleteString(current->content);
-        delete current;
-        current = nextElement;
+		deleteString(list->first->content);
+        ListElement *nextElement = list->first;
+        list->first = list->first->next;
+        delete nextElement;
+		list->size--;
     }
     delete list;
 }

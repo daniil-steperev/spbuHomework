@@ -18,3 +18,5 @@ void printList(List *list);
 
 void add(List *list, MyString *content);
 void removeListElement(List *list, MyString *content);
+
+bool isEmptyList(List *list);

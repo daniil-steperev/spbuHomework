@@ -5,12 +5,12 @@
 
 using namespace std;
 
-const int size = 10009;
+const int maxSize = 10009;
 
 HashTable *createHashTable()
 {
     HashTable *newTable = new HashTable;
-    newTable->size = size;
+    newTable->size = maxSize;
     newTable->currentSize = 0;
     newTable->buckets = new List* [newTable->size];
     for (int i = 0; i < newTable->size; i++)
@@ -90,7 +90,7 @@ void deleteHashTable(HashTable *table)
         deleteList(table->buckets[i]);
     }
 
-    deleteList(*table->buckets);
+    delete[] table->buckets;
     delete table;
 }
 
