@@ -9,65 +9,65 @@ MyString *createString()
     return new MyString;
 }
 
-MyString *createString(const char *str)
+MyString *createString(const char *string)
 {
-    if (str == nullptr)
+    if (string == nullptr)
     {
         return nullptr;
     }
 
     MyString *newString = new MyString;
 
-    newString->size = strlen(str);
+    newString->size = strlen(string);
     newString->content = new char[newString->size + 1];
-    strcpy(newString->content, str);
+    strcpy(newString->content, string);
 
     return newString;
 }
 
-void deleteString(MyString *str)
+void deleteString(MyString *string)
 {
-    if (str == nullptr)
+    if (string == nullptr)
     {
         return;
     }
-    if (str->content != nullptr)
+    if (string->content != nullptr)
     {
-        delete[] str->content;
-        str->content = nullptr;
+        delete[] string->content;
+        string->content = nullptr;
     }
 
-    str->size = 0;
+    string->size = 0;
 }
 
-MyString *clone(MyString *str)
+MyString *clone(MyString *string)
 {
-    if (str == nullptr || str->content == nullptr)
+    if (string == nullptr || string->content == nullptr)
     {
         return nullptr;
     }
-    MyString *newString = createString(str->content);
+    MyString *newString = createString(string->content);
     return newString;
 }
 
-MyString *concatenate(MyString *str1, MyString *str2)
+MyString *concatenate(MyString *firstString, MyString *secondString)
 {
-    if (is_Empty(str1) && is_Empty(str2))
+    if (is_Empty(firstString) && is_Empty(secondString))
     {
         return nullptr;
     }
-    if (is_Empty(str1))
+    if (is_Empty(firstString))
     {
-        return clone(str2);
+        return clone(secondString);
     }
-    if (is_Empty(str2))
+    if (is_Empty(secondString))
     {
-        return clone(str1);
+        return clone(firstString);
     }
-    char *newContent = new char[countLength(str1) + countLength(str2) + 1];
+    char *newContent = new char[countLength(firstString) + countLength(secondString) + 1];
 
-    strcpy(newContent, str1->content);
-    strcpy(newContent + countLength(str1), str2->content);
+    strcpy(newContent, firstString->content);
+    strcpy(newContent + countLength(firstString), secondString->content);
 
     MyString *newString = createString(newContent);
 
@@ -75,43 +75,43 @@ MyString *concatenate(MyString *str1, MyString *str2)
     return newString;
 }
 
-bool are_Equal(MyString *str1, MyString *str2)
+bool are_Equal(MyString *firstString, MyString *secondString)
 {
-    if (is_Empty(str1) && is_Empty(str2))
+    if (is_Empty(firstString) && is_Empty(secondString))
     {
         return true;
     }
 
-    return (strcmp(str1->content, str2->content) == 0);
+    return (strcmp(firstString->content, secondString->content) == 0);
 }
 
-int countLength(MyString *str)
+int countLength(MyString *string)
 {
-    if (str != nullptr)
+    if (string != nullptr)
     {
-        return str->size;
+        return string->size;
     }
     return 0;
 }
 
-bool is_Empty(MyString *str)
+bool is_Empty(MyString *string)
 {
-    return (countLength(str) == 0);
+    return (countLength(string) == 0);
 }
 
-MyString *pickOutSubStr(MyString *str, const int index, const int length)
+MyString *pickOutSubStr(MyString *string, const int index, const int length)
 {
-    if (str == nullptr)
+    if (string == nullptr)
     {
         return nullptr;
     }
-    if (is_Empty(str) || index < 0 || index + length >= countLength(str))
+    if (is_Empty(string) || index < 0 || index + length >= countLength(string))
     {
         return nullptr;
     }
 
     char *newContent = new char[length + 1];
-    memcpy(newContent, str->content + index, length);
+    memcpy(newContent, string->content + index, length);
     newContent[length] = '\0'; // last char
 
     MyString *newString = createString(newContent);
@@ -120,14 +120,14 @@ MyString *pickOutSubStr(MyString *str, const int index, const int length)
     return newString;
 }
 
-char *returnChar(MyString *str)
+char *returnChar(MyString *string)
 {
-    if (str == nullptr || is_Empty(str))
+    if (string == nullptr || is_Empty(string))
     {
         return nullptr;
     }
-    char *newContent = new char[countLength(str) + 1];
-    strcpy(newContent, str->content);
+    char *newContent = new char[countLength(string) + 1];
+    strcpy(newContent, string->content);
 
     return newContent;
 
