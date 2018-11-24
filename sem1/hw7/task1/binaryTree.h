@@ -5,7 +5,7 @@ struct BinaryTree;
 BinaryTree *createBinaryTree();
 
 bool isEmpty(BinaryTree *tree);
-void findInTree(BinaryTree *tree, int element);
+bool findInTree(BinaryTree *tree, int element);
 
 void addToTree(BinaryTree *tree, int element);
 

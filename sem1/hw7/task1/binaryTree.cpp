@@ -27,40 +27,29 @@ bool isEmpty(BinaryTree *tree)
     return tree->root == nullptr;
 }
 
-void findInTree(Node *son, int element)
+bool findInTree(Node *son, int element)
 {
     if (son == nullptr)
     {
-        cout << "Not found!" << endl;
-        return;
+        return false;
     }
     if (son->value == element)
     {
-        cout << "Element in tree!" << endl;
-        return;
+        return true;
     }
     if (element < son->value)
     {
         findInTree(son->leftChild, element);
-        return;
     }
-    findInTree(son->rightChild, element);
+    else
+    {
+        findInTree(son->rightChild, element);
+    }
 }
 
-void findInTree(BinaryTree *tree, int element)
+bool findInTree(BinaryTree *tree, int element)
 {
-    if (isEmpty(tree))
-    {
-        cout << "Not found!" << endl;
-    }
-    if (element < tree->root->value)
-    {
-        findInTree(tree->root->leftChild, element);
-    }
-    else if (element > tree->root->value)
-    {
-        findInTree(tree->root->rightChild, element);
-    }
+    return findInTree(tree->root, element);
 }
 
 void addToTree(Node *&son, int element)
@@ -191,20 +180,7 @@ void removeFromTree(Node *&son, int element)
 
 void removeFromTree(BinaryTree *tree, int element)
 {
-    if (isEmpty(tree))
-    {
-        return;
-    }
-    if (element == tree->root->value)
-    {
-        cout << "You can not delete tree root!" << endl;
-    }
-    if (element < tree->root->value)
-    {
-        removeFromTree(tree->root->leftChild, element);
-        return;
-    }
-    removeFromTree(tree->root->rightChild, element);
+    removeFromTree(tree->root, element);
 }
 
 void printIncreasing(Node *son)
