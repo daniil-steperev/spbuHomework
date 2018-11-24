@@ -100,40 +100,29 @@ void balance(Node *&son)
 }
 
 
-void findInTree(Node *son, int element)
+bool findInTree(Node *son, int element)
 {
     if (son == nullptr)
     {
-        cout << "Not found!" << endl;
-        return;
+        return false;
     }
     if (son->value == element)
     {
-        cout << "Element in tree!" << endl;
-        return;
+        return true;
     }
     if (element < son->value)
     {
         findInTree(son->leftChild, element);
-        return;
     }
-    findInTree(son->rightChild, element);
+    else
+    {
+        findInTree(son->rightChild, element);
+    }
 }
 
-void findInTree(AVLBinaryTree *tree, int element)
+bool findInTree(AVLBinaryTree *tree, int element)
 {
-    if (isEmpty(tree))
-    {
-        cout << "Not found!" << endl;
-    }
-    if (element < tree->root->value)
-    {
-        findInTree(tree->root->leftChild, element);
-    }
-    else if (element > tree->root->value)
-    {
-        findInTree(tree->root->rightChild, element);
-    }
+    return findInTree(tree->root, element);
 }
 
 void addToTree(Node *&son, int element)

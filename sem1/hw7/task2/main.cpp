@@ -28,11 +28,17 @@ int main()
         cout << endl;
         if (task == 1)
         {
-            addElement(tree);
+            int element = 0;
+            cout << "Element to add: ";
+            cin >> element;
+            addToTree(tree, element);
         }
         else if (task == 2)
         {
-            removeElement(tree);
+            int element = 0;
+            cout << "Element to delete: ";
+            cin >> element;
+            removeFromTree(tree, element);
         }
         else if (task == 3)
         {
@@ -48,7 +54,17 @@ int main()
         }
         else if (task == 6)
         {
-            findTree(tree);
+            int element = 0;
+            cout << "Element to find: ";
+            cin >> element;
+            if (findInTree(tree, element))
+            {
+                cout << "Element " << element << " in tree!" << endl;
+            }
+            else
+            {
+                cout << "Element " << element << " not in tree!" << endl;
+            }
         }
         else if (task == 0)
         {

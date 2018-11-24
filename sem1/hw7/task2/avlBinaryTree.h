@@ -16,7 +16,7 @@ struct AVLBinaryTree
 AVLBinaryTree *createAVLBinaryTree();
 
 bool isEmpty(AVLBinaryTree *tree);
-void findInTree(AVLBinaryTree *tree, int element);
+bool findInTree(AVLBinaryTree *tree, int element);
 Node *createElement(int value);
 
 void addToTree(AVLBinaryTree *tree, int element);
