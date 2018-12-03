@@ -13,9 +13,9 @@ void deleteString(MyString *string);
 MyString *clone(MyString *string);
 MyString *concatenate(MyString *stringFirst, MyString *stringSecond);
 
-bool are_Equal(MyString *stringFirst, MyString *strintSecond);
+bool isEqual(MyString *stringFirst, MyString *strintSecond);
 int countLength(MyString *string);
-bool is_Empty(MyString *string);
+bool isEmpty(MyString *string);
 
 MyString *pickOutSubStr(MyString *string, const int index, const int length);
 char *returnChar(MyString *string);
