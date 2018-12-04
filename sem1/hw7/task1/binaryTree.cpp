@@ -65,117 +65,83 @@ void addToTree(Node *&son, int element)
     if (element < son->value)
     {
         addToTree(son->leftChild, element);
-        return;
     }
-    addToTree(son->rightChild, element);
+    else
+    {
+        addToTree(son->rightChild, element);
+    }
 }
 
 void addToTree(BinaryTree *tree, int element)
 {
-    if (isEmpty(tree))
-    {
-        tree->root = new Node {element, nullptr, nullptr};
-        return;
-    }
-    if (element == tree->root->value)
-    {
-        return;
-    }
-    if (element < tree->root->value)
-    {
-        addToTree(tree->root->leftChild, element);
-        return;
-    }
-    addToTree(tree->root->rightChild, element);
+    addToTree(tree->root, element);
 }
 
-void removeOrphan(Node *&son)
-{
-    delete son;
-    son = nullptr;
-}
+void removeNode(Node *&son);
 
-void removeAloneNode(Node *&son)
+int removeRightest(Node *&son)
 {
-    Node *deleteElement = son;
     if (son->rightChild != nullptr)
     {
-        son = son->rightChild;
-        delete deleteElement;
-        return;
-    }
-    son = son->leftChild;
-    delete deleteElement;
-}
-
-int numberOfChildren(Node *&son)
-{
-    if (son->leftChild == nullptr && son->rightChild == nullptr)
-    {
-        return 0;
-    }
-    else if (son->leftChild != nullptr && son->rightChild != nullptr)
-    {
-        return 2;
-    }
-    return 1;
-}
-
-Node *removeMinimal(Node *&son)
-{
-    if (son->leftChild == nullptr)
-    {
-        Node *current = son;
-        delete son;
-        return current;
+        int answer = removeRightest(son->rightChild);
+        return answer;
     }
     else
     {
-        removeMinimal(son->leftChild);
+        int answer = son->value;
+        removeNode(son);
+        return answer;
     }
 }
 
-void removeBoth(Node *&son)
+void removeNode(Node *&son)
 {
-    Node *newElement = removeMinimal(son->rightChild);
-    Node *prevLeft = son->leftChild;
-    Node *prevRight = son->rightChild;
-    son = newElement;
-    newElement->leftChild = prevLeft;
-    newElement->rightChild = prevRight;
+    if (son->leftChild == nullptr && son->rightChild == nullptr)
+    {
+        delete son;
+        son = nullptr;
+        return;
+    }
+    if (son->leftChild != nullptr && son->rightChild == nullptr)
+    {
+        Node *deleteNode = son;
+        son = son->leftChild;
+        delete deleteNode;
+        return;
+    }
+    if (son->leftChild == nullptr && son->rightChild != nullptr)
+    {
+        Node *deleteNode = son;
+        son = son->rightChild;
+        delete deleteNode;
+        return;
+    }
+    if (son->leftChild != nullptr && son->rightChild != nullptr)
+    {
+        son->value = removeRightest(son->leftChild);
+    }
 }
 
 void removeFromTree(Node *&son, int element)
 {
     if (son == nullptr)
     {
-        cout << "There is no such element in tree!" << endl;
+        cout << "There is not such element in tree!" << endl;
         return;
     }
     if (son->value == element)
     {
-        if (numberOfChildren(son) == 0)
-        {
-            removeOrphan(son);
-            return;
-        }
-        else if (numberOfChildren(son) == 1)
-        {
-            removeAloneNode(son);
-            return;
-        }
-        else
-        {
-            removeBoth(son);
-            return;
-        }
-    }
-    if (element < son->value)
-    {
-        removeFromTree(son->leftChild, element);
+        removeNode(son);
         return;
     }
-    removeFromTree(son->rightChild, element);
+    if (son->value > element)
+    {
+        removeFromTree(son->leftChild, element);
+    }
+    else
+    {
+        removeFromTree(son->rightChild, element);
+    }
 }
 
 void removeFromTree(BinaryTree *tree, int element)
