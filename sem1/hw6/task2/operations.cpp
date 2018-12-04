@@ -11,7 +11,7 @@ void binaryOperations(int firstNumber, int secondNumber)
     translateToBinary(firstBinary, firstNumber);
     translateToBinary(secondBinary, secondNumber);
 
-    printingInBinary(firstBinary, secondBinary);
+    printInBinary(firstBinary, secondBinary);
 
     sumBinary(firstBinary, secondBinary);
     sum(firstNumber, secondNumber);

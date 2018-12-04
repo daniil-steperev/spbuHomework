@@ -10,7 +10,7 @@ void sum(int firstNumber, int secondNumber)
     cout << firstNumber + secondNumber;
 }
 
-void printingSummary(int *sumOfBinary, int size)
+void printSummary(int *sumOfBinary, int size)
 {
     cout << "Sum in binary: ";
     int i = 0;
@@ -96,12 +96,12 @@ void sumBinary(int *firstBinary, int *secondBinary)
         }
     }
 
-    printingSummary(sumOfBinary, maxSize);
+    printSummary(sumOfBinary, maxSize);
 
     delete[] sumOfBinary;
 }
 
-void printingInBinary(int *firstBinary, int *secondBinary)
+void printInBinary(int *firstBinary, int *secondBinary)
 {
     cout << "First number in binary code: ";
     print(firstBinary);
