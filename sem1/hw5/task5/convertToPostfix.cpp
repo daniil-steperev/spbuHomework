@@ -2,12 +2,12 @@
 #include <limits.h>
 #include "stack.h"
 #include "convertToPostfix.h"
-#include "countingExpression.h"
+#include "countExpression.h"
 using namespace std;
 
 const int length = 256;
 
-void convertingToPostfix(char *infixString)
+void convertToPostfix(char *infixString)
 {
     Stack *stack = createStack();
     char postfixString[length] = {'\0'};
@@ -17,7 +17,7 @@ void convertingToPostfix(char *infixString)
             break;
         if (infixString[i] <= '9' && infixString[i] >= '0')
         {
-            postfixString[freeSpace(postfixString)] = infixString[i];
+            postfixString[returnFreeSpace(postfixString)] = infixString[i];
         }
         else if (isOperation(infixString[i]))
         {
@@ -25,17 +25,17 @@ void convertingToPostfix(char *infixString)
         }
         else if (infixString[i] == ')')
         {
-            convertingFromBrackets(stack, postfixString);
+            convertFromBrackets(stack, postfixString);
         }
     }
-    convertingFromStack(stack, postfixString);
+    convertFromStack(stack, postfixString);
 
-    countingExpression(postfixString);
+    countExpression(postfixString);
 
     deleteStack(stack);
 }
 
-int freeSpace(char *string)
+int returnFreeSpace(char *string)
 {
     for (int i = 0; i < length; i++)
     {
@@ -45,17 +45,17 @@ int freeSpace(char *string)
         }
     }
 }
- void convertingFromStack(Stack *stack, char *postfixString)
+ void convertFromStack(Stack *stack, char *postfixString)
 {
     int element = 0;
     while (element != INT_MIN)
     {
         element = pop(stack);
-        postfixString[freeSpace(postfixString)] = element;
+        postfixString[returnFreeSpace(postfixString)] = element;
     }
 }
 
-void convertingFromBrackets(Stack *stack, char *postfixString)
+void convertFromBrackets(Stack *stack, char *postfixString)
 {
     while (true)
     {
@@ -64,7 +64,7 @@ void convertingFromBrackets(Stack *stack, char *postfixString)
         {
             return;
         }
-        postfixString[freeSpace(postfixString)] = element;
+        postfixString[returnFreeSpace(postfixString)] = element;
     }
 }
 

@@ -1,9 +1,9 @@
 #pragma once
 #include "stack.h"
 
-int freeSpace(char *string);
+int returnFreeSpace(char *string);
 bool isOperation(char operation);
 
-void convertingFromStack(Stack *stack, char *postfixString);
-void convertingFromBrackets(Stack *stack, char *postfixString);
-void convertingToPostfix(char *infixString);
+void convertFromStack(Stack *stack, char *postfixString);
+void convertFromBrackets(Stack *stack, char *postfixString);
+void convertToPostfix(char *infixString);

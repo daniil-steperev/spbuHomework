@@ -8,7 +8,7 @@ using namespace std;
 
 const int length = 256;
 
-int countingIntermediateResult(Stack *stack, char operation)
+int countIntermediateResult(Stack *stack, char operation)
 {
     int firstNumber = pop(stack);
     int secondNumber = pop(stack);
@@ -34,7 +34,7 @@ int countingIntermediateResult(Stack *stack, char operation)
     }
  }
 
-void countingExpression(char *expression)
+void countExpression(char *expression)
 {
     Stack *stack = createStack();
     for (int i = 0; i < length; i++)
@@ -47,7 +47,7 @@ void countingExpression(char *expression)
         }
         else
         {
-            int intermediate = countingIntermediateResult(stack, expression[i]);
+            int intermediate = countIntermediateResult(stack, expression[i]);
             if (intermediate == INT_MIN)
             {
                 cout << "ERROR!";

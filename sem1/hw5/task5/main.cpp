@@ -11,7 +11,6 @@ int main()
     cout << "Enter the expression in infix variation: ";
     cin >> infixString;
 
-    convertingToPostfix(infixString);
-
+    convertToPostfix(infixString);
     return 0;
 }
