@@ -34,7 +34,7 @@ void removeListElement(List *list, MyString *str)
     {
         return;
     }
-    while (current->next && are_Equal(current->next->content, str))
+    while (current->next && areEqual(current->next->content, str))
     {
         current = current->next;
     }
@@ -58,13 +58,14 @@ void add(List *list, MyString *str)
         ListElement *newElement = new ListElement {str, 1, nullptr};
         list->first = newElement;
         list->size++;
-        return ;
+        return;
     }
     while (current->next)
     {
-        if (are_Equal(current->content, str)) // element already added
+        if (areEqual(current->content, str)) // element already added
         {
             current->quantity++;
+			deleteString(str);
             return;
         }
         current = current->next;
@@ -79,7 +80,9 @@ void printList(List *list)
     ListElement *current = list->first;
     while (current)
     {
-        cout << returnChar(current->content) << " ";
+        char *outputString = returnChar(current->content);
+        cout << outputString << ' ';
+        delete[] outputString;
         current = current->next;
     }
     cout << endl;

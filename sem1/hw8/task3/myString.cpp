@@ -43,15 +43,15 @@ MyString *clone(MyString *string)
 
 MyString *concatenate(MyString *firstString, MyString *secondString)
 {
-    if (is_Empty(firstString) && is_Empty(secondString))
+    if (isEmpty(firstString) && isEmpty(secondString))
     {
         return nullptr;
     }
-    if (is_Empty(firstString))
+    if (isEmpty(firstString))
     {
         return clone(secondString);
     }
-    if (is_Empty(secondString))
+    if (isEmpty(secondString))
     {
         return clone(firstString);
     }
@@ -66,9 +66,9 @@ MyString *concatenate(MyString *firstString, MyString *secondString)
     return newString;
 }
 
-bool are_Equal(MyString *firstString, MyString *secondString)
+bool areEqual(MyString *firstString, MyString *secondString)
 {
-    if (is_Empty(firstString) && is_Empty(secondString))
+    if (isEmpty(firstString) && isEmpty(secondString))
     {
         return true;
     }
@@ -85,7 +85,7 @@ int countLength(MyString *string)
     return 0;
 }
 
-bool is_Empty(MyString *string)
+bool isEmpty(MyString *string)
 {
     return (countLength(string) == 0);
 }
@@ -96,7 +96,7 @@ MyString *pickOutSubStr(MyString *string, const int index, const int length)
     {
         return nullptr;
     }
-    if (is_Empty(string) || index < 0 || index + length >= countLength(string))
+    if (isEmpty(string) || index < 0 || index + length >= countLength(string))
     {
         return nullptr;
     }
@@ -113,7 +113,7 @@ MyString *pickOutSubStr(MyString *string, const int index, const int length)
 
 char *returnChar(MyString *string)
 {
-    if (string == nullptr || is_Empty(string))
+    if (string == nullptr || isEmpty(string))
     {
         return nullptr;
     }
