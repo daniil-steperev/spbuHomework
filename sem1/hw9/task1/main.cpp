@@ -39,8 +39,8 @@ int main()
     algorithmDijkstra(graph); // count minimal distance from each city to another one
     printCitiesList(graph, capitals, numberOfCapitals); // print cities and capitals
 
-	file.close();
-	delete[] capitals;
+    file.close();
+    delete[] capitals;
     deleteGraph(graph);
-	return 0;
+    return 0;
 }
