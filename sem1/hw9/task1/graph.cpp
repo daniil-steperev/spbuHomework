@@ -16,7 +16,7 @@ Graph *createGraph(int size)
         matrix[i] = new int[size] {0};
     }
     graph->matrix = matrix;
-	return graph;
+    return graph;
 }
 
 void getGraph(Graph *graph, int numberOfRoads, ifstream &file)
