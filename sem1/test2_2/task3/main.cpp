@@ -1,7 +1,4 @@
-it#include <iostream>
-#include <algorithm>
-#include <vector>
-#include "list.h"
+#include <iostream>
 
 using namespace std;
 
@@ -77,11 +74,11 @@ int main()
     cout << "Enter number of killed and exiled: ";
     cin >> numberOfKilled >> numberOfExiled;
 
-    printPerson(people, values, 0, numberOfKilled, 0);
+    printPerson(people, values, 0, numberOfKilled, 0); // "0" - should be killed
 
-    printPerson(people, values, numberOfKilled, numberOfExiled + 1, 1);
+    printPerson(people, values, numberOfKilled, numberOfExiled + 1, 1); // "1" - should be exiled
 
-    printPerson(people, values, numberOfKilled + numberOfExiled, numberOfPeople, 2);
+    printPerson(people, values, numberOfKilled + numberOfExiled, numberOfPeople, 2); // "2" - should stay alive
 
     delete[] values;
     for (int i = 0; i < numberOfPeople; i++)
