@@ -1,0 +1,2 @@
+(* (* (b null null) (e null null)) (* (* (p null null) (o null null)) (* (* (r null null) (! null null)) (' ' null null))))
+00 01 01 100 111 00 101 101 100 111 00 01 01 1100 1101
