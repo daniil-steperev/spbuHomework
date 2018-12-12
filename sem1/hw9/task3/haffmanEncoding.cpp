@@ -102,7 +102,7 @@ void translateMessage(ofstream &file, List *characters, char *message)
         {
             word += message[i];
             i++;
-         }
+        }
         writeElementInChar(file, characters, word);
         word = {};
         i++;
