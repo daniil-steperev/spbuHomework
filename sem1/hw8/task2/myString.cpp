@@ -19,24 +19,18 @@ MyString *createString(const char *string)
     MyString *newString = new MyString;
 
     newString->size = strlen(string);
-    newString->content = new char[newString->size + 1];
-    strcpy(newString->content, string);
+    char *content = new char[newString->size + 1];
+    strcpy(content, string);
+	newString->content = content;
 
     return newString;
 }
 
 void deleteString(MyString *string)
 {
-    if (string == nullptr)
-    {
-        return;
-    }
-    if (string->content != nullptr)
-    {
-        delete[] string->content;
-        string->content = nullptr;
-    }
-    string->size = 0;
+	delete[] string->content;
+	delete string;
+	string = nullptr;
 }
 
 MyString *clone(MyString *string)
@@ -68,10 +62,10 @@ MyString *concatenate(MyString *stringFirst, MyString *stringSecond)
     strcpy(newContent, stringFirst->content);
     strcpy(newContent + countLength(stringFirst), stringSecond->content);
 
-    MyString *newString = createString(newContent);
+	MyString *newString = createString(newContent);
 
     delete[] newContent;
-    return newString;
+	return newString;
 }
 
 bool isEqual(MyString *stringFirst, MyString *stringSecond)
@@ -121,10 +115,6 @@ MyString *pickOutSubStr(MyString *string, const int index, const int length)
 
 char *returnChar(MyString *string)
 {
-    if (string == nullptr || isEmpty(string))
-    {
-        return nullptr;
-    }
     char *newContent = new char[countLength(string) + 1];
     strcpy(newContent, string->content);
 
