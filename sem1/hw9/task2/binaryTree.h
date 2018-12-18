@@ -1,7 +1,6 @@
 #pragma once
 #include <fstream>
 #include "list.h"
-#include "myString.h"
 using namespace std;
 
 struct BinaryTree;
