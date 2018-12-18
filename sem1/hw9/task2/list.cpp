@@ -66,6 +66,6 @@ void writeElementInCode(ofstream &file, List *list, char symbol)
     {
         current = current->next;
     }
-
-    file << current->code << ' ';
+	string code = current->code;
+    file << code << ' ';
 }

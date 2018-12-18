@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string.h>
 #include "binaryTree.h"
 using namespace std;
