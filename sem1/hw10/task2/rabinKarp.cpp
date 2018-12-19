@@ -2,8 +2,8 @@
 #include "myString.h"
 #include "rabinKarp.h"
 
-const int factor = 7;
-const int divider = 10243;
+const int factor = 13;
+const int divider = 1009;
 
 int getHash(MyString *str, int start, int end)
 {
@@ -11,86 +11,56 @@ int getHash(MyString *str, int start, int end)
     char *stringValue = returnChar(str);
     for (int i = start; i < end; i++)
     {
-        hash = (hash * factor + stringValue[i]);
+        hash = ((hash * factor) % divider + (int)stringValue[i]) % divider;
     }
-    hash %= divider;
     delete[] stringValue;
     return hash;
 }
 
-int pow(int number, int degree)
+int changeHash(int hash, char oldCharacter, char newCharacter, int power)
 {
-    if (degree == 0)
-    {
-        return 1;
-    }
-    else if (degree == 1)
-    {
-        return number;
-    }
-    else
-    {
-        if (degree % 2 == 0)
-        {
-            return pow(number * number, degree / 2);
-        }
-        else
-        {
-            return number * pow(number, degree - 1);
-        }
-    }
-}
-
-int changeHash(int hash, int oldCharacter, int newCharacter, int degree)
-{
-    int redundancy = (oldCharacter * pow(factor, degree)) % divider;
-    hash -= redundancy;
-    hash = (hash * factor + newCharacter) % divider;
-    return hash;
+    hash = (((((hash - ((int) oldCharacter) * power) % divider + divider) % divider) * factor) % divider
+                      + newCharacter) % divider;
+	return hash;
 }
 
 void algorithmRabinKarp(MyString *text, MyString *desired)
 {
     int textLength = countLength(text);
     int desiredLength = countLength(desired);
+
+    int power = 1;
+    for (int i = 1; i < desiredLength; i++)
+    {
+        power = (power * factor) % divider;
+    }
+
     if (desiredLength > textLength)
     {
-        return;
-    }
-    if (desiredLength == textLength)
-    {
-        if (isEqual(text, desired))
-        {
-            cout << 1;
-        }
         return;
     }
 
     int desiredHash = getHash(desired, 0, countLength(desired));
     int currentHash = getHash(text, 0, countLength(desired));
 
-    int start = countLength(desired);
-    int end = countLength(text);
+    int start = 0;
+    int end = textLength - desiredLength;
 
     char *textString = returnChar(text);
-    for (int i = start; i < end; i++)
+
+    for (int i = start; i <= end; i++)
     {
         if (currentHash == desiredHash)
         {
-            MyString *subString = pickOutSubStr(text, i - countLength(desired), countLength(desired));
-            if (isEqual(subString, desired))
+            MyString *subStr = subString(text, i, i + desiredLength - 1);
+            if (isEqual(subStr, desired))
             {
-                cout << i - countLength(desired) + 1 << ' ';
+                cout << i + 1 << ' ';
             }
-            deleteString(subString);
+            deleteString(subStr);
         }
-        int degree = countLength(desired) - 1;
-        int oldCharacterIndex = i - countLength(desired);
-        currentHash = changeHash(currentHash, textString[oldCharacterIndex], textString[i], degree);
-    }
-    if (currentHash == desiredHash)
-    {
-        cout << end - start + 1;
+
+        currentHash = changeHash(currentHash, textString[i], textString[i + countLength(desired)], power);
     }
     delete[] textString;
 }

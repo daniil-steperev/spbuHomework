@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const int stringSize = 1000000;
+const int stringSize = 100000;
 
 int main()
 {

@@ -8,7 +8,7 @@ struct MyString
 };
 
 MyString *createString();
-MyString *createString(const char *string);
+MyString *createString(char *string);
 void deleteString(MyString *string);
 
 MyString *clone(MyString *string);
@@ -18,5 +18,5 @@ bool isEqual(MyString *stringFirst, MyString *strintSecond);
 int countLength(MyString *string);
 bool isEmpty(MyString *string);
 
-MyString *pickOutSubStr(MyString *string, const int index, const int length);
+MyString *subString(MyString *string, int index, int end);
 char *returnChar(MyString *string);

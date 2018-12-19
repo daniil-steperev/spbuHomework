@@ -9,7 +9,17 @@ MyString *createString()
     return new MyString;
 }
 
-MyString *createString(const char *string)
+int lineLength(char *line)
+{
+    int count = 0;
+    while(line[count] != '\0')
+    {
+        count++;
+    }
+    return count;
+}
+
+MyString *createString(char *string)
 {
     if (string == nullptr)
     {
@@ -18,25 +28,20 @@ MyString *createString(const char *string)
 
     MyString *newString = new MyString;
 
-    newString->size = strlen(string);
-    newString->content = new char[newString->size + 1];
-    strcpy(newString->content, string);
+    newString->size = lineLength(string);
+    newString->content = new char[newString->size];
+    for (int i = 0; i < newString->size; i++)
+    {
+        newString->content[i] = string[i];
+    }
 
     return newString;
 }
 
 void deleteString(MyString *string)
 {
-    if (string == nullptr)
-    {
-        return;
-    }
-    if (string->content != nullptr)
-    {
-        delete[] string->content;
-        string->content = nullptr;
-    }
-    string->size = 0;
+    delete[] string->content;
+    delete string;
 }
 
 MyString *clone(MyString *string)
@@ -76,12 +81,14 @@ MyString *concatenate(MyString *stringFirst, MyString *stringSecond)
 
 bool isEqual(MyString *stringFirst, MyString *stringSecond)
 {
-    if (isEmpty(stringFirst) && isEmpty(stringSecond))
+    for (int i = 0; i < stringFirst->size; i++)
     {
-        return true;
+        if (stringFirst->content[i] != stringSecond->content[i])
+        {
+            return false;
+        }
     }
-
-    return (strcmp(stringFirst->content, stringSecond->content) == 0);
+    return true;
 }
 
 int countLength(MyString *string)
@@ -98,35 +105,35 @@ bool isEmpty(MyString *string)
     return (countLength(string) == 0);
 }
 
-MyString *pickOutSubStr(MyString *string, const int index, const int length)
+MyString *subString(MyString *string, int begin, int end)
 {
-    if (string == nullptr)
+    char *stringChar = returnChar(string);
+    char *subStringChar = new char[end - begin + 2];
+    for (int i = 0; i <= end - begin; i++)
     {
-        return nullptr;
+        subStringChar[i] = stringChar[i + begin];
     }
-    if (isEmpty(string) || index < 0 || index + length >= countLength(string))
-    {
-        return nullptr;
-    }
+    subStringChar[end - begin + 1] = '\0';
 
-    char *newContent = new char[length + 1];
-    memcpy(newContent, string->content + index, length);
-    newContent[length] = '\0'; // last char
+    MyString *newString = createString(subStringChar);
 
-    MyString *newString = createString(newContent);
-    delete[] newContent;
+    delete[] stringChar;
+    delete[] subStringChar;
 
     return newString;
 }
 
 char *returnChar(MyString *string)
 {
-    if (string == nullptr || isEmpty(string))
+    int size = string->size + 1;
+    char *newContent = new char[size];
+
+    for (int i = 0; i < size - 1; i++)
     {
-        return nullptr;
+        newContent[i] = string->content[i];
     }
-    char *newContent = new char[countLength(string) + 1];
-    strcpy(newContent, string->content);
+
+    newContent[size - 1] = '\0';
 
     return newContent;
  }
