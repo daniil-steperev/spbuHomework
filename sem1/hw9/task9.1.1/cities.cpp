@@ -109,14 +109,12 @@ int returnNearCity(Graph *graph, bool *seenCities, int *addedCities, int numberO
 
 int getNearCity(Graph *graph, int **cityOwnership, bool *seenCities, int currentCapital)
 {
-    cout << "NEAR CITY TO: " << currentCapital << "is: ";
     int numberOfAddedCities = getFreeIndex(cityOwnership[currentCapital], graph->size, cityOwnership[currentCapital][0]);
     if (numberOfAddedCities == 0)
     {
         numberOfAddedCities++;
     }
     int newCity = returnNearCity(graph, seenCities, cityOwnership[currentCapital], numberOfAddedCities);
-    cout << newCity << endl;
     return newCity;
 }
 
@@ -125,6 +123,7 @@ void printCities(int **cityOwnership, int numberOfCapitals, int size)
     for (int i = 0; i < numberOfCapitals; i++)
     {
         cout << "Capital " << cityOwnership[i][0] + 1 << ": ";
+        cout << cityOwnership[i][0] + 1 << ' ';
         for (int j = 1; j < size; j++)
         {
             if (cityOwnership[i][j] > 0)
@@ -142,15 +141,6 @@ void printCitiesAndCapitals(Graph *graph, int *capitals, int numberOfCapitals)
     bool *seenCities = createSeenCities(graph->size);
 
     addCapitals(cityOwnership, seenCities, numberOfCapitals, capitals);
-
-    for (int i = 0; i < numberOfCapitals; i++)
-    {
-        for (int j = 0; j < graph->size; j++)
-        {
-            cout << cityOwnership[i][j] << ' ';
-        }
-        cout << endl;
-    }
 
     int currentCapital = 0;
     while (!isEmpty(seenCities, graph->size))
