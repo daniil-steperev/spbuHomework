@@ -3,7 +3,7 @@
 #include "queue.h"
 #include "operations.h"
 #include "algorithmHaffman.h"
-#include <vld.h>
+
 using namespace std;
 
 const int fileNameSize = 1000;

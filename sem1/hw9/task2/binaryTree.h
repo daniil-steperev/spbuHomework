@@ -1,7 +1,7 @@
 #pragma once
 #include <fstream>
 #include "list.h"
-#include "myString.h"
+
 using namespace std;
 
 struct BinaryTree;
@@ -18,7 +18,6 @@ void writeCodes(ofstream &file, BinaryTree *tree);
 
 int returnPriority(BinaryTree *tree);
 char returnNodeValue(Node *son);
-MyString *returnNodeString(Node *son);
 
 bool isEmpty(BinaryTree *tree);
 bool isElement(ofstream &file, BinaryTree *tree, char destinition);
