@@ -1,10 +1,7 @@
 #pragma once
 #include <fstream>
 #include "list.h"
-<<<<<<< HEAD
 
-=======
->>>>>>> 764698f61a695e6c5d0457744bff0c1675f9099c
 using namespace std;
 
 struct BinaryTree;
