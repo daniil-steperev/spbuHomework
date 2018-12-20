@@ -2,6 +2,8 @@
 #include <fstream>
 #include <string.h>
 #include "binaryTree.h"
+#include "myString.h"
+
 using namespace std;
 
 const int length = 256;
@@ -9,7 +11,7 @@ const int length = 256;
 struct Node
 {
     char value;
-    string code;
+    MyString *code;
     Node *leftChild;
     Node *rightChild;
 };
@@ -39,7 +41,7 @@ void addToTree(Node *&son, char element)
 {
     if (son == nullptr)
     {
-        string str;
+        MyString *str = createString();
         son = new Node {element, str, nullptr, nullptr};
     }
     if (element == son->value)
@@ -66,7 +68,7 @@ BinaryTree *mergeTrees(BinaryTree *first, BinaryTree *second)
     int newPriority = first->priority + second->priority;
     BinaryTree *newTree = createBinaryTree(newPriority);
 
-    string str;
+    MyString *str = createString();
     Node *newNode = new Node {'*', str, nullptr, nullptr};
     newNode->leftChild = first->root;
     newNode->rightChild = second->root;
@@ -143,9 +145,9 @@ bool isLeaf(Node *son)
     return (son->leftChild == nullptr && son->rightChild == nullptr);
 }
 
-void assignCodes(ofstream &file, Node *son, string previousCode)
+void assignCodes(ofstream &file, Node *son, MyString *previousCode)
 {
-    son->code = previousCode;
+    son->code = clone(previousCode);
     if (son->value != '*')
     {
         if (son->value == ' ')
@@ -156,9 +158,9 @@ void assignCodes(ofstream &file, Node *son, string previousCode)
         {
             file << son->value << " - ";
         }
-
-        file << son->code;
-        file << endl;
+        char *output = returnChar(son->code);
+        file << output << endl;
+        delete[] output;
     }
 
     if (isLeaf(son))
@@ -168,20 +170,20 @@ void assignCodes(ofstream &file, Node *son, string previousCode)
 
     if (son->leftChild != nullptr)
     {
-        string additiveCode = "0";
-        string newCode = previousCode + additiveCode;
-
+        MyString *additiveCode = createString("0");
+        MyString *newCode = concatenate(previousCode, additiveCode);
         assignCodes(file, son->leftChild, newCode);
+        deleteString(additiveCode);
     }
 
     if (son->rightChild != nullptr)
     {
-        string additiveCode = "1";
-        string newCode = previousCode + additiveCode;
-
+        MyString *additiveCode = createString("1");
+        MyString *newCode = concatenate(previousCode, additiveCode);
         assignCodes(file, son->rightChild, newCode);
+        deleteString(additiveCode);
     }
-
+    deleteString(previousCode);
 }
 
 void assignCodes(ofstream &file, BinaryTree *tree)
@@ -193,16 +195,16 @@ void assignCodes(ofstream &file, BinaryTree *tree)
 
     if (tree->root->leftChild != nullptr)
     {
-        string previousCode = "0";
+        MyString *previousCode = createString("0");
         assignCodes(file, tree->root->leftChild, previousCode);
-
+        deleteString(previousCode);
     }
 
     if (tree->root->rightChild != nullptr)
     {
-        string previousCode = "1";
+        MyString *previousCode = createString("1");
         assignCodes(file, tree->root->rightChild, previousCode);
-
+        deleteString(previousCode);
     }
 }
 

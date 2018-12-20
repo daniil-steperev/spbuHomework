@@ -24,16 +24,18 @@ int main()
         return 0;
     }
     char *buff = new char[maxStringSize] {0};
-    file.getline(buff, maxStringSize);
-
     int *alphabet = new int[alphabetLength] {0};
     PriorityQueue *haffmanQueue = createPriorityQueue();
 
-    getElements(buff, alphabet);
-    addElementsToQueue(alphabet, haffmanQueue);
+    while (!file.eof())
+    {
+        file.getline(buff, maxStringSize);
+        getElements(buff, alphabet);
+        addElementsToQueue(alphabet, haffmanQueue);
+    }
 
     ofstream fileOutput("fileOutput.txt");
-    haffmanAlgorithm(fileOutput, haffmanQueue, alphabet, buff);
+    haffmanAlgorithm(file, fileOutput, haffmanQueue, alphabet);
 
     delete[] alphabet;
     delete[] buff;

@@ -5,10 +5,12 @@
 #include "binaryTree.h"
 #include "algorithmHaffman.h"
 #include "list.h"
+
 using namespace std;
 
+const int buffSize = 1000;
 
-void haffmanAlgorithm(ofstream &file, PriorityQueue *queue, int *alphabet, char *buff)
+void haffmanAlgorithm(ifstream &fin, ofstream &file, PriorityQueue *queue, int *alphabet)
 {
     file << "Table of frequency: " << endl;
     printTableOfFrequency(file, alphabet);
@@ -36,15 +38,25 @@ void haffmanAlgorithm(ofstream &file, PriorityQueue *queue, int *alphabet, char 
     List *codeList = createList();
     addElementsToList(codeList, tree);
 
-    file << "Coded message: ";
-    int length = strlen(buff);
+    fin.clear();
+    fin.seekg(0, ios::beg);
+
     char symbol = '\0';
-    for (int i = 0; i < length; i++)
+
+    file << "Coded message: ";
+    char *buff = new char [buffSize] {0};
+    while (!fin.eof())
     {
-        symbol = buff[i];
-        writeElementInCode(file, codeList, symbol);
+        fin.getline(buff, buffSize);
+        int length = strlen(buff);
+        for (int i = 0; i < length; i++)
+        {
+            symbol = buff[i];
+            writeElementInCode(file, codeList, symbol);
+        }
     }
 
     deleteList(codeList);
     deleteTree(tree);
+    delete[] buff;
 }

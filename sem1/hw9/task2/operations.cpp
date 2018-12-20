@@ -4,6 +4,7 @@
 #include "binaryTree.h"
 #include "queue.h"
 #include "algorithmHaffman.h"
+
 using namespace std;
 
 const int alphabetLength = 256;

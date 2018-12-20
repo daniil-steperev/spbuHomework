@@ -1,11 +1,13 @@
 #include <iostream>
 #include "list.h"
+#include "myString.h"
+
 using namespace std;
 
 struct ListElement
 {
     char value;
-    string code;
+    MyString *code;
     ListElement *next;
 };
 
@@ -20,7 +22,7 @@ List *createList()
     return list;
 }
 
-void addToList(List *list, char symbol, string str)
+void addToList(List *list, char symbol, MyString *str)
 {
     ListElement *newElement = new ListElement;
     newElement->value = symbol;
@@ -49,6 +51,7 @@ void deleteList(List *list)
     {
         ListElement *deleteElement = current;
         current = current->next;
+        deleteString(deleteElement->code);
         delete deleteElement;
     }
     delete list;
@@ -66,6 +69,7 @@ void writeElementInCode(ofstream &file, List *list, char symbol)
     {
         current = current->next;
     }
-	string code = current->code;
+	char *code = returnChar(current->code);
     file << code << ' ';
+    delete[] code;
 }
