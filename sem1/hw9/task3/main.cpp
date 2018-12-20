@@ -10,15 +10,17 @@ int main()
     cout << "Input file name: ";
     char *fileName = new char [fileNameSize] {0};
     cin >> fileName;
-    ifstream file(fileName);
+
+	ifstream file(fileName);
     if (!file.is_open())
     {
         cout << "File can not be opened!";
+		delete[] fileName;
         return 0;
     }
 
     ofstream fileOutput("fileOutput.txt");
-    mainEncoding(file, fileOutput);
+    encodeMessage(file, fileOutput);
 
     fileOutput.close();
     file.close();
