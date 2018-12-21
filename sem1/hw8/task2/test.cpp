@@ -25,14 +25,13 @@ void test()
     deleteString(cloneString);
     cout << endl;
 
-
     MyString *secondString = createString(" I believe that everything is OK"); // concatenated string
     MyString *concString = concatenate(string, secondString);
     cout << "Concatenated string: '";
     printString(string);
     cout << "'"<< endl;
     deleteString(secondString);
-	deleteString(concString);
+    deleteString(concString);
     cout << endl;
 
     MyString *firstStr = createString("I get enough sleep"); // equal and not equal string
@@ -59,14 +58,14 @@ void test()
     deleteString(thirdStr);
     cout << endl;
 
-	cout << "Length of '";
-	printString(string);
-	cout << "' is: " << countLength(string) << endl; // counting length of the string
-	cout << endl;
-	MyString *subString = pickOutSubStr(string, 8, 7);
-	cout << "Sub string from the ninth index (length = 7): '";
-	printString(subString);
-	cout << "'" << endl;
-	deleteString(subString);
+    cout << "Length of '";
+    printString(string);
+    cout << "' is: " << countLength(string) << endl; // counting length of the string
+    cout << endl;
+    MyString *subString = pickOutSubStr(string, 8, 7);
+    cout << "Sub string from the ninth index (length = 7): '";
+    printString(subString);
+    cout << "'" << endl;
+    deleteString(subString);
     deleteString(string);
 }
