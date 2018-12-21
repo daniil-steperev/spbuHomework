@@ -127,6 +127,7 @@ void deleteTree(Node *son)
     {
         deleteTree(son->leftChild);
         deleteTree(son->rightChild);
+        deleteString(son->code);
         delete son;
     }
 }
