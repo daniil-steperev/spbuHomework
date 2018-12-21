@@ -1,5 +1,4 @@
 #include <iostream>
-#include "myString.h"
 #include "rabinKarp.h"
 
 using namespace std;
