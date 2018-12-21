@@ -33,7 +33,7 @@ void enqueue(Queue *queue, int value, int priority)
     newElement->next = queue->head;
     newElement->previous = nullptr;
 
-	while (newElement->next && (newElement->next->priority > priority))
+	while (newElement->next && (newElement->next->priority >= priority))
 	{
 		newElement->previous = newElement->next;
 		newElement->next = newElement->next->next;
