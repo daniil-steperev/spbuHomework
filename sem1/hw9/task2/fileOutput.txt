@@ -1,0 +1,32 @@
+Table of frequency: 
+' ' - 2
+! - 1
+b - 3
+e - 4
+o - 2
+p - 2
+r - 1
+
+Binary trees: 
+1: (* (r null null) (! null null))
+
+2: (* (* (r null null) (! null null)) (' ' null null))
+
+3: (* (p null null) (o null null))
+
+4: (* (b null null) (e null null))
+
+5: (* (* (p null null) (o null null)) (* (* (r null null) (! null null)) (' ' null null)))
+
+6: (* (* (b null null) (e null null)) (* (* (p null null) (o null null)) (* (* (r null null) (! null null)) (' ' null null))))
+
+Codes of elements 
+b - 00
+e - 01
+p - 100
+o - 101
+r - 1100
+! - 1101
+' ' - 111
+
+Coded message: 00 01 01 100 111 00 101 101 100 111 00 01 01 1100 1101 
