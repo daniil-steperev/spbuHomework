@@ -21,8 +21,8 @@ int main()
     cout << "Indexes of matches: ";
     algorithmRabinKarp(text, desired);
 
-    delete[] text;
-    delete[] desired;
+    delete[] textString;
+    delete[] desiredString;
     deleteString(text);
     deleteString(desired);
     return 0;
