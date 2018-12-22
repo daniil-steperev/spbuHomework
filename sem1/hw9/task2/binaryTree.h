@@ -14,13 +14,10 @@ void deleteTree(BinaryTree *tree);
 void addToTree(BinaryTree *tree, char element);
 BinaryTree *mergeTrees(BinaryTree *first, BinaryTree *second);
 void writeTree(ofstream &file, BinaryTree *tree);
-void writeCodes(ofstream &file, BinaryTree *tree);
 
 int returnPriority(BinaryTree *tree);
-char returnNodeValue(Node *son);
 
 bool isEmpty(BinaryTree *tree);
-bool isElement(ofstream &file, BinaryTree *tree, char destinition);
+bool isLeaf(Node *son);
 
-void assignCodes(ofstream &file, BinaryTree *tree);
-void addElementsToList(List *list, BinaryTree *tree);
+void assignCodes(ofstream &file, BinaryTree *tree, List *list);

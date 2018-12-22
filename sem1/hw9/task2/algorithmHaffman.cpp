@@ -31,12 +31,12 @@ void haffmanAlgorithm(ifstream &fin, ofstream &file, PriorityQueue *queue, int *
     }
 
     file << "Codes of elements " << endl;
+    List *codeList = createList();
     BinaryTree *tree = pop(queue);
-    assignCodes(file, tree);
+    assignCodes(file, tree, codeList);
     file << endl;
 
-    List *codeList = createList();
-    addElementsToList(codeList, tree);
+    //addElementsToList(codeList, tree);
 
     fin.clear();
     fin.seekg(0, ios::beg);

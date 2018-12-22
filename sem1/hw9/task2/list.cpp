@@ -69,7 +69,7 @@ void writeElementInCode(ofstream &file, List *list, char symbol)
     {
         current = current->next;
     }
-	char *code = returnChar(current->code);
-    file << code << ' ';
+    char *code = returnChar(current->code);
+    file << code;
     delete[] code;
 }
