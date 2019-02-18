@@ -62,5 +62,4 @@ void algorithmRabinKarp(MyString *text, MyString *desired)
 
         currentHash = changeHash(currentHash, textString[i], textString[i + countLength(desired)], power);
     }
-    delete textString;
 }
