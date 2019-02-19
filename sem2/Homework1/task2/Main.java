@@ -15,11 +15,12 @@ public class Main {
         System.out.print("List: ");
         list.printList();
         System.out.println("");
-        System.out.println("Removed fifth element = " + list.remove(5));
+        System.out.println("Remove third element");
+        list.remove(2);
         list.printList();
-        System.out.printf("");
+        System.out.println("");
         System.out.println("Find 62 in list, if it present return index (>= 0) = " + list.find(62));
-        System.out.print("Added 5");
+        System.out.println("Added 5 in list: ");
         list.add(5);
         System.out.println("List: ");
         list.printList();

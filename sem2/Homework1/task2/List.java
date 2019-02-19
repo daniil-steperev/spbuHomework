@@ -3,22 +3,22 @@ package group144.steperev_daniil;
 /**
  * A singly connected List
 */
-public class List {
+public class List<Type> {
     private class Node {
-        private int value;
+        private Type value;
         private Node next;
 
-        private Node(int value) {
+        private Node(Type value) {
             this.value = value;
             this.next = null;
         }
 
-        private Node(int value, Node next) {
+        private Node(Type value, Node next) {
             this.value = value;
             this.next = next;
         }
 
-        private int getValue() {
+        private Type getValue() {
             return value;
         }
 
@@ -46,7 +46,7 @@ public class List {
     /**
      * A function adding a new element to the end of the list
      */
-    public void add(int value) {
+    public void add(Type value) {
         if (isEmpty()) {
             head = new Node(value);
             length = 1;
@@ -65,7 +65,7 @@ public class List {
     /**
      * A function adding a new value to the index to the list
      */
-    public void add(int value, int index) {
+    public void add(Type value, int index) {
         if (isEmpty()) {
             head = new Node(value);
             length = 1;
@@ -96,9 +96,9 @@ public class List {
     /**
      *A fuction removing last element from the list
      */
-    public int remove() {
+    public void remove() {
         if (isEmpty()) {
-            return -1;
+            return;
         }
 
         length--;
@@ -108,22 +108,20 @@ public class List {
             current = current.next;
         }
 
-        int value = current.getValue();
         current = null;
-
-        return value;
     }
 
     /**
      * A function removing element from the index from the list
      */
-    public int remove(int index) {
+    public void remove(int index) {
         if (isEmpty() || length - 1 < index) {
-            return -1;
+            return;
         }
 
         if (length - 1 == index) {
-            return remove();
+            remove();
+            return;
         }
 
         length--;
@@ -133,16 +131,13 @@ public class List {
             current = current.getNextNode();
         }
 
-        int value = current.next.getValue();
         current.setNextNode(current.next.next);
-
-        return value;
     }
 
     /**
      * A function finding the element in the list
      */
-    public int find(int value) {
+    public int find(Type value) {
         if (isEmpty()) {
             return -1;
         }
