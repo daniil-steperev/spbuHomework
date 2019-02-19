@@ -1,24 +1,24 @@
 package group144.stepyrev_daniil;
 
 /**
- *
+ *A class that realizes ordinary stack
  */
-public class Stack {
+public class Stack<Type> {
     private class Node {
-        private int value = 0;
+        private Type value = null;
         private Node next = null;
 
-        private Node(int value) {
+        private Node(Type value) {
             this.value = value;
             this.next = null;
         }
 
-        private Node(int value, Node next) {
+        private Node(Type value, Node next) {
             this.value = value;
             this.next = next;
         }
 
-        private int getValue() {
+        private Type getValue() {
             return this.value;
         }
 
@@ -41,7 +41,7 @@ public class Stack {
     /**
      * A function that puts element to the top of stack
      */
-    public void push(int value) {
+    public void push(Type value) {
         Node newElement = new Node(value, head);
         length++;
         head = newElement;
@@ -50,12 +50,12 @@ public class Stack {
     /**
      * A function that delets top element from the stack
      */
-    public int pop() {
+    public Type pop() {
         if (isEmpty()) {
-            return -1;
+            return null;
         }
 
-        int valueOfFirst = head.getValue();
+        Type valueOfFirst = head.getValue();
         head = head.next;
 
         return valueOfFirst;
