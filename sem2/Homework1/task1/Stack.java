@@ -39,7 +39,7 @@ public class Stack<Type> {
     }
 
     /**
-     * A function that puts element to the top of stack
+     * A method that puts element to the top of stack
      *
      * @param value means value of the element that user wants to push to the Stack
      */
@@ -50,7 +50,7 @@ public class Stack<Type> {
     }
 
     /**
-     * A function that delets top element from the stack
+     * A method that delets top element from the stack
      */
     public Type pop() {
         if (isEmpty()) {
@@ -64,7 +64,7 @@ public class Stack<Type> {
     }
 
     /**
-     * A function that prints the stack
+     * A method that prints the stack
      */
     public void print() {
         if (isEmpty()) {
