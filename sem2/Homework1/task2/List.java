@@ -44,7 +44,7 @@ public class List<Type> {
     }
 
     /**
-     * A function adding a new element to the end of the list
+     * A method adding a new element to the end of the list
      *
      * @param value means value of the element that user wants to add to List
      */
@@ -65,7 +65,7 @@ public class List<Type> {
     }
 
     /**
-     * A function adding a new value to the index to the list
+     * A method adding a new value to the index to the list
      *
      * @param value means value of the element that user wants to add to List
      * @param index means positions where new element should be inserted
@@ -99,7 +99,7 @@ public class List<Type> {
     }
 
     /**
-     *A fuction removing last element from the list
+     *A method removing last element from the list
      */
     public void remove() {
         if (isEmpty()) {
@@ -117,7 +117,7 @@ public class List<Type> {
     }
 
     /**
-     * A function removing element from the index from the list
+     * A method removing element from the index from the list
      *
      * @param index means index of the element that user wants to remove
      */
@@ -142,7 +142,7 @@ public class List<Type> {
     }
 
     /**
-     * A function finding the element in the list
+     * A method finding the element in the list
      *
      * @param value means value of element that user wants to find
      * @return index means index of element that was found in List (-1 if not found)
@@ -172,7 +172,7 @@ public class List<Type> {
     }
 
     /**
-     * A function printing the list
+     * A method printing the list
      */
     public void printList() {
         Node currentNode = head;
