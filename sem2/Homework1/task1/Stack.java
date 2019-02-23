@@ -59,6 +59,7 @@ public class Stack<Type> {
 
         Type valueOfFirst = head.getValue();
         head = head.next;
+        length--;
 
         return valueOfFirst;
     }
