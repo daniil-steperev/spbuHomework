@@ -2,7 +2,7 @@ package group144.sorter.stepyrev;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class BubbleSortTest {
     private static BubbleSort sorter = new BubbleSort();
