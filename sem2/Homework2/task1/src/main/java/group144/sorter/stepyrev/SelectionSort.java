@@ -1,5 +1,8 @@
 package group144.sorter.stepyrev;
 
+/**
+ * A class that represents sorter based on a Selection Sort idea
+ */
 public class SelectionSort implements Sorter {
     @Override
     public void sort(int[] array) {
