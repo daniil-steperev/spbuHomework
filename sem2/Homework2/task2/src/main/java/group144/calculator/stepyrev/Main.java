@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 public class Main {
     public static void main(String[] args) throws WrongInputException, IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Enter an exception in postfix form:");
+        System.out.println("Enter an exception:");
 
         String expression = reader.readLine();
         StackCalculator calculator = new StackCalculator();

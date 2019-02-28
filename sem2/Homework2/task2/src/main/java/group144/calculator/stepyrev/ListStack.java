@@ -1,5 +1,7 @@
 package group144.calculator.stepyrev;
 
+import java.util.Currency;
+
 /**
  * An implementation of stack that based on using linked list idea
  * @param <Type> means type of objects that stack is consisted of
@@ -60,4 +62,15 @@ public class ListStack<Type> implements Stack<Type> {
     public int getLength() {
         return length;
     }
+
+    public void print() {
+        if (isEmpty()) {
+            return;
+        }
+
+        Node currentNode = head;
+        while (currentNode != null) {
+            System.out.print(currentNode.value + " ");
+        }
+     }
 }
