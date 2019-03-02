@@ -1,8 +1,6 @@
 package group144.calculator.stepyrev;
 
-/**
- * A class that represents Calculator based on Stack.
- */
+/** A class that represents Calculator based on Stack */
 public class StackCalculator {
     /**
      * A method that calculates an answer of inputted expression

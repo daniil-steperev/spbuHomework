@@ -1,8 +1,6 @@
 package group144.calculator.stepyrev;
 
-/**
- * A class that translates infix expression to postfix expression
- */
+/** A class that translates infix expression to postfix expression */
 public class Converter {
     public String convertToPostfix(String expression)
     {
