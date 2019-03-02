@@ -4,29 +4,6 @@ package group144.stepyrev_daniil;
  *A class that realizes ordinary stack
  */
 public class Stack<Type> {
-    private class Node {
-        private Type value = null;
-        private Node next = null;
-
-        private Node(Type value) {
-            this.value = value;
-            this.next = null;
-        }
-
-        private Node(Type value, Node next) {
-            this.value = value;
-            this.next = next;
-        }
-
-        private Type getValue() {
-            return this.value;
-        }
-
-        private void setNextNode(Node node) {
-            this.next = node;
-        }
-    }
-
     private Node head = null;
     private int length = 0;
 
@@ -76,6 +53,29 @@ public class Stack<Type> {
         while (currentNode != null) {
             System.out.print(currentNode.value + " ");
             currentNode = currentNode.next;
+        }
+    }
+
+    private class Node {
+        private Type value = null;
+        private Node next = null;
+
+        private Node(Type value) {
+            this.value = value;
+            this.next = null;
+        }
+
+        private Node(Type value, Node next) {
+            this.value = value;
+            this.next = next;
+        }
+
+        private Type getValue() {
+            return this.value;
+        }
+
+        private void setNextNode(Node node) {
+            this.next = node;
         }
     }
 }
