@@ -1,8 +1,6 @@
 package group144.steperev_daniil;
 
-/**
- * A singly connected List
-*/
+/** A singly connected List */
 public class List<Type> {
     private Node head;
     private int length;
@@ -29,16 +27,16 @@ public class List<Type> {
         else {
             Node current = this.head;
             while (current.next != null) {
-                current = current.getNextNode();
+                current = current.next;
             }
 
-            current.setNextNode(new Node(value));
+            current.next = new Node(value);
             length++;
         }
     }
 
     /**
-     * A method adding a new value to the index to the list
+     * A method that adds a new value to the index to the list
      *
      * @param value means value of the element that user wants to add to List
      * @param index means positions where new element should be inserted
@@ -65,15 +63,13 @@ public class List<Type> {
 
         Node current = this.head;
         for (int i = 0; i < index; i++) {
-            current = current.getNextNode();
+            current = current.next;
         }
 
-        current.setNextNode(new Node(value, current.next));
+        current.next = new Node(value, current.next);
     }
 
-    /**
-     *A method removing last element from the list
-     */
+    /** *A method that removes last element from the list */
     public void remove() {
         if (isEmpty()) {
             return;
@@ -90,7 +86,7 @@ public class List<Type> {
     }
 
     /**
-     * A method removing element from the index from the list
+     * A method that removes element from the index from the list
      *
      * @param index means index of the element that user wants to remove
      */
@@ -108,14 +104,14 @@ public class List<Type> {
 
         Node current = this.head;
         for (int i = 0; i < index - 1; i++) {
-            current = current.getNextNode();
+            current = current.next;
         }
 
-        current.setNextNode(current.next.next);
+        current.next = current.next.next;
     }
 
     /**
-     * A method finding the element in the list
+     * A method  that finds the element in the list
      *
      * @param value means value of element that user wants to find
      * @return index means index of element that was found in List (-1 if not found)
@@ -128,8 +124,8 @@ public class List<Type> {
         int index = 0;
 
         Node current = this.head;
-        while (current != null && current.getValue() != value) {
-            current = current.getNextNode();
+        while (current != null && !current.value.equals(value)) {
+            current = current.next;
             index++;
         }
 
@@ -144,14 +140,12 @@ public class List<Type> {
         return length;
     }
 
-    /**
-     * A method printing the list
-     */
+    /** A method that prints the list */
     public void printList() {
         Node currentNode = head;
         for (int i = 0; i < length; i++) {
-            System.out.print(currentNode.getValue() + " ");
-            currentNode = currentNode.getNextNode();
+            System.out.print(currentNode.value + " ");
+            currentNode = currentNode.next;
         }
     }
 
@@ -167,18 +161,6 @@ public class List<Type> {
         private Node(Type value, Node next) {
             this.value = value;
             this.next = next;
-        }
-
-        private Type getValue() {
-            return value;
-        }
-
-        private void setNextNode(Node node) {
-            this.next = node;
-        }
-
-        private Node getNextNode() {
-            return this.next;
         }
     }
 }
