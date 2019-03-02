@@ -4,33 +4,6 @@ package group144.steperev_daniil;
  * A singly connected List
 */
 public class List<Type> {
-    private class Node {
-        private Type value;
-        private Node next;
-
-        private Node(Type value) {
-            this.value = value;
-            this.next = null;
-        }
-
-        private Node(Type value, Node next) {
-            this.value = value;
-            this.next = next;
-        }
-
-        private Type getValue() {
-            return value;
-        }
-
-        private void setNextNode(Node node) {
-            this.next = node;
-        }
-
-        private Node getNextNode() {
-            return this.next;
-        }
-    }
-
     private Node head;
     private int length;
 
@@ -179,6 +152,33 @@ public class List<Type> {
         for (int i = 0; i < length; i++) {
             System.out.print(currentNode.getValue() + " ");
             currentNode = currentNode.getNextNode();
+        }
+    }
+
+    private class Node {
+        private Type value;
+        private Node next;
+
+        private Node(Type value) {
+            this.value = value;
+            this.next = null;
+        }
+
+        private Node(Type value, Node next) {
+            this.value = value;
+            this.next = next;
+        }
+
+        private Type getValue() {
+            return value;
+        }
+
+        private void setNextNode(Node node) {
+            this.next = node;
+        }
+
+        private Node getNextNode() {
+            return this.next;
         }
     }
 }
