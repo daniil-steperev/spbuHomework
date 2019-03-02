@@ -10,8 +10,11 @@ public class Main {
         System.out.println("Enter an exception:");
 
         String expression = reader.readLine();
+        Converter converter = new Converter();
+        String postfixExpression = converter.convertToPostfix(expression);
+
         StackCalculator calculator = new StackCalculator();
-        int result = calculator.calculateAnswer(expression);
+        int result = calculator.calculateAnswer(postfixExpression);
         System.out.println("The result is: " + result);
     }
 }

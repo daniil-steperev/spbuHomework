@@ -1,27 +1,10 @@
 package group144.calculator.stepyrev;
 
-import java.util.Currency;
-
 /**
  * An implementation of stack that based on using linked list idea
  * @param <Type> means type of objects that stack is consisted of
  */
 public class ListStack<Type> implements Stack<Type> {
-    private class Node {
-        private Type value;
-        private Node next;
-
-        private Node(Type value, Node next) {
-            this.value = value;
-            this.next = next;
-        }
-
-        private Node(Type value) {
-            this.value = value;
-            this.next = null;
-        }
-    }
-
     private Node head = null;
     private int length = 0;
 
@@ -73,4 +56,19 @@ public class ListStack<Type> implements Stack<Type> {
             System.out.print(currentNode.value + " ");
         }
      }
+
+    private class Node {
+        private Type value;
+        private Node next;
+
+        private Node(Type value, Node next) {
+            this.value = value;
+            this.next = next;
+        }
+
+        private Node(Type value) {
+            this.value = value;
+            this.next = null;
+        }
+    }
 }

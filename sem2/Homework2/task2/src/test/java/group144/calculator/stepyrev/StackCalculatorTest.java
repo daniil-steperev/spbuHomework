@@ -9,7 +9,7 @@ class StackCalculatorTest {
 
     @Test
     void calculateAnswerOperationOfAddition() throws WrongInputException {
-        String expression = "2 + 2";
+        String expression = "2 2 +";
         int answer = calculator.calculateAnswer(expression);
 
         assertEquals(4, answer);
@@ -17,7 +17,7 @@ class StackCalculatorTest {
 
     @Test
     void calculateAnswerOperationOfMultiplication() throws WrongInputException {
-        String expression = "2 * 2";
+        String expression = "2 2 *";
         int answer = calculator.calculateAnswer(expression);
 
         assertEquals(4, answer);
@@ -25,7 +25,7 @@ class StackCalculatorTest {
 
     @Test
     void calculateAnswerOperationOfSubstraction() throws WrongInputException {
-        String expression = "2 - 2";
+        String expression = "2 2 -";
         int answer = calculator.calculateAnswer(expression);
 
         assertEquals(0, answer);
@@ -33,7 +33,7 @@ class StackCalculatorTest {
 
     @Test
     void calculateAnswerOperationOfDivision() throws WrongInputException {
-        String expression = "4 / 2";
+        String expression = "4 2 /";
         int answer = calculator.calculateAnswer(expression);
 
         assertEquals(2, answer);
@@ -41,7 +41,7 @@ class StackCalculatorTest {
 
     @Test
     void calculateAnswerForRegularExpression() throws WrongInputException {
-        String expression = "(((2 * 2) - 5) * 10) / 2";
+        String expression = "2 2 * 5 - 10 * 2 / "; // (((2 * 2) - 5) * 10) / 2
         int answer = calculator.calculateAnswer(expression);
 
         assertEquals(-5, answer);
@@ -49,14 +49,14 @@ class StackCalculatorTest {
 
     @Test
     void calculateAnswerForWrongInputDueToLackOfNumber() throws WrongInputException {
-        String expression = "2 + 2 - 5 - 1 +";
+        String expression = "2 2 + -";
 
         assertThrows(WrongInputException.class, () -> calculator.calculateAnswer(expression));
     }
 
     @Test
     void calculateAnswerForWrongInputDueToExtraNumber() {
-        String expression = "2 + 2 + ";
+        String expression = "2 2 + 2";
 
         assertThrows(WrongInputException.class, () -> calculator.calculateAnswer(expression));
     }
