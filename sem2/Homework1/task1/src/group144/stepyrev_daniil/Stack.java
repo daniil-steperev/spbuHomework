@@ -30,7 +30,7 @@ public class Stack<Type> {
             return null;
         }
 
-        Type valueOfFirst = head.getValue();
+        Type valueOfFirst = head.value;
         head = head.next;
         length--;
 
@@ -62,14 +62,6 @@ public class Stack<Type> {
         private Node(Type value, Node next) {
             this.value = value;
             this.next = next;
-        }
-
-        private Type getValue() {
-            return this.value;
-        }
-
-        private void setNextNode(Node node) {
-            this.next = node;
         }
     }
 }
