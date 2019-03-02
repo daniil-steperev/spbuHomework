@@ -1,8 +1,6 @@
 package group144.stepyrev_daniil;
 
-/**
- *A class that realizes ordinary stack
- */
+/** A class that realizes ordinary stack */
 public class Stack<Type> {
     private Node head = null;
     private int length = 0;
@@ -26,9 +24,7 @@ public class Stack<Type> {
         head = newElement;
     }
 
-    /**
-     * A method that delets top element from the stack
-     */
+    /** A method that deletes top element from the stack */
     public Type pop() {
         if (isEmpty()) {
             return null;
@@ -41,9 +37,7 @@ public class Stack<Type> {
         return valueOfFirst;
     }
 
-    /**
-     * A method that prints the stack
-     */
+    /** A method that prints the stack */
     public void print() {
         if (isEmpty()) {
             return;
