@@ -19,9 +19,8 @@ public class Stack<Type> {
      * @param value means value of the element that user wants to push to the Stack
      */
     public void push(Type value) {
-        Node newElement = new Node(value, head);
         length++;
-        head = newElement;
+        head = new Node(value, head);
     }
 
     /** A method that deletes top element from the stack */
