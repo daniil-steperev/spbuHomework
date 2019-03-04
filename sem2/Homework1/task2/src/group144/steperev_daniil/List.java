@@ -11,7 +11,7 @@ public class List<Type> {
     }
 
     private boolean isEmpty() {
-        return (head == null);
+        return head == null;
     }
 
     /**
@@ -62,7 +62,7 @@ public class List<Type> {
         }
 
         Node current = this.head;
-        for (int i = 0; i < index; i++) {
+        for (int i = 0; i < index - 1; i++) {
             current = current.next;
         }
 
@@ -78,11 +78,11 @@ public class List<Type> {
         length--;
 
         Node current = this.head;
-        while (current.next != null) {
+        while (current.next.next != null) {
             current = current.next;
         }
 
-        current = null;
+        current.next = null;
     }
 
     /**

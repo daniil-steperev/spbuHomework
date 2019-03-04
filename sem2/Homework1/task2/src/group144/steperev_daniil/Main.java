@@ -20,9 +20,14 @@ public class Main {
         list.printList();
         System.out.println("");
         System.out.println("Find 62 in list, if it present return index (>= 0) = " + list.find(62));
-        System.out.println("Added 5 in list: ");
+        System.out.println("Added 5 in list.");
         list.add(5);
-        System.out.println("List: ");
+        System.out.print("List: ");
+        list.printList();
+        System.out.println("");
+        System.out.println("Added 4 to the second position (numerating from 0).");
+        list.add(4, 2);
+        System.out.print("List: ");
         list.printList();
     }
 }
