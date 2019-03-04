@@ -8,7 +8,7 @@ class StackCalculatorTest {
     private static StackCalculator calculator = new StackCalculator();
 
     @Test
-    void calculateAnswerOperationOfAddition() throws WrongInputException {
+    void calculateAnswerOperationOfAddition() throws WrongInputException, EmptyStackException {
         String expression = "2 2 +";
         int answer = calculator.calculateAnswer(expression);
 
@@ -16,7 +16,7 @@ class StackCalculatorTest {
     }
 
     @Test
-    void calculateAnswerOperationOfMultiplication() throws WrongInputException {
+    void calculateAnswerOperationOfMultiplication() throws WrongInputException, EmptyStackException {
         String expression = "2 2 *";
         int answer = calculator.calculateAnswer(expression);
 
@@ -24,7 +24,7 @@ class StackCalculatorTest {
     }
 
     @Test
-    void calculateAnswerOperationOfSubstraction() throws WrongInputException {
+    void calculateAnswerOperationOfSubstraction() throws WrongInputException, EmptyStackException {
         String expression = "2 2 -";
         int answer = calculator.calculateAnswer(expression);
 
@@ -32,7 +32,7 @@ class StackCalculatorTest {
     }
 
     @Test
-    void calculateAnswerOperationOfDivision() throws WrongInputException {
+    void calculateAnswerOperationOfDivision() throws WrongInputException, EmptyStackException {
         String expression = "4 2 /";
         int answer = calculator.calculateAnswer(expression);
 
@@ -40,7 +40,7 @@ class StackCalculatorTest {
     }
 
     @Test
-    void calculateAnswerForRegularExpression() throws WrongInputException {
+    void calculateAnswerForRegularExpression() throws WrongInputException, EmptyStackException {
         String expression = "2 2 * 5 - 10 * 2 / "; // (((2 * 2) - 5) * 10) / 2
         int answer = calculator.calculateAnswer(expression);
 
@@ -51,7 +51,7 @@ class StackCalculatorTest {
     void calculateAnswerForWrongInputDueToLackOfNumber() throws WrongInputException {
         String expression = "2 2 + -";
 
-        assertThrows(WrongInputException.class, () -> calculator.calculateAnswer(expression));
+        assertThrows(EmptyStackException.class, () -> calculator.calculateAnswer(expression));
     }
 
     @Test

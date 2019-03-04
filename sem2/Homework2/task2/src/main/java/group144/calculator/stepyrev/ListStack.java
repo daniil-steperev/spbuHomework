@@ -24,9 +24,9 @@ public class ListStack<Type> implements Stack<Type> {
     }
 
     @Override
-    public Type pop() {
+    public Type pop() throws EmptyStackException {
         if (isEmpty()) {
-            return null;
+            throw new EmptyStackException();
         }
 
         Type returnValue = head.value;

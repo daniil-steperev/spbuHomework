@@ -8,13 +8,13 @@ class ArrayStackTest {
     private static ArrayStack<Integer> stack = new ArrayStack<Integer>();
 
     @Test
-    void pushOneElement() {
+    void pushOneElement() throws EmptyStackException {
         stack.push(2);
         assertEquals(2, stack.pop());
     }
 
     @Test
-    void pushSeveralElements() {
+    void pushSeveralElements() throws EmptyStackException {
         int[] array = new int[10];
         for (int i = 0; i < 10; i++) {
             stack.push(i);
@@ -27,13 +27,13 @@ class ArrayStackTest {
     }
 
     @Test
-    void popOneElement() {
+    void popOneElement() throws EmptyStackException {
         stack.push(2);
         assertEquals(2, stack.pop());
     }
 
     @Test
-    void popFromEmptyStack() {
-        assertEquals(null, stack.pop());
+    void popFromEmptyStack() throws EmptyStackException {
+        assertThrows(EmptyStackException.class, () -> stack.pop());
     }
 }

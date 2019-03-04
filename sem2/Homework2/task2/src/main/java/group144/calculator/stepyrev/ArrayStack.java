@@ -23,9 +23,9 @@ public class ArrayStack<Type> implements Stack<Type> {
     }
 
     @Override
-    public Type pop() {
+    public Type pop() throws EmptyStackException {
         if (isEmpty()) {
-            return null;
+            throw new EmptyStackException();
         }
 
         Type returnElement = values[length - 1];

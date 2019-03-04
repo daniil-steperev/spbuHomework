@@ -8,7 +8,7 @@ public class StackCalculator {
      * @return means calculated result of inputted expression
      * @throws WrongInputException means Exception that should be raised if inputted expression is not correct
      */
-    public int calculateAnswer(String postfixExpression) throws WrongInputException {
+    public int calculateAnswer(String postfixExpression) throws WrongInputException, EmptyStackException {
         ListStack<Integer> stack = new ListStack<Integer>();
         String[] separatedElements = postfixExpression.split(" ");
 

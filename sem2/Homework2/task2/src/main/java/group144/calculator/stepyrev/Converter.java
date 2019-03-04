@@ -2,8 +2,8 @@ package group144.calculator.stepyrev;
 
 /** A class that translates infix expression to postfix expression */
 public class Converter {
-    public String convertToPostfix(String expression)
-    {
+    /** A method that coverts infix string to postfix form */
+    public String convertToPostfix(String expression) throws EmptyStackException {
         ListStack<String> stack = new ListStack<String>();
         String postfixString = "";
         expression = setSpaces(expression);
@@ -47,8 +47,7 @@ public class Converter {
         return rightExpression;
     }
 
-    private String convertFromStack(ListStack<String> stack, String postfixString)
-    {
+    private String convertFromStack(ListStack<String> stack, String postfixString) throws EmptyStackException {
         String element = "";
         while (stack.getLength() > 0)
         {
@@ -59,8 +58,7 @@ public class Converter {
         return postfixString;
     }
 
-    private String convertFromBrackets(ListStack<String> stack, String postfixString)
-    {
+    private String convertFromBrackets(ListStack<String> stack, String postfixString) throws EmptyStackException {
         while (true)
         {
             String element = stack.pop();
@@ -88,8 +86,8 @@ public class Converter {
 
     private boolean isOperation(String operation)
     {
-        return ((operation.equals("(")) || (operation.equals("+")) ||
-                (operation.equals("-")) || (operation.equals("*")) ||
-                (operation.equals("/")));
+        return operation.equals("(") || operation.equals("+") ||
+                operation.equals("-") || operation.equals("*") ||
+                operation.equals("/");
     }
 }

@@ -8,7 +8,7 @@ class ConverterTest {
     private static Converter converter = new Converter();
 
     @Test
-    void convertToPostfixWithoutBrackets() {
+    void convertToPostfixWithoutBrackets() throws EmptyStackException {
         String infixString = "2 + 2 - 5 + 1";
         String postfixString = "2 2 + 5 - 1 +";
         String convertedString = converter.convertToPostfix(infixString);
@@ -17,7 +17,7 @@ class ConverterTest {
     }
 
     @Test
-    void convertToPostfixWithBrackets() {
+    void convertToPostfixWithBrackets() throws EmptyStackException {
         String infixString = "((2 - 6) * 5) / 4";
         String postfixString = "2 6 - 5 * 4 / ";
         String convertedString = converter.convertToPostfix(infixString);
