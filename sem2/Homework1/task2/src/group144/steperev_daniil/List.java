@@ -2,13 +2,8 @@ package group144.steperev_daniil;
 
 /** A singly connected List */
 public class List<Type> {
-    private Node head;
-    private int length;
-
-    public List() {
-        head = null;
-        length = 0;
-    }
+    private Node head = null;
+    private int length = 0;
 
     private boolean isEmpty() {
         return head == null;
@@ -75,6 +70,12 @@ public class List<Type> {
             return;
         }
 
+        if (length == 1) {
+            head = null;
+            length--;
+            return;
+        }
+
         length--;
 
         Node current = this.head;
@@ -91,12 +92,18 @@ public class List<Type> {
      * @param index means index of the element that user wants to remove
      */
     public void remove(int index) {
-        if (isEmpty() || length - 1 < index) {
+        if (isEmpty() || length - 1 < index || index < 0) {
             return;
         }
 
         if (length - 1 == index) {
             remove();
+            return;
+        }
+
+        if (index == 0) {
+            head = head.next;
+            length--;
             return;
         }
 
