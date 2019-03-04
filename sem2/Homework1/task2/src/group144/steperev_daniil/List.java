@@ -2,13 +2,8 @@ package group144.steperev_daniil;
 
 /** A singly connected List */
 public class List<Type> {
-    private Node head;
-    private int length;
-
-    public List() {
-        head = null;
-        length = 0;
-    }
+    private Node head = null;
+    private int length = 0;
 
     private boolean isEmpty() {
         return head == null;
