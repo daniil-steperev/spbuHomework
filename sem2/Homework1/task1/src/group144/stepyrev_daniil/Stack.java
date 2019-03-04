@@ -10,7 +10,7 @@ public class Stack<Type> {
     }
 
     public boolean isEmpty() {
-        return (length == 0);
+        return length == 0;
     }
 
     /**
