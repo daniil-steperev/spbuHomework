@@ -6,9 +6,7 @@ import java.io.IOException;
 
 import static group144.spiralarray.stepyrev.MatrixUnpacker.convertMatrixToList;
 
-/**
- * A class that represents spiral writer of Matrix to the File
- */
+/** A class that represents spiral writer of Matrix to the File */
 public class FileWriter implements SpiralWriter {
     private String fileName = "";
 

@@ -1,8 +1,6 @@
 package group144.spiralarray.stepyrev;
 
-/**
- * A class that represents Exception that should be raised in case of wrong input
- */
+/** A class that represents Exception that should be raised in case of wrong input */
 public class WrongInputException extends Exception {
     public WrongInputException() { super(); }
 

@@ -1,8 +1,6 @@
 package group144.spiralarray.stepyrev;
 
-/**
- * An interface that represents spiral writer of Matrix
- */
+/** An interface that represents spiral writer of Matrix */
 public interface SpiralWriter {
     /**
      * A method that writes converted Matrix to the console or file

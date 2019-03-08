@@ -2,9 +2,7 @@ package group144.spiralarray.stepyrev;
 
 import java.util.Scanner;
 
-/**
- * A class that represents a matrix in a table view
- */
+/** A class that represents a matrix in a table view */
 public class Matrix {
     private int[][] matrix;
     private int size;
