@@ -14,13 +14,9 @@ public class Converter {
             if (isNumber(separatedExpression[i]))
             {
                 postfixString = postfixString + separatedExpression[i] + " ";
-            }
-            else if (isOperation(separatedExpression[i]))
-            {
+            } else if (isOperation(separatedExpression[i])) {
                 stack.push(separatedExpression[i]);
-            }
-            else if (separatedExpression[i].equals(")"))
-            {
+            } else if (separatedExpression[i].equals(")")) {
                 postfixString = convertFromBrackets(stack, postfixString);
             }
         }
@@ -35,11 +31,9 @@ public class Converter {
         for (int i = 0; i < expressionLetters.length; i++) {
             if (expressionLetters[i] == ' ') {
 
-            }
-            else if (isNumber(expressionLetters[i])) {
+            } else if (isNumber(expressionLetters[i])) {
                 rightExpression = rightExpression + expressionLetters[i];
-            }
-            else {
+            } else {
                 rightExpression = rightExpression + " "  + expressionLetters[i] + " ";
             }
         }
