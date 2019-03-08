@@ -1,8 +1,6 @@
 package group144.sorter.stepyrev;
 
-/**
- * A class that represents sorter based on a Bubble Sort idea
- */
+/** A class that represents sorter based on a Bubble Sort idea */
 public class BubbleSort implements Sorter {
     @Override
     public void sort(int[] array) {

@@ -1,8 +1,6 @@
 package group144.sorter.stepyrev;
 
-/**
- * A class that represents sorter based on a Shaker Sort idea
- */
+/** A class that represents sorter based on a Shaker Sort idea */
 public class ShakerSort implements Sorter {
     @Override
     public void sort(int[] array) {

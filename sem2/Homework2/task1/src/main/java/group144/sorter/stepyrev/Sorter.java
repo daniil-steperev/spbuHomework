@@ -1,8 +1,6 @@
 package group144.sorter.stepyrev;
 
-/**
- * An interface that describes main methods of array sorter
- */
+/** An interface that describes main methods of array sorter */
 public interface Sorter {
     /**
      * A method that sorts array
