@@ -18,8 +18,7 @@ public class List<Type> {
         if (isEmpty()) {
             head = new Node(value);
             length = 1;
-        }
-        else {
+        } else {
             Node current = this.head;
             while (current.next != null) {
                 current = current.next;
@@ -37,13 +36,17 @@ public class List<Type> {
      * @param index means positions where new element should be inserted
      */
     public void add(Type value, int index) {
+        if (index < 0) {
+            return;
+        }
+
         if (isEmpty()) {
             head = new Node(value);
             length = 1;
             return;
         }
 
-        if (length - 1 < index || index < 0) {
+        if (length - 1 < index) {
             add(value);
             return;
         }
