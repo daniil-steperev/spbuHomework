@@ -32,12 +32,10 @@ public class FileWriter implements SpiralWriter {
 
             byte[] bufferedData = stringMatrix.getBytes();
             fileOutput.write(bufferedData);
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
             return;
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
             return;
         }

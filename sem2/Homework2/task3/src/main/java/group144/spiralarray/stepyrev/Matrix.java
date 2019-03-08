@@ -26,8 +26,7 @@ public class Matrix {
             for (int j = 0; j < size; j++) {
                 try {
                     matrix[i][j] = scanner.nextInt();
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     throw new WrongInputException("Wrong number inputted!");
                 }
             }

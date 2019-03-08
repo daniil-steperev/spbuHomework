@@ -60,14 +60,11 @@ public class MatrixUnpacker {
 
             if (direction.equals("right")) {
                 currentJ++;
-            }
-            else if (direction.equals("down")) {
+            } else if (direction.equals("down")) {
                 currentI++;
-            }
-            else if (direction.equals("left")) {
+            } else if (direction.equals("left")) {
                 currentJ--;
-            }
-            else if (direction.equals("up")) {
+            } else if (direction.equals("up")) {
                 currentI--;
             }
         }
