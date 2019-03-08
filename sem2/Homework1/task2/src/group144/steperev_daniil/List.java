@@ -14,7 +14,7 @@ public class List<Type> {
      *
      * @param value means value of the element that user wants to add to List
      */
-    public void add(Type value) {
+    public void addLast(Type value) {
         if (isEmpty()) {
             head = new Node(value);
             length = 1;
@@ -47,7 +47,7 @@ public class List<Type> {
         }
 
         if (length - 1 < index) {
-            add(value);
+            addLast(value);
             return;
         }
 
@@ -68,7 +68,7 @@ public class List<Type> {
     }
 
     /** *A method that removes last element from the list */
-    public void remove() {
+    public void removeLast() {
         if (isEmpty()) {
             return;
         }
@@ -100,7 +100,7 @@ public class List<Type> {
         }
 
         if (length - 1 == index) {
-            remove();
+            removeLast();
             return;
         }
 
