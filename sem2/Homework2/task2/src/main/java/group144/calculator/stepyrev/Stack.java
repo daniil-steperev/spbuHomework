@@ -14,6 +14,7 @@ public interface Stack<Type> {
     /**
      * A method that removes top element
      * @return means value of removed element
+     * @throws EmptyStackException means an exception that should be raised when method pop() is caused to empty stack
      */
     Type pop() throws EmptyStackException;
 

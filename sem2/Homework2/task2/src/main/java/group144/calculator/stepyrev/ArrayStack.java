@@ -23,11 +23,7 @@ public class ArrayStack<Type> implements Stack<Type> {
         values[length] = value;
     }
 
-    /**
-     * {@inheritDoc}
-     * @return means element that was popped
-     * @throws EmptyStackException means an exception that should be raised when method pop() is caused to empty stack
-     */
+    /** {@inheritDoc} */
     @Override
     public Type pop() throws EmptyStackException {
         if (isEmpty()) {
