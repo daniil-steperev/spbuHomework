@@ -7,6 +7,10 @@ public class Matrix {
     private int[][] matrix;
     private int size;
 
+    /**
+     * A constructor of matrix: occurs creation of matrix table
+     * @throws WrongInputException an exception that should be raised when was inputted wrong size of matrix or not a number
+     */
     public Matrix() throws WrongInputException {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter size of matrix: ");
@@ -33,6 +37,12 @@ public class Matrix {
         this.matrix = matrix;
     }
 
+    /**
+     * A constructor of matrix: occurs creation of matrix table
+     * @param matrix means matrix in table form
+     * @param size means size of matrix
+     * @throws WrongInputException an exception that should be raised when was inputted wrong size of matrix or not a number
+     */
     public Matrix(int[][] matrix, int size) throws WrongInputException {
         for (int i = 0; i < size; i++) {
             if (matrix[i].length != size) {

@@ -15,7 +15,7 @@ class MatrixUnpackerTest {
         };
         Matrix matrix = new Matrix(matrixTable, 3);
 
-        int[] convertedMatrix = {5, 6, 9, 8, 7, 4, 1, 2, 3};
-        assertArrayEquals(convertedMatrix, convertMatrixToList(matrix));
+        String convertedMatrix = "5 6 9 8 7 4 1 2 3 ";
+        assertEquals(convertedMatrix, convertMatrixToList(matrix).toString());
     }
 }

@@ -25,8 +25,8 @@ public class FileWriter implements SpiralWriter {
             FileOutputStream fileOutput = new FileOutputStream(fileName);
             int[][] matrixArray = matrix.getMatrix();
 
-            int[] convertedMatrix = convertMatrixToList(matrix);
-            String stringMatrix = convertArrayToString(convertedMatrix);
+            StringBuilder convertedMatrix = convertMatrixToList(matrix);
+            String stringMatrix = convertedMatrix.toString();
 
             byte[] bufferedData = stringMatrix.getBytes();
             fileOutput.write(bufferedData);
@@ -37,14 +37,5 @@ public class FileWriter implements SpiralWriter {
             System.out.println(e.getMessage());
             return;
         }
-    }
-
-    private String convertArrayToString(int[] array) {
-        String convertedArray = "";
-        for (int i = 0; i < array.length; i++) {
-            convertedArray = convertedArray + array[i] + " ";
-        }
-
-        return convertedArray;
     }
 }
