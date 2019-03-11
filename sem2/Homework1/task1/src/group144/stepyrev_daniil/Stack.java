@@ -23,7 +23,10 @@ public class Stack<Type> {
         head = new Node(value, head);
     }
 
-    /** A method that deletes top element from the stack */
+    /**
+     * A method that deletes top element from the stack
+     * @return means element that was deleted from stack (if stack is empty returns null)
+     */
     public Type pop() {
         if (isEmpty()) {
             return null;
@@ -50,12 +53,11 @@ public class Stack<Type> {
     }
 
     private class Node {
-        private Type value = null;
-        private Node next = null;
+        private Type value;
+        private Node next;
 
         private Node(Type value) {
             this.value = value;
-            this.next = null;
         }
 
         private Node(Type value, Node next) {
