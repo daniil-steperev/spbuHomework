@@ -6,8 +6,6 @@ import static group144.spiralarray.stepyrev.MatrixUnpacker.convertMatrixToList;
 public class ConsoleWriter implements SpiralWriter {
     @Override
     public void write(Matrix matrix) throws WrongInputException {
-        int[][] matrixArray = matrix.getMatrix();
-
         StringBuilder convertedMatrix = convertMatrixToList(matrix);
         System.out.println(convertedMatrix);
     }

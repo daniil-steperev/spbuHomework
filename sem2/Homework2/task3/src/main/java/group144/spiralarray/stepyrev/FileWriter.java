@@ -23,7 +23,6 @@ public class FileWriter implements SpiralWriter {
 
         try {
             FileOutputStream fileOutput = new FileOutputStream(fileName);
-            int[][] matrixArray = matrix.getMatrix();
 
             StringBuilder convertedMatrix = convertMatrixToList(matrix);
             String stringMatrix = convertedMatrix.toString();
