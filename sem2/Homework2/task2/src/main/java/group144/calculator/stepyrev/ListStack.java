@@ -8,6 +8,7 @@ public class ListStack<Type> implements Stack<Type> {
     private Node head = null;
     private int length = 0;
 
+    /** {@inheritDoc} */
     @Override
     public void push(Type value) {
         if (isEmpty()) {
@@ -23,6 +24,11 @@ public class ListStack<Type> implements Stack<Type> {
         length++;
     }
 
+    /**
+     * {@inheritDoc}
+     * @return means element that was popped
+     * @throws EmptyStackException means an exception that should be raised when method pop() is caused to empty stack
+     */
     @Override
     public Type pop() throws EmptyStackException {
         if (isEmpty()) {
@@ -36,16 +42,19 @@ public class ListStack<Type> implements Stack<Type> {
         return returnValue;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isEmpty() {
         return head == null;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getLength() {
         return length;
     }
 
+    /** A method that prints the list */
     public void print() {
         if (isEmpty()) {
             return;
@@ -68,7 +77,6 @@ public class ListStack<Type> implements Stack<Type> {
 
         private Node(Type value) {
             this.value = value;
-            this.next = null;
         }
     }
 }

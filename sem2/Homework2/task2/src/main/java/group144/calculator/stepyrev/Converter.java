@@ -3,9 +3,9 @@ package group144.calculator.stepyrev;
 /** A class that translates infix expression to postfix expression */
 public class Converter {
     /** A method that coverts infix string to postfix form */
-    public String convertToPostfix(String expression) throws EmptyStackException {
+    public StringBuilder convertToPostfix(String expression) throws EmptyStackException {
         ListStack<String> stack = new ListStack<String>();
-        String postfixString = "";
+        StringBuilder postfixString = new StringBuilder();
         expression = setSpaces(expression);
         String[] separatedExpression = expression.split(" ");
 
@@ -13,7 +13,7 @@ public class Converter {
         {
             if (isNumber(separatedExpression[i]))
             {
-                postfixString = postfixString + separatedExpression[i] + " ";
+                postfixString.append(separatedExpression[i] + " ");
             } else if (isOperation(separatedExpression[i])) {
                 stack.push(separatedExpression[i]);
             } else if (separatedExpression[i].equals(")")) {
@@ -41,18 +41,18 @@ public class Converter {
         return rightExpression;
     }
 
-    private String convertFromStack(ListStack<String> stack, String postfixString) throws EmptyStackException {
+    private StringBuilder convertFromStack(ListStack<String> stack, StringBuilder postfixString) throws EmptyStackException {
         String element = "";
         while (stack.getLength() > 0)
         {
             element = stack.pop();
-            postfixString = postfixString + element + " ";
+            postfixString.append(element + " ");
         }
 
         return postfixString;
     }
 
-    private String convertFromBrackets(ListStack<String> stack, String postfixString) throws EmptyStackException {
+    private StringBuilder convertFromBrackets(ListStack<String> stack, StringBuilder postfixString) throws EmptyStackException {
         while (true)
         {
             String element = stack.pop();
@@ -61,7 +61,7 @@ public class Converter {
                 return postfixString;
             }
 
-            postfixString = postfixString + element + " ";
+            postfixString.append(element + " ");
         }
     }
 

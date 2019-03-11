@@ -15,8 +15,9 @@ public class Main {
         String expression = reader.readLine();
 
         try {
-            String postfixExpression = converter.convertToPostfix(expression);
-            result = calculator.calculateAnswer(postfixExpression);
+            StringBuilder postfixExpression = converter.convertToPostfix(expression);
+            String task = postfixExpression.toString();
+            result = calculator.calculateAnswer(task);
         }
         catch (EmptyStackException e) {
             System.out.println("You tried to use method pop() from an empty stack.");

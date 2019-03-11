@@ -6,7 +6,8 @@ public class StackCalculator {
      * A method that calculates an answer of inputted expression
      * @param postfixExpression means postfix expression that should be calculated
      * @return means calculated result of inputted expression
-     * @throws WrongInputException means Exception that should be raised if inputted expression is not correct
+     * @throws WrongInputException means an exception that should be raised if inputted expression is not correct
+     * @throws EmptyStackException means an exception that should be raised when method pop() is caused to empty stack
      */
     public int calculateAnswer(String postfixExpression) throws WrongInputException, EmptyStackException {
         ListStack<Integer> stack = new ListStack<Integer>();

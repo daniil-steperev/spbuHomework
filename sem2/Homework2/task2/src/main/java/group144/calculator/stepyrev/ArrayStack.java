@@ -9,19 +9,25 @@ public class ArrayStack<Type> implements Stack<Type> {
     private int size = 15;
     private Type[] values = (Type[]) new Object[size];
 
+    /** {@inheritDoc} */
     @Override
     public void push(Type value) {
+        length++;
+
         if (length == size) {
             increaseStack();
             values[length] = value;
-            length++;
             return;
         }
 
         values[length] = value;
-        length++;
     }
 
+    /**
+     * {@inheritDoc}
+     * @return means element that was popped
+     * @throws EmptyStackException means an exception that should be raised when method pop() is caused to empty stack
+     */
     @Override
     public Type pop() throws EmptyStackException {
         if (isEmpty()) {
@@ -35,11 +41,13 @@ public class ArrayStack<Type> implements Stack<Type> {
         return returnElement;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isEmpty() {
         return length == 0;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getLength() {
         return length;
@@ -52,6 +60,16 @@ public class ArrayStack<Type> implements Stack<Type> {
         }
 
         size *= 2;
+        values = newValues;
+    }
+
+    private void decreaseStack() {
+        size = length + 10;
+        Type[] newValues = (Type[]) new Object[size];
+        for (int i = 0; i < length; i++) {
+            newValues[i] = values[i];
+        }
+
         values = newValues;
     }
 }

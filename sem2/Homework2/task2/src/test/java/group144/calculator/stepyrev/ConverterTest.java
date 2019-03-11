@@ -10,18 +10,18 @@ class ConverterTest {
     @Test
     void convertToPostfixWithoutBrackets() throws EmptyStackException {
         String infixString = "2 + 2 - 5 + 1";
-        String postfixString = "2 2 + 5 - 1 +";
-        String convertedString = converter.convertToPostfix(infixString);
+        String postfixString = "2 2 5 1 + - + ";
+        StringBuilder convertedString = converter.convertToPostfix(infixString);
 
-        assertEquals(postfixString, postfixString);
+        assertEquals(postfixString, convertedString.toString());
     }
 
     @Test
     void convertToPostfixWithBrackets() throws EmptyStackException {
         String infixString = "((2 - 6) * 5) / 4";
         String postfixString = "2 6 - 5 * 4 / ";
-        String convertedString = converter.convertToPostfix(infixString);
+        StringBuilder convertedString = converter.convertToPostfix(infixString);
 
-        assertEquals(postfixString, convertedString);
+        assertEquals(postfixString, convertedString.toString());
     }
 }
