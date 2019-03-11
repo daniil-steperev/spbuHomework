@@ -2,10 +2,10 @@ package group144.steperev_daniil;
 
 /** A singly connected List */
 public class List<Type> {
-    private Node head = null;
-    private int length = 0;
+    private Node head;
+    private int length;
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return head == null;
     }
 
@@ -73,13 +73,12 @@ public class List<Type> {
             return;
         }
 
+        length--;
+
         if (length == 1) {
             head = null;
-            length--;
             return;
         }
-
-        length--;
 
         Node current = this.head;
         while (current.next.next != null) {
@@ -104,13 +103,12 @@ public class List<Type> {
             return;
         }
 
+        length--;
+
         if (index == 0) {
             head = head.next;
-            length--;
             return;
         }
-
-        length--;
 
         Node current = this.head;
         for (int i = 0; i < index - 1; i++) {
@@ -165,7 +163,6 @@ public class List<Type> {
 
         private Node(Type value) {
             this.value = value;
-            this.next = null;
         }
 
         private Node(Type value, Node next) {
