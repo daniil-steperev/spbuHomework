@@ -224,6 +224,10 @@ public class List<T> {
         throw new AbsenceElementException();
     }
 
+    public int getLength() {
+        return length;
+    }
+
     /** A method that prints the list */
     public String print() {
         if (isEmpty()) {
