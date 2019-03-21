@@ -43,7 +43,6 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
      */
     @Override
     public boolean contains(Object o) {
-
         return !isEmpty() && root.contain((T) o);
     }
 

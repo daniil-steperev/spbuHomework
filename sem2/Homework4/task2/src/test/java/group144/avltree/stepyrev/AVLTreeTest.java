@@ -12,10 +12,10 @@ class AVLTreeTest {
     @Test
     public void makeRightRotate() {
         AVLTree<Integer> tree = new AVLTree<>();
+        String balancedTree = "(4{1} (3{1} null null) (5{1} null null))";
         tree.add(5);
         tree.add(4);
         tree.add(3);
-        String balancedTree = "(4{1} (3{1} null null) (5{1} null null))";
 
         assertEquals(balancedTree, tree.toString());
     }
@@ -23,10 +23,10 @@ class AVLTreeTest {
     @Test
     public void makeLeftRotate() {
         AVLTree<Integer> tree = new AVLTree<>();
+        String balancedTree = "(2{1} (1{1} null null) (3{1} null null))";
         tree.add(1);
         tree.add(2);
         tree.add(3);
-        String balancedTree = "(2{1} (1{1} null null) (3{1} null null))";
 
         assertEquals(balancedTree, tree.toString());
     }
@@ -34,10 +34,10 @@ class AVLTreeTest {
     @Test
     public void addSimilarElements() {
         AVLTree<Integer> tree = new AVLTree<>();
-        tree.add(1);
-        tree.add(1);
-        tree.add(1);
         String normalTree = "(1{3} null null)";
+        tree.add(1);
+        tree.add(1);
+        tree.add(1);
 
         assertEquals(normalTree, tree.toString());
     }
@@ -45,10 +45,10 @@ class AVLTreeTest {
     @Test
     public void addFirstTenElements() {
         AVLTree<Integer> tree = new AVLTree<>();
+        String balancedTree = "(6{1} (4{1} (2{1} (1{1} null null) (3{1} null null)) (5{1} null null)) (8{1} (7{1} null null) (9{1} null (10{1} null null))))";
         for (int i = 1; i <= 10; i++) {
             tree.add(i);
         }
-        String balancedTree = "(6{1} (4{1} (2{1} (1{1} null null) (3{1} null null)) (5{1} null null)) (8{1} (7{1} null null) (9{1} null (10{1} null null))))";
 
         assertEquals(balancedTree, tree.toString());
     }
