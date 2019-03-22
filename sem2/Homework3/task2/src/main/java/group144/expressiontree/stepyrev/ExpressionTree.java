@@ -7,11 +7,10 @@ public class ExpressionTree {
     /**
      * A method that builds the expression tree
      * @param expression means inputted expression based on which should be expression tree
-     * @param index means index of current symbol
      * @throws WrongInputException an expression that should be raised when user entered incorrect expression
      */
-    public ExpressionTree(String expression, int index) throws WrongInputException {
-        head = (Node) scanTree(expression, index).object;
+    public ExpressionTree(String expression) throws WrongInputException {
+        head = (Node) scanTree(expression, 0).object;
 
         if (head instanceof OperandNode) {
             throw new WrongInputException();

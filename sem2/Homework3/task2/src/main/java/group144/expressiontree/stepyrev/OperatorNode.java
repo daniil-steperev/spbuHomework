@@ -28,6 +28,10 @@ public class OperatorNode extends Node {
     /** {@inheritDoc}*/
     @Override
     public int calculate() throws WrongInputException {
+        if (leftChild == null || rightChild == null) {
+            throw new WrongInputException();
+        }
+
         if (operation == '+') {
             return leftChild.calculate() + rightChild.calculate();
         }
