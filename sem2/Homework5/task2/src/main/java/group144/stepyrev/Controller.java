@@ -20,6 +20,7 @@ public class Controller {
     @FXML
     private Spinner<Integer> secondNumber;
 
+    /** A method that initializes text field, choice box and spinners. */
     public void initialize() {
         operations.getItems().addAll("+", "-", "*", "/");
         operations.valueProperty().setValue("-");
