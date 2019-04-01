@@ -293,6 +293,7 @@ public class Controller {
         buttonMinus.setDisable(true);
         buttonMultiply.setDisable(true);
         buttonDivide.setDisable(true);
+        buttonEqual.setDisable(true);
     }
 
     /**
@@ -305,5 +306,6 @@ public class Controller {
         buttonMinus.setDisable(false);
         buttonMultiply.setDisable(false);
         buttonDivide.setDisable(false);
+        buttonEqual.setDisable(false);
     }
 }
