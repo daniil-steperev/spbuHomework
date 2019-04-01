@@ -97,6 +97,8 @@ public class Controller {
                 answer.setText(tmp.toString());
             }
         }
+
+        unlockOperations();
     }
 
     /** A method that is called when button "+" was pressed.
@@ -129,6 +131,8 @@ public class Controller {
 
         answer.setText(String.valueOf(calculator.getAnswer()));
         isNewNumber = true;
+
+        lockOperations();
     }
 
     /** A method that is called when button "-" was pressed.
@@ -161,6 +165,8 @@ public class Controller {
 
         answer.setText(String.valueOf(calculator.getAnswer()));
         isNewNumber = true;
+
+        lockOperations();
     }
 
     /** A method that is called when button "*" was pressed.
@@ -193,6 +199,8 @@ public class Controller {
 
         answer.setText(String.valueOf(calculator.getAnswer()));
         isNewNumber = true;
+
+        lockOperations();
     }
 
     /** A method that is called when button "/" was pressed.
@@ -225,6 +233,8 @@ public class Controller {
 
         answer.setText(String.valueOf(calculator.getAnswer()));
         isNewNumber = true;
+
+        lockOperations();
     }
 
     /** A method that is called when button "=" was pressed.
@@ -271,5 +281,29 @@ public class Controller {
         newBuffer.append(answer.getText());
         newBuffer.append(newOperation);
         buffer.setText(newBuffer.toString());
+    }
+
+    /**
+     * A method that locks to user operation buttons.
+     *
+     * This method is useful in case of inputted operation (i.e. after operation should be a number).
+     */
+    private void lockOperations() {
+        buttonPlus.setDisable(true);
+        buttonMinus.setDisable(true);
+        buttonMultiply.setDisable(true);
+        buttonDivide.setDisable(true);
+    }
+
+    /**
+     * A method that unlocks to user operation buttons.
+     *
+     * This method is useful in case of inputted number (i.e. after number should be an operation).
+     */
+    private void unlockOperations() {
+        buttonPlus.setDisable(false);
+        buttonMinus.setDisable(false);
+        buttonMultiply.setDisable(false);
+        buttonDivide.setDisable(false);
     }
 }
