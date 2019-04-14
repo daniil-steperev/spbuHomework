@@ -84,7 +84,7 @@ class ListTest {
         list.addFirst(2);
         list.addFirst(1);
 
-        assertEquals(1, list.removeFirst());
+        assertEquals(Integer.valueOf(1), list.removeFirst());
     }
 
     @Test
@@ -100,7 +100,7 @@ class ListTest {
         list.addFirst(3);
         list.addFirst(2);
 
-        assertEquals(3, list.removeLast());
+        assertEquals(Integer.valueOf(3), list.removeLast());
     }
 
     @Test
