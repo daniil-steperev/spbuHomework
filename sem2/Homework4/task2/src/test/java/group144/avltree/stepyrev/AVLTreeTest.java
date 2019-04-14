@@ -138,11 +138,11 @@ class AVLTreeTest {
         tree.add(5);
         Iterator<Integer> treeIterator = tree.iterator();
         assertTrue(treeIterator.hasNext());
-        assertEquals(2, treeIterator.next());
+        assertEquals(Integer.valueOf(2), treeIterator.next());
         assertTrue(treeIterator.hasNext());
-        assertEquals(4, treeIterator.next());
+        assertEquals(Integer.valueOf(4), treeIterator.next());
         assertTrue(treeIterator.hasNext());
-        assertEquals(5, treeIterator.next());
+        assertEquals(Integer.valueOf(5), treeIterator.next());
         assertFalse(treeIterator.hasNext());
     }
 
