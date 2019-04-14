@@ -10,7 +10,7 @@ class ArrayStackTest {
     @Test
     void pushOneElement() throws EmptyStackException {
         stack.push(2);
-        assertEquals(2, stack.pop());
+        assertEquals(Integer.valueOf(2), stack.pop());
     }
 
     @Test
@@ -22,14 +22,14 @@ class ArrayStackTest {
         }
 
         for (int i = 9; i >= 0; i--) {
-            assertEquals(array[i], stack.pop());
+            assertEquals(Integer.valueOf(array[i]), stack.pop());
         }
     }
 
     @Test
     void popOneElement() throws EmptyStackException {
         stack.push(2);
-        assertEquals(2, stack.pop());
+        assertEquals(Integer.valueOf(2), stack.pop());
     }
 
     @Test
