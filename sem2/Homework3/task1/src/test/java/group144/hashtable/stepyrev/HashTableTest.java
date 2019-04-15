@@ -1,13 +1,12 @@
 package group144.hashtable.stepyrev;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.FileInputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class HashTableTest {
-    private static HashTable hashTable;
-
     @Test
     void findWithPositiveAnswer() throws WrongInputException {
         HashTable hashTable = new HashTable();
@@ -28,5 +27,15 @@ class HashTableTest {
         HashTable hashTable = new HashTable();
 
         assertThrows(ElementAbsenseException.class, () -> hashTable.remove("abc"));
+    }
+
+    @Test
+    void getFromFileTest() throws WrongInputException {
+        HashTable hashTable = new HashTable();
+        String fileName = "testFile.txt";
+        hashTable.getFromFile(fileName);
+        Statistics correctStatistics = new Statistics(0.03125, 0, 0, 248, 8);
+
+        assertTrue(correctStatistics.equals(hashTable.getStatistics()));
     }
 }

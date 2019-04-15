@@ -10,7 +10,7 @@ public class PolynomialHashFunction implements HashFunction {
     private int mod = 256;
 
     /**
-     * A constructor of PolynomialHashFunction
+     * A constructor of PolynomialHashFunction.
      * @param power means a power of the hash function
      * @param mod means a mod of the hash function
      * @throws WrongInputException an exception that should be raised if user inputs incorrect data
@@ -52,11 +52,13 @@ public class PolynomialHashFunction implements HashFunction {
     }
 
     /**
-     * A method that compares two PolynomialHashFunctions
+     * A method that compares two PolynomialHashFunctions.
      * @param newHashFunction means new PolynomialHashFunctions that should be compared with current one
      * @return true if hash functions are equal and false if aren't
      */
-    public boolean equals(PolynomialHashFunction newHashFunction) {
-        return (mod == newHashFunction.getMod()) && (power == newHashFunction.getPower());
+    public boolean equals(HashFunction newHashFunction) {
+        return (newHashFunction instanceof PolynomialHashFunction) &&
+                (newHashFunction.getMod() == this.mod) &&
+                (newHashFunction.getPower() == this.power);
     }
 }

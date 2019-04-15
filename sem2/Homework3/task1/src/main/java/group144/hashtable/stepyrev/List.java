@@ -2,7 +2,7 @@ package group144.hashtable.stepyrev;
 
 
 /**
- * A class that represents singly connected list
+ * A class that represents singly connected list.
  * @param <Type> a type of elements that present in the list
  */
 public class List<Type> {
@@ -10,7 +10,7 @@ public class List<Type> {
     private int length;
 
     /**
-     * A method that checks if the list is empty
+     * A method that checks if the list is empty.
      * @return true if list is empty and false if is not
      */
     public boolean isEmpty() {
@@ -18,7 +18,7 @@ public class List<Type> {
     }
 
     /**
-     * A method adding a new element to the top of the list
+     * A method adding a new element to the top of the list.
      * @param value means value of the element that user wants to add to List
      */
     public void add(Type value) {
@@ -32,9 +32,8 @@ public class List<Type> {
         }
     }
 
-
     /**
-     * A method that removes element from the list
+     * A method that removes element from the list.
      * @param element means value that should be removed from the list
      */
     public void remove(Type element) {
@@ -61,7 +60,7 @@ public class List<Type> {
     }
 
     /**
-     * A method finding the element in the list
+     * A method finding the element in the list.
      * @param value means value of element that user wants to find
      * @return false if not found and true if element is found
      */
@@ -83,8 +82,8 @@ public class List<Type> {
     }
 
     /**
-     * A method that gets element from the list by index
-     * @param index means index of element that should be getted
+     * A method that gets element from the list by index.
+     * @param index means index of element that should be got
      * @return value of getted element
      * @throws WrongInputException an exception that should be raised if user tries to do incorrect actions
      */
@@ -102,7 +101,7 @@ public class List<Type> {
     }
 
     /**
-     * A method that returns length of the list
+     * A method that returns length of the list.
      * @return length of the list
      */
     public int getLength() {
