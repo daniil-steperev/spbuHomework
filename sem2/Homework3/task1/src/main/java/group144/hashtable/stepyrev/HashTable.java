@@ -36,7 +36,10 @@ public class HashTable {
         this.hashTable = hashTable;
     }
 
-    /** A constructor of HashTable with the hash function and the size */
+    /** A constructor of HashTable with the hash function and the size
+     * @param hashFunction a hashfunction that will be used in HashTable
+     * @param size a size of HashTable
+     */
     public HashTable(HashFunction hashFunction, int size) {
         this.hashFunction = hashFunction;
         this.size = size;
@@ -47,6 +50,10 @@ public class HashTable {
         this.hashTable = hashTable;
     }
 
+    /**
+     * A method that adds the element to the hashtable
+     * @param element means added element
+     */
     public void add(String element) {
         int hash = hashFunction.getHash(element);
         if (isContain(element, hash)) {

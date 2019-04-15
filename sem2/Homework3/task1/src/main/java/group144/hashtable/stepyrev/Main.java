@@ -114,10 +114,6 @@ public class Main {
                     catch (SimilarHashFunctionException e) {
                         System.out.println("Entered HashFunction is similar to current one!");
                     }
-                    finally {
-                        reader.close();
-                        break;
-                    }
                 }
 
             }
