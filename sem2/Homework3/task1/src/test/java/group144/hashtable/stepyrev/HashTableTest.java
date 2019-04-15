@@ -7,8 +7,6 @@ import java.io.FileInputStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HashTableTest {
-    private static HashTable hashTable;
-
     @Test
     void findWithPositiveAnswer() throws WrongInputException {
         HashTable hashTable = new HashTable();

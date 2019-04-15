@@ -108,12 +108,7 @@ public class Main {
                         break;
                     }
 
-                    try {
-                        hashTable.changeHashFunction(newHashFunction);
-                    }
-                    catch (SimilarHashFunctionException e) {
-                        System.out.println("Entered HashFunction is similar to current one!");
-                    }
+                    hashTable.changeHashFunction(newHashFunction);
                 }
 
             }

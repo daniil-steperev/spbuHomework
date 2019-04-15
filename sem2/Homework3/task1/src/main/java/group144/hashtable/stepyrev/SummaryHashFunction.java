@@ -38,12 +38,18 @@ public class SummaryHashFunction implements HashFunction {
         return mod;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getPower() {
+        return 1;
+    }
+
     /**
      * A method that compares two SummaryHashFunctions
      * @param newHashFunction a hash function that should be compared with the current one
      * @return true if hash functions are equal and false if aren't
      */
-    public boolean equals(SummaryHashFunction newHashFunction) {
-        return mod == newHashFunction.getMod();
+    public boolean equals(HashFunction newHashFunction) {
+        return (newHashFunction instanceof SummaryHashFunction) && (mod == newHashFunction.getMod());
     }
 }

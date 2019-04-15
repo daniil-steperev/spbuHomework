@@ -56,7 +56,9 @@ public class PolynomialHashFunction implements HashFunction {
      * @param newHashFunction means new PolynomialHashFunctions that should be compared with current one
      * @return true if hash functions are equal and false if aren't
      */
-    public boolean equals(PolynomialHashFunction newHashFunction) {
-        return (mod == newHashFunction.getMod()) && (power == newHashFunction.getPower());
+    public boolean equals(HashFunction newHashFunction) {
+        return (newHashFunction instanceof PolynomialHashFunction) &&
+                (newHashFunction.getMod() == this.mod) &&
+                (newHashFunction.getPower() == this.power);
     }
 }

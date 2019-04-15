@@ -106,11 +106,10 @@ public class HashTable {
      * A method that changes a hash function
      * @param newHashFunction a new hash function that should be setted to the HashTable
      * @throws WrongInputException an exception that should be raised when user inputs incorrect data
-     * @throws SimilarHashFunctionException an exception that should be raised when user tries to change hash function to similar one
      */
-    public void changeHashFunction(HashFunction newHashFunction) throws WrongInputException, SimilarHashFunctionException {
+    public void changeHashFunction(HashFunction newHashFunction) throws WrongInputException {
         if (isSimilarHashFunction(newHashFunction)) {
-            throw new SimilarHashFunctionException();
+            return;
         }
 
         int newSize = newHashFunction.getMod();
@@ -133,14 +132,7 @@ public class HashTable {
     }
 
     private boolean isSimilarHashFunction(HashFunction newHashFunction) {
-        if (hashFunction instanceof SummaryHashFunction && newHashFunction instanceof SummaryHashFunction) {
-            return ((SummaryHashFunction) hashFunction).equals((SummaryHashFunction) newHashFunction);
-        }
-        else if (hashFunction instanceof  PolynomialHashFunction && newHashFunction instanceof PolynomialHashFunction) {
-            return ((PolynomialHashFunction) hashFunction).equals((PolynomialHashFunction) newHashFunction);
-        }
-
-        return false;
+        return newHashFunction.equals(hashFunction);
     }
 
     private double getLoadFactor() {
