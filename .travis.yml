@@ -1,6 +1,0 @@
-language: java
-os:
-- linux
-env:
-- PROJECT_DIR=sem2/Homework1
-script: cd $PROJECT_DIR && ./gradlew check
