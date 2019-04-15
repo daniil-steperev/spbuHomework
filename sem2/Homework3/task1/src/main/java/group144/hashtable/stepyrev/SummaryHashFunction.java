@@ -1,6 +1,6 @@
 package group144.hashtable.stepyrev;
 
-/** A class that represents the SummaryHashFunction
+/** A class that represents the SummaryHashFunction.
  *
  * Hash counts code of each symbol and returns it divided by mod
  */
@@ -8,7 +8,7 @@ public class SummaryHashFunction implements HashFunction {
     private int mod = 256;
 
     /**
-     * A constructor of SummaryHashFunction
+     * A constructor of SummaryHashFunction.
      * @param mod means mod that should be setted
      * @throws WrongInputException an exception that should be raised if user enters incorrect data
      */
@@ -45,7 +45,7 @@ public class SummaryHashFunction implements HashFunction {
     }
 
     /**
-     * A method that compares two SummaryHashFunctions
+     * A method that compares two SummaryHashFunctions.
      * @param newHashFunction a hash function that should be compared with the current one
      * @return true if hash functions are equal and false if aren't
      */

@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-/** A class that represents a hash table with ability of changing hash function */
+/** A class that represents a hash table with ability of changing hash function. */
 public class HashTable {
     private HashFunction hashFunction;
     private List<String>[] hashTable;
@@ -13,7 +13,7 @@ public class HashTable {
     private int numberOfElements = 0;
 
     /**
-     * A constructor of class HashTable
+     * A constructor of class HashTable.
      * @throws WrongInputException an exception that should be raised when user tries to input incorrect data
      */
     public HashTable() throws WrongInputException {
@@ -26,7 +26,7 @@ public class HashTable {
         this.hashFunction = new PolynomialHashFunction(13, 256);
     }
 
-    /** A constructor of HashTable with the hash function */
+    /** A constructor of HashTable with the hash function. */
     public HashTable(HashFunction hashFunction) {
         this.hashFunction = hashFunction;
         List<String>[] hashTable = new List[size];
@@ -36,7 +36,7 @@ public class HashTable {
         this.hashTable = hashTable;
     }
 
-    /** A constructor of HashTable with the hash function and the size
+    /** A constructor of HashTable with the hash function and the size.
      * @param hashFunction a hashfunction that will be used in HashTable
      * @param size a size of HashTable
      */
@@ -51,7 +51,7 @@ public class HashTable {
     }
 
     /**
-     * A method that adds the element to the hashtable
+     * A method that adds the element to the hashtable.
      * @param element means added element
      */
     public void add(String element) {
@@ -65,7 +65,7 @@ public class HashTable {
     }
 
     /**
-     * A method that finds the element in the HashTable
+     * A method that finds the element in the HashTable.
      * @param element an element that should be found
      * @return true if element present and false if not
      */
@@ -88,7 +88,7 @@ public class HashTable {
     }
 
     /**
-     * A method that removes an element from the HashTable
+     * A method that removes an element from the HashTable.
      * @param element an element that should be removed
      * @throws ElementAbsenseException an exception that should be raised if element is not present in the HashTable
      */
@@ -103,7 +103,7 @@ public class HashTable {
     }
 
     /**
-     * A method that changes a hash function
+     * A method that changes a hash function.
      * @param newHashFunction a new hash function that should be setted to the HashTable
      * @throws WrongInputException an exception that should be raised when user inputs incorrect data
      */
@@ -135,11 +135,19 @@ public class HashTable {
         return newHashFunction.equals(hashFunction);
     }
 
-    private double getLoadFactor() {
+    /**
+     * A method that returns a load factor of the hash table.
+     * @return a load factor
+     */
+    public double getLoadFactor() {
         return (double) numberOfElements / size;
     }
 
-    private int getNumberOfConflicts() {
+    /**
+     * A method that returns a number of conflicts in the hash table.
+     * @return a number of conflicts
+     */
+    public int getNumberOfConflicts() {
         int counter = 0;
         for (int i = 0; i < size; i++) {
             if (hashTable[i].getLength() > 1) {
@@ -150,7 +158,11 @@ public class HashTable {
         return counter;
     }
 
-    private int getMaxLength() {
+    /**
+     * A method that returns a max length of a conflict chain.
+     * @return a max length of a conflict chain
+     */
+    public int getMaxLength() {
         int maxLength = 0;
         int length = 0;
         for (int i = 0; i < size; i++) {
@@ -165,7 +177,11 @@ public class HashTable {
         return maxLength;
     }
 
-    private int countEmptyRows() {
+    /**
+     * A method that counts empty rows
+     * @return a number of empty rows
+     */
+    public int countEmptyRows() {
         int counter = 0;
         for (int i = 0; i < size; i++) {
             if (hashTable[i].getLength() == 0) {
@@ -177,27 +193,23 @@ public class HashTable {
     }
 
     /**
-     * A method that returns statistics of the HashTable
+     * A method that returns statistics of the HashTable.
      * @return statistics of the HashTable
      */
-    public String getStatistics() {
-        double loadFactor = getLoadFactor();
-        int numberOfConflicts = getNumberOfConflicts();
-        int maxLength = getMaxLength();
-        int emptyRows = countEmptyRows();
-        String statistics = "";
-
-        statistics = "The amount of elements: " + numberOfElements + "; ";
-        statistics = statistics + "load factor: " + loadFactor + "; ";
-        statistics = statistics + "number of conflicts: " + numberOfConflicts + "; ";
-        statistics = statistics + "max length of conflict row: " + maxLength + "; ";
-        statistics = statistics + "empty rows: " + emptyRows + ".";
-
-        return statistics;
+    public Statistics getStatistics() {
+        return new Statistics(this);
     }
 
     /**
-     * A method that fills the HashTable from the file
+     * A method that returns a number of elements of the hashtable.
+     * @return a number of elements of the hashtable
+     */
+    public int getNumberOfElements() {
+        return numberOfElements;
+    }
+
+    /**
+     * A method that fills the HashTable from the file.
      * @param fileName a name of file from which HashTable should be filled
      */
     public void getFromFile(String fileName) {

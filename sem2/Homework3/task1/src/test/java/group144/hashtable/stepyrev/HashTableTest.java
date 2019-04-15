@@ -34,8 +34,8 @@ class HashTableTest {
         HashTable hashTable = new HashTable();
         String fileName = "testFile.txt";
         hashTable.getFromFile(fileName);
-        String rightStatistics = "The amount of elements: 8; load factor: 0.03125; number of conflicts: 0; max length of conflict row: 0; empty rows: 248.";
+        Statistics correctStatistics = new Statistics(0.03125, 0, 0, 248, 8);
 
-        assertEquals(rightStatistics, hashTable.getStatistics());
+        assertTrue(correctStatistics.equals(hashTable.getStatistics()));
     }
 }
