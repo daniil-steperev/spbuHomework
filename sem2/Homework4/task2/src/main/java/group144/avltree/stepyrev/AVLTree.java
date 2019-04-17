@@ -298,12 +298,10 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
             }
 
             if (currentNode.value.equals(value)) {
-                if (currentNode.quantity > 1) {
-                    currentNode.quantity--;
-                    return true;
+                currentNode.quantity--;
+                if (currentNode.quantity == 0) {
+                    removeNode();
                 }
-
-                removeNode();
                 return true;
             }
 
@@ -335,7 +333,10 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
                 return;
             }
 
-            currentNode.value = currentNode.leftChild.removeRightest();
+            Pair returnNode = currentNode.leftChild.removeRightest();
+
+            currentNode.value = returnNode.value;
+            currentNode.quantity = returnNode.quantity;
             currentNode.updateHeight();
         }
 
@@ -345,16 +346,16 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
          * This method would be useful to method removeNode (in case when both children is present)
          * @return a removed rightest node
          */
-        private T removeRightest() {
+        private Pair removeRightest() {
             if (currentNode.rightChild.currentNode != null) {
-                T rightest = currentNode.rightChild.removeRightest();
+                Pair pair = currentNode.rightChild.removeRightest();
                 currentNode.updateHeight();
                 this.balance();
-                return rightest;
+                return pair;
             } else {
-                Node rightest = currentNode;
+                Pair returnNode = new Pair(currentNode.value, currentNode.quantity);
                 this.removeNode();
-                return rightest.value;
+                return returnNode;
             }
         }
 
@@ -364,10 +365,12 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
          */
         private void balance() {
             currentNode.updateHeight();
+            NodeOperator currentLeft = currentNode.leftChild;
+            NodeOperator currentRight = currentNode.rightChild;
 
             if (currentNode.balanceFactor() == 2) {
-                if (currentNode.rightChild.currentNode.balanceFactor() < 0) {
-                    currentNode.rightChild.rotateRight();
+                if (currentRight.currentNode.balanceFactor() < 0) {
+                    currentRight.rotateRight();
                 }
 
                 this.rotateLeft();
@@ -375,8 +378,8 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
             }
 
             if (currentNode.balanceFactor() == -2) {
-                if (currentNode.leftChild.currentNode.balanceFactor() > 0) {
-                    currentNode.leftChild.rotateLeft();
+                if (currentLeft.currentNode.balanceFactor() > 0) {
+                    currentLeft.rotateLeft();
                 }
 
                 this.rotateRight();
@@ -474,6 +477,16 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
                 elements.add(currentNode.value);
             }
             currentNode.rightChild.addAll(elements);
+        }
+
+        private class Pair {
+            private T value;
+            private int quantity;
+
+            private Pair(T value, int quantity) {
+                this.value = value;
+                this.quantity = quantity;
+            }
         }
     }
 }
