@@ -12,29 +12,16 @@ public class List<T> {
      * A method that adds new value to the head of the list
      * @param value means value of the element that should be added
      */
-    public void addFirst(T value) throws AlreadyAddedElementException {
-        head = new Node<>(value, head);
-        length++;
+    public void addFirst(T value) throws AlreadyAddedElementException, WrongIndexException {
+        add(value, 0);
     }
 
     /**
      * A method that adds new value to the end of the list
      * @param value means value of the element that should be added
      */
-    public void addLast(T value) throws AlreadyAddedElementException {
-        if (isEmpty()) {
-            addFirst(value);
-            return;
-        }
-
-        length++;
-
-        Node current = head;
-        while (current.next != null) {
-            current = current.next;
-        }
-
-        current.next = new Node<>(value);
+    public void addLast(T value) throws AlreadyAddedElementException, WrongIndexException {
+        add(value, length);
     }
 
     /**
@@ -44,21 +31,16 @@ public class List<T> {
      * @throws WrongIndexException an exception that should be raised when user tries to add an element to the wrong position (e.g. index is negative)
      */
     public void add(T value, int index) throws WrongIndexException, AlreadyAddedElementException {
-        if ((isEmpty() || index == 0) && index >= 0) {
-            addFirst(value);
-            return;
-        }
-
-        if (index < 0 || index > length - 1) {
+        if (index < 0 || (index > length && length > 0)) {
             throw new WrongIndexException();
         }
 
-        if (index == length) { // without -1 because we count with one more element
-            addLast(value);
+        length++;
+
+        if ((isEmpty() || index == 0) && index >= 0) {
+            head = new Node<>(value, head);
             return;
         }
-
-        length++;
 
         Node<T> current = head;
         Node<T> previous = null;
@@ -75,16 +57,12 @@ public class List<T> {
      * @return value of the removed element
      * @throws EmptyListException an exception that should be raised when user tries to remove from empty list
      */
-    public T removeFirst() throws EmptyListException, AlreadyAddedElementException {
+    public T removeFirst() throws EmptyListException, AlreadyAddedElementException, WrongIndexException {
         if (isEmpty()) {
             throw new EmptyListException();
         }
 
-        Node<T> removed = head;
-        head = head.next;
-
-        length--;
-        return removed.value;
+        return remove(0);
     }
 
     /**
@@ -92,21 +70,12 @@ public class List<T> {
      * @return value of the removed element
      * @throws EmptyListException an exception that should be raised when user tries to remove from empty list
      */
-    public T removeLast() throws EmptyListException, AlreadyAddedElementException {
+    public T removeLast() throws EmptyListException, AlreadyAddedElementException, WrongIndexException {
         if (isEmpty()) {
             throw new EmptyListException();
         }
 
-        Node<T> current = head;
-        while (current.next.next != null) {
-            current = current.next;
-        }
-
-        length--;
-        T removedValue = current.next.value;
-        current.next = null;
-
-        return removedValue;
+        return remove(length - 1);
     }
 
     /**
@@ -116,7 +85,7 @@ public class List<T> {
      * @throws EmptyListException an exception that should be raised when user tries to remove from empty list
      * @throws AbsenceElementException an exception that should be raised when user tries to remove missing element
      */
-    public T remove(T value) throws EmptyListException, AbsenceElementException, AlreadyAddedElementException {
+    public T remove(T value) throws EmptyListException, AbsenceElementException, AlreadyAddedElementException, WrongIndexException {
         if (isEmpty()) {
             throw new EmptyListException();
         }
@@ -154,16 +123,16 @@ public class List<T> {
             throw new EmptyListException();
         }
 
-        if (index < 0 || index > length - 1) {
+        if (index < 0 || (index > length - 1 && length > 0)) {
             throw new WrongIndexException();
         }
 
-        if (index == 0) {
-            return removeFirst();
-        }
+        length--;
 
-        if (index == length - 1) {
-            return removeLast();
+        if (index == 0) {
+            T returnValue = head.value;
+            head = head.next;
+            return returnValue;
         }
 
         Node<T> current = head;
@@ -173,7 +142,6 @@ public class List<T> {
             current = current.next;
         }
 
-        length--;
         T removedValue = current.value;
         previous.next = current.next;
 
@@ -181,7 +149,7 @@ public class List<T> {
     }
 
     /** A method that checks if the element contains in the list */
-    public boolean isContain(T value) {
+    public boolean contains(T value) {
         if (isEmpty()) {
             return false;
         }

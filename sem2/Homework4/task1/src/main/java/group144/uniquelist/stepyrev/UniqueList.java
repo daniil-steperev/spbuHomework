@@ -11,8 +11,8 @@ public class UniqueList<T> extends List<T> {
      * @throws AlreadyAddedElementException an exception that should be raised when user tries to add already presented element to the unique list
      */
     @Override
-    public void addFirst(T value) throws AlreadyAddedElementException {
-        if (isContain(value)) {
+    public void addFirst(T value) throws AlreadyAddedElementException, WrongIndexException {
+        if (contains(value)) {
             throw new AlreadyAddedElementException();
         }
 
@@ -25,8 +25,8 @@ public class UniqueList<T> extends List<T> {
      * @throws AlreadyAddedElementException an exception that should be raised when user tries to add already presented element to the unique list
      */
     @Override
-    public void addLast(T value) throws AlreadyAddedElementException {
-        if (isContain(value)) {
+    public void addLast(T value) throws AlreadyAddedElementException, WrongIndexException {
+        if (contains(value)) {
             throw new AlreadyAddedElementException();
         }
 
@@ -42,7 +42,7 @@ public class UniqueList<T> extends List<T> {
      */
     @Override
     public void add(T value, int index) throws WrongIndexException, AlreadyAddedElementException {
-        if (isContain(value)) {
+        if (contains(value)) {
             throw new AlreadyAddedElementException();
         }
 

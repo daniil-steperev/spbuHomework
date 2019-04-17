@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UniqueListTest {
     @Test
-    void addFirstSimilarOne() throws AlreadyAddedElementException {
+    void addFirstSimilarOne() throws AlreadyAddedElementException, WrongIndexException {
         UniqueList<Integer> list = new UniqueList<>();
         list.addFirst(4);
 
@@ -14,7 +14,7 @@ class UniqueListTest {
     }
 
     @Test
-    void addFirst() throws AlreadyAddedElementException {
+    void addFirst() throws AlreadyAddedElementException, WrongIndexException {
         UniqueList<Integer> list = new UniqueList<>();
         list.addFirst(4);
         String printedList = "1 4";
@@ -24,7 +24,7 @@ class UniqueListTest {
     }
 
     @Test
-    void addLastSimilarOne() throws AlreadyAddedElementException {
+    void addLastSimilarOne() throws AlreadyAddedElementException, WrongIndexException {
         UniqueList<Integer> list = new UniqueList<>();
         list.addFirst(4);
         list.addFirst(10);
@@ -34,7 +34,7 @@ class UniqueListTest {
     }
 
     @Test
-    void addLast() throws AlreadyAddedElementException {
+    void addLast() throws AlreadyAddedElementException, WrongIndexException {
         UniqueList<Integer> list = new UniqueList<>();
         list.addFirst(4);
         list.addFirst(10);
@@ -46,7 +46,7 @@ class UniqueListTest {
     }
 
     @Test
-    void addSimilarOne() throws AlreadyAddedElementException {
+    void addSimilarOne() throws AlreadyAddedElementException, WrongIndexException {
         UniqueList<Integer> list = new UniqueList<>();
         list.addFirst(4);
         list.addFirst(10);

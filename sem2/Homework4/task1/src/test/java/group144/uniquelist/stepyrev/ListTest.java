@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ListTest {
     @Test
-    void addFirstToEmptyList() throws AlreadyAddedElementException {
+    void addFirstToEmptyList() throws AlreadyAddedElementException, WrongIndexException {
         List<Integer> list = new List<>();
         list.addFirst(5);
         String printedList = "5";
@@ -14,7 +14,7 @@ class ListTest {
     }
 
     @Test
-    void addFirstToList() throws AlreadyAddedElementException {
+    void addFirstToList() throws AlreadyAddedElementException, WrongIndexException {
         List<Integer> list = new List<>();
         list.addFirst(3);
         list.addFirst(2);
@@ -26,7 +26,7 @@ class ListTest {
     }
 
     @Test
-    void addLastToEmptyList() throws AlreadyAddedElementException {
+    void addLastToEmptyList() throws AlreadyAddedElementException, WrongIndexException {
         List<Integer> list = new List<>();
         list.addLast(5);
         String printedList = "5";
@@ -35,7 +35,7 @@ class ListTest {
     }
 
     @Test
-    void addLastToList() throws AlreadyAddedElementException {
+    void addLastToList() throws AlreadyAddedElementException, WrongIndexException {
         List<Integer> list = new List<>();
         list.addFirst(2);
         list.addFirst(1);
@@ -79,7 +79,7 @@ class ListTest {
     }
 
     @Test
-    void removeFirstFromList() throws AlreadyAddedElementException, EmptyListException {
+    void removeFirstFromList() throws AlreadyAddedElementException, EmptyListException, WrongIndexException {
         List<Integer> list = new List<>();
         list.addFirst(2);
         list.addFirst(1);
@@ -95,7 +95,7 @@ class ListTest {
     }
 
     @Test
-    void removeLastFromList() throws AlreadyAddedElementException, EmptyListException {
+    void removeLastFromList() throws AlreadyAddedElementException, EmptyListException, WrongIndexException {
         List<Integer> list = new List<>();
         list.addFirst(3);
         list.addFirst(2);
@@ -118,7 +118,7 @@ class ListTest {
     }
 
     @Test
-    void removeFromListByValue() throws AlreadyAddedElementException, AbsenceElementException, EmptyListException {
+    void removeFromListByValue() throws AlreadyAddedElementException, AbsenceElementException, EmptyListException, WrongIndexException {
         List<Integer> list = new List<>();
         list.addFirst(3);
         list.addFirst(2);
@@ -145,15 +145,15 @@ class ListTest {
     void isContainInEmptyList() {
         List<Integer> list = new List<>();
 
-        assertEquals(false, list.isContain(Integer.valueOf(2)));
+        assertEquals(false, list.contains(Integer.valueOf(2)));
     }
 
     @Test
-    void isContainInList() throws AlreadyAddedElementException {
+    void isContainInList() throws AlreadyAddedElementException, WrongIndexException {
         List<Integer> list = new List<>();
         list.addFirst(2);
 
-        assertEquals(true, list.isContain(Integer.valueOf(2)));
+        assertEquals(true, list.contains(Integer.valueOf(2)));
     }
 
     @Test
@@ -164,7 +164,7 @@ class ListTest {
     }
 
     @Test
-    void getIndexOfElementInList() throws AlreadyAddedElementException, AbsenceElementException, EmptyListException {
+    void getIndexOfElementInList() throws AlreadyAddedElementException, AbsenceElementException, EmptyListException, WrongIndexException {
         List<Integer> list = new List<>();
         list.addFirst(2);
 
