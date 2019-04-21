@@ -1,268 +1,279 @@
 package group144.stepyrev;
 
+import org.joor.Reflect;
+
 import java.io.*;
 import java.lang.reflect.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
+
 
 /** A class that builds a file with a text of inputted file. */
 public class ClassBuilder {
     public static void main(String[] args) throws IOException {
         ClassBuilder classBuilder = new ClassBuilder();
-        FileWriter fileOutput = new FileWriter("src//buildClass.java", true);
-        classBuilder.printStructure(fileOutput, String.class);
-        fileOutput.close();
+        StringBuilder buildClass = new StringBuilder();
+        classBuilder.printStructure(buildClass, String.class);
+
+        StringBuilder diffClases = new StringBuilder();
+        classBuilder.diffClasses(diffClases, String.class, String.class);
+        System.out.println(diffClases);
     }
 
     /**
      * A method that builds a file with a text of class.
      * @param clazz - a class which should be build in the file
      */
-    public void printStructure(FileWriter file, Class clazz) throws IOException {
-        file.write("import java.io.*;\n");
-        file.write("import java.util.*;\n\n");
-        getStructure(file, clazz);
+    public void printStructure(StringBuilder buildClass, Class clazz) throws IOException {
+        buildClass.append("package group144.stepyrev;\n\n");
+        buildClass.append("import java.io.*;\n");
+        buildClass.append("import java.util.*;\n\n");
+        getStructure(buildClass, clazz);
     }
 
-    private void getStructure(FileWriter fileOutput, Class clazz) throws IOException {
-        writeClassDeclaration(fileOutput, clazz);
-        fileOutput.write("{\n\t");
+    private void getStructure(StringBuilder buildClass, Class clazz) {
+        writeClassDeclaration(buildClass, clazz);
+        buildClass.append("{\n\t");
 
-        writeFields(fileOutput, clazz);
-        writeConstructors(fileOutput, clazz);
-        writeMethods(fileOutput, clazz);
-        writeInnerClasses(fileOutput, clazz);
+        writeFields(buildClass, clazz);
+        writeConstructors(buildClass, clazz);
+        writeMethods(buildClass, clazz);
+        writeInnerClasses(buildClass, clazz);
 
-        fileOutput.write("\n}");
-        fileOutput.write("\n\n\t");
+        buildClass.append("\n}");
+        buildClass.append("\n\n\t");
     }
 
-    private void writeClassDeclaration(FileWriter file, Class clazz) throws IOException {
-        writeClassModifiers(file, clazz);
-        file.write("class ");
-        writeClassNameWithParameters(file, clazz); // space here
-        writeSuperclass(file, clazz); // space here
-        writeInterfaces(file, clazz); // space here
+    private void writeClassDeclaration(StringBuilder buildClass, Class clazz) {
+        writeClassModifiers(buildClass, clazz);
+        buildClass.append("class ");
+        writeClassNameWithParameters(buildClass, clazz); // space here
+        writeSuperclass(buildClass, clazz); // space here
+        writeInterfaces(buildClass, clazz); // space here
     }
 
-    private void writeClassModifiers(FileWriter file, Class clazz) throws IOException {
+    private void writeClassModifiers(StringBuilder buildClass, Class clazz) {
         if (clazz.getModifiers() != 0) {
-            file.write(Modifier.toString(clazz.getModifiers()) + " ");
+            buildClass.append(Modifier.toString(clazz.getModifiers()) + " ");
         }
     }
 
-    private void writeClassNameWithParameters(FileWriter file, Class clazz) throws IOException {
-        file.write(clazz.getSimpleName());
-        file.write(" ");
+    private void writeClassNameWithParameters(StringBuilder buildClass, Class clazz) {
+        buildClass.append(clazz.getSimpleName());
+        buildClass.append(" ");
         if (clazz.getTypeParameters().length != 0) {
             TypeVariable[] parameters = clazz.getTypeParameters();
-            file.write("<");
+            buildClass.append("<");
             for (int i = 0; i < parameters.length; i++) {
-                file.write(parameters[i].getName());
+                buildClass.append(parameters[i].getName());
 
                 if (i != parameters.length - 1) {
-                    file.write(", ");
+                    buildClass.append(", ");
                 }
             }
 
-            file.write("> ");
+            buildClass.append("> ");
         }
     }
 
-    private void writeSuperclass(FileWriter file, Class clazz) throws IOException {
+    private void writeSuperclass(StringBuilder buildClass, Class clazz) {
         if (clazz.getSuperclass() != null) {
-            file.write("extends ");
-            writeClassNameWithParameters(file, clazz.getSuperclass());
+            buildClass.append("extends ");
+            writeClassNameWithParameters(buildClass, clazz.getSuperclass());
         }
     }
 
-    private void writeInterfaces(FileWriter file, Class clazz) throws IOException {
+    private void writeInterfaces(StringBuilder buildClass, Class clazz) {
         if (clazz.getInterfaces().length != 0) {
-            file.write("implements ");
+            buildClass.append("implements ");
             Class[] interfaces = clazz.getInterfaces();
             for (int i = 0; i < interfaces.length; i++) {
-                file.write(interfaces[i].getSimpleName());
+                buildClass.append(interfaces[i].getSimpleName());
                 if (i != interfaces.length - 1) {
-                    file.write(", ");
+                    buildClass.append(", ");
                 }
             }
         }
 
-        file.write(" ");
+        buildClass.append(" ");
     }
 
-    private void writeFields(FileWriter file, Class clazz) throws IOException {
+    private void writeFields(StringBuilder buildClass, Class clazz) {
         if (clazz.getDeclaredFields().length != 0) {
             Field[] fields = clazz.getDeclaredFields();
             for (int i = 0; i < fields.length; i++) {
-                writeOneField(file, fields[i]);
-                file.write("\n\t");
+                writeOneField(buildClass, fields[i]);
+                buildClass.append("\n\t");
             }
         }
     }
 
-    private void writeOneField(FileWriter file, Field field) throws IOException {
+    private void writeOneField(StringBuilder buildClass, Field field) {
         if (field.getModifiers() != 0) {
-            file.write(Modifier.toString(field.getModifiers()));
-            file.write(" ");
+            buildClass.append(Modifier.toString(field.getModifiers()));
+            buildClass.append(" ");
         }
 
-        file.write(field.getType().getSimpleName() + " " + field.getName() + " = ");
-        writeType(file, field.getType());
-        file.write("\n");
+        buildClass.append(field.getType().getSimpleName() + " " + field.getName() + " = ");
+        writeType(buildClass, field.getType());
+        buildClass.append("\n");
     }
 
-    private void writeConstructors(FileWriter file, Class clazz) throws IOException {
-        file.write("\n\t");
+    private void writeConstructors(StringBuilder buildClass, Class clazz) {
+        buildClass.append("\n\t");
         if (clazz.getDeclaredConstructors().length != 0) {
             Constructor[] constructors = clazz.getDeclaredConstructors();
             for (int i = 0; i < constructors.length; i++) {
-                writeOneConstructor(file, clazz, constructors[i]);
-                file.write("\n\n\t");
+                writeOneConstructor(buildClass, clazz, constructors[i]);
+                buildClass.append("\n\n\t");
             }
         }
     }
 
-    private void writeOneConstructor(FileWriter file, Class clazz, Constructor constructor) throws IOException {
+    private void writeOneConstructor(StringBuilder buildClass, Class clazz, Constructor constructor) {
         if (constructor.getModifiers() != 0) {
-            file.write(Modifier.toString(constructor.getModifiers()) + " ");
+            buildClass.append(Modifier.toString(constructor.getModifiers()) + " ");
         }
 
-        file.write(clazz.getSimpleName());
-        file.write("(");
+        buildClass.append(clazz.getSimpleName());
+        buildClass.append("(");
         Parameter[] parameters = constructor.getParameters();
-        writeParameters(file, parameters);
-        file.write(") ");
-        file.write("{ }");
+        writeParameters(buildClass, parameters);
+        buildClass.append(") ");
+        buildClass.append("{ }");
     }
 
-    private void writeMethods(FileWriter file, Class clazz) throws IOException {
+    private void writeMethods(StringBuilder buildClass, Class clazz) {
         if (clazz.getDeclaredMethods().length != 0) {
             Method[] methods = clazz.getDeclaredMethods();
             for (int i = 0; i < methods.length; i++) {
-                writeOneMethod(file, methods[i]);
+                writeOneMethod(buildClass, methods[i]);
 
                 if (i != methods.length - 1) {
-                    file.write("\n\n\t");
+                    buildClass.append("\n\n\t");
                 }
             }
         }
     }
 
-    private void writeOneMethod(FileWriter file, Method method) throws IOException {
+    private void writeOneMethod(StringBuilder buildClass, Method method) {
         if (method.getModifiers() != 0) {
-            file.write(Modifier.toString(method.getModifiers()) + " ");
+            buildClass.append(Modifier.toString(method.getModifiers()) + " ");
         }
 
-        file.write(method.getReturnType().getSimpleName() + " ");
-        file.write(method.getName() + " (");
+        buildClass.append(method.getReturnType().getSimpleName() + " ");
+        buildClass.append(method.getName() + " (");
         Parameter[] parameters = method.getParameters();
-        writeParameters(file, parameters);
-        file.write(") ");
-        writeExceptions(file, method);
+        writeParameters(buildClass, parameters);
+        buildClass.append(") ");
+        writeExceptions(buildClass, method);
 
-        file.write("{");
+        buildClass.append("{");
         if (!method.getReturnType().getSimpleName().equals("void")) {
-            file.write("\n\t\t");
-            file.write("return ");
-            writeType(file, method.getReturnType());
-            file.write("\n\t");
+            buildClass.append("\n\t\t");
+            buildClass.append("return ");
+            writeType(buildClass, method.getReturnType());
+            buildClass.append("\n\t");
         } else {
-            file.write(" ");
+            buildClass.append(" ");
         }
 
-        file.write("}");
+        buildClass.append("}");
     }
 
-    private void writeType(FileWriter file, Type type) throws IOException {
+    private void writeType(StringBuilder buildClass, Type type) {
         switch (type.getTypeName()) {
             case "Integer":
-                file.write("Integer.valueOf(0);");
+                buildClass.append("Integer.valueOf(0);");
                 break;
             case "Boolean":
-                file.write("true;");
+                buildClass.append("true;");
                 break;
             case "String":
-                file.write("String.valueOf(\"\");");
+                buildClass.append("String.valueOf(\"\");");
                 break;
             case "Double":
-                file.write("Double.valueOf(0.0);");
+                buildClass.append("Double.valueOf(0.0);");
                 break;
             case "Character":
-                file.write("Character.valueOf('x');");
+                buildClass.append("Character.valueOf('x');");
                 break;
             case "Byte":
-                file.write("Byte.valueOf(0);");
+                buildClass.append("Byte.valueOf(0);");
                 break;
             case "Long":
-                file.write("Long.valueOf(0);");
+                buildClass.append("Long.valueOf(0);");
                 break;
             case "Short":
-                file.write("Short.valueOf(0);");
+                buildClass.append("Short.valueOf(0);");
                 break;
             case "Float":
-                file.write("Float.valueOf(0);");
+                buildClass.append("Float.valueOf(0);");
                 break;
             case "int":
-                file.write("0;");
+                buildClass.append("0;");
                 break;
             case "boolean":
-                file.write("true;");
+                buildClass.append("true;");
                 break;
             case "double":
-                file.write("0.0;");
+                buildClass.append("0.0;");
                 break;
             case "char":
-                file.write("'x';");
+                buildClass.append("'x';");
                 break;
             case "byte":
-                file.write("0;");
+                buildClass.append("0;");
                 break;
             case "long":
-                file.write("0;");
+                buildClass.append("0;");
                 break;
             case "short":
-                file.write("0;");
+                buildClass.append("0;");
                 break;
             case "float":
-                file.write("0;");
+                buildClass.append("0;");
                 break;
             default:
-                file.write("null;");
+                buildClass.append("null;");
                 break;
         }
     }
 
-    private void writeExceptions(FileWriter file, Method method) throws IOException {
+    private void writeExceptions(StringBuilder buildClass, Method method) {
         if (method.getExceptionTypes().length != 0) {
-            file.write("throws ");
+            buildClass.append("throws ");
             Class[] exceptions = method.getExceptionTypes();
             for (int i = 0; i < exceptions.length; i++) {
-                file.write(exceptions[i].getSimpleName());
+                buildClass.append(exceptions[i].getSimpleName());
                 if (i != exceptions.length - 1) {
-                    file.write(", ");
+                    buildClass.append(", ");
                 }
             }
         }
-        file.write(" ");
+        buildClass.append(" ");
     }
 
-    private void writeParameters(FileWriter file, Parameter[] parameters) throws IOException {
+    private void writeParameters(StringBuilder buildClass, Parameter[] parameters) {
         for (int i = 0; i < parameters.length; i++) {
-            file.write(parameters[i].getType().getSimpleName() + " " + parameters[i].getName());
+            buildClass.append(parameters[i].getType().getSimpleName() + " " + parameters[i].getName());
             if (i != parameters.length - 1) {
-                file.write(", ");
+                buildClass.append(", ");
             }
         }
     }
 
-    private void writeInnerClasses(FileWriter file, Class clazz) throws IOException {
+    private void writeInnerClasses(StringBuilder buildClass, Class clazz) {
         if (clazz.getDeclaredClasses().length != 0) {
-            file.write("\n\t");
+            buildClass.append("\n\t");
             Class<?>[] classes = clazz.getDeclaredClasses();
             for (int i = 0; i < classes.length; i++) {
-                getStructure(file, classes[i]);
+                getStructure(buildClass, classes[i]);
 
                 if (i != classes.length -1) {
-                    file.write("\n\n\t");
+                    buildClass.append("\n\n\t");
                 }
             }
         }
@@ -273,26 +284,23 @@ public class ClassBuilder {
      * @param firstClazz - a first class
      * @param secondClazz - a second class
      */
-    public void diffClasses(Class firstClazz, Class secondClazz) throws IOException {
-        FileWriter fileOutput = new FileWriter("src//diffClasses.txt");
-        getDifference(fileOutput, firstClazz, secondClazz);
+    public void diffClasses(StringBuilder diffClasses, Class firstClazz, Class secondClazz) {
+        getDifference(diffClasses, firstClazz, secondClazz);
 
-        BufferedReader reader = new BufferedReader(new FileReader("src//diffClasses.txt"));
-        while (reader.ready()) {
-            System.out.println(reader.readLine());
+        if (diffClasses.length() == 0) {
+            System.out.println("Classes are equal!");
+        } else {
+            System.out.println(diffClasses);
         }
-
-        fileOutput.close();
-        reader.close();
     }
 
-    private void getDifference(FileWriter fileOutput, Class firstClazz, Class secondClazz) throws IOException {
-        writeDifferenceInFields(fileOutput, firstClazz, secondClazz);
-        writeDifferenceInMethods(fileOutput, firstClazz, secondClazz);
-        writeDifferenceInInnerClasses(fileOutput, firstClazz, secondClazz);
+    private void getDifference(StringBuilder diffClasses, Class firstClazz, Class secondClazz) {
+        writeDifferenceInFields(diffClasses, firstClazz, secondClazz);
+        writeDifferenceInMethods(diffClasses, firstClazz, secondClazz);
+        writeDifferenceInInnerClasses(diffClasses, firstClazz, secondClazz);
     }
 
-    private void writeDifferenceInFields(FileWriter file, Class firstClazz, Class secondClazz) throws IOException {
+    private void writeDifferenceInFields(StringBuilder diffClasses, Class firstClazz, Class secondClazz) {
         Field[] firstClassFields = firstClazz.getDeclaredFields();
         Field[] secondClassFields = secondClazz.getDeclaredFields();
 
@@ -305,10 +313,10 @@ public class ClassBuilder {
 
                 if (curField.getName().equals(secondField.getName())) {
                     if (!isFieldEquals(curField, secondField)) {
-                        writeOneField(file, curField);
-                        file.write("\n");
-                        writeOneField(file, secondField);
-                        file.write("\n");
+                        writeOneField(diffClasses, curField);
+                        diffClasses.append("\n");
+                        writeOneField(diffClasses, secondField);
+                        diffClasses.append("\n");
                         contains = true;
                         break;
                     } else {
@@ -319,8 +327,8 @@ public class ClassBuilder {
             }
 
             if (!contains) {
-                writeOneField(file, curField);
-                file.write("\n");
+                writeOneField(diffClasses, curField);
+                diffClasses.append("\n");
             }
         }
 
@@ -338,8 +346,8 @@ public class ClassBuilder {
             }
 
             if (!contains) {
-                writeOneField(file, curField);
-                file.write("\n");
+                writeOneField(diffClasses, curField);
+                diffClasses.append("\n");
             }
         }
     }
@@ -350,9 +358,10 @@ public class ClassBuilder {
 
     }
 
-    private void writeDifferenceInMethods(FileWriter file, Class firstClass, Class secondClass) throws IOException {
+    private void writeDifferenceInMethods(StringBuilder diffClasses, Class firstClass, Class secondClass) {
         Method[] firstClassMethods = firstClass.getDeclaredMethods();
         Method[] secondClassMethods = secondClass.getDeclaredMethods();
+        StringBuilder addedMethods = new StringBuilder();
 
         for (int i = 0; i < firstClassMethods.length; i++) {
             Method curMethod = firstClassMethods[i];
@@ -361,23 +370,25 @@ public class ClassBuilder {
             for (int j = 0; j < secondClassMethods.length; j++) {
                 Method secondMethod = secondClassMethods[j];
 
-                if (!isMethodEquals(curMethod, secondMethod)) {
-                    writeOneMethod(file, curMethod);
-                    file.write("\n");
-                    writeOneMethod(file, secondMethod);
-                    file.write("\n");
-
-                    contains = true;
-                    break;
-                } else {
-                    contains = true;
-                    break;
+                if (curMethod.getName().equals(secondMethod.getName())) {
+                    if (!isMethodEquals(curMethod, secondMethod)) {
+                        writeOneMethod(addedMethods, curMethod);
+                        addedMethods.append("\n");
+                        writeOneMethod(addedMethods, secondMethod);
+                        addedMethods.append("\n");
+                    } else {
+                        contains = true;
+                        break;
+                    }
                 }
             }
 
-            if (!contains) {
-                writeOneMethod(file, curMethod);
-                file.write("\n");
+            if (!contains && addedMethods.length() != 0) {
+                diffClasses.append(addedMethods);
+                diffClasses.append("\n");
+            } else if (!contains) {
+                writeOneMethod(diffClasses, curMethod);
+                diffClasses.append("\n");
             }
         }
 
@@ -395,18 +406,47 @@ public class ClassBuilder {
             }
 
             if (!contains) {
-                writeOneMethod(file, curMethod);
+                writeOneMethod(diffClasses, curMethod);
             }
         }
     }
 
     private boolean isMethodEquals(Method firstMethod, Method secondMethod) {
         return firstMethod.getReturnType().getSimpleName().equals(secondMethod.getReturnType().getSimpleName()) &&
-                firstMethod.getExceptionTypes().equals(secondMethod.getExceptionTypes()) &&
-                Modifier.toString(firstMethod.getModifiers()).equals(Modifier.toString(secondMethod.getModifiers()));
+                isExceptionsEqual(firstMethod, secondMethod) &&
+                Modifier.toString(firstMethod.getModifiers()).equals(Modifier.toString(secondMethod.getModifiers())) &&
+                isParametersEqualInMethods(firstMethod, secondMethod);
     }
 
-    private void writeDifferenceInInnerClasses(FileWriter file, Class firstClass, Class secondClass) throws IOException {
+    private boolean isExceptionsEqual(Method first, Method second) {
+        List<Class<?>> firstExceptions = Arrays.asList(first.getExceptionTypes());
+        List<Class<?>> secondExceptions = Arrays.asList(second.getExceptionTypes());
+
+        return isArraysEqual(firstExceptions, secondExceptions);
+    }
+
+    private boolean isParametersEqualInMethods(Method first, Method second) {
+        List<Class<?>> firstParemeters = Arrays.asList(first.getParameterTypes());
+        List<Class<?>> secondParameters = Arrays.asList(second.getParameterTypes());
+
+        return isArraysEqual(firstParemeters, secondParameters);
+    }
+
+    private boolean isArraysEqual(List<Class<?>> first, List<Class<?>> second) {
+
+        if (first.size() != second.size()) {
+            return false;
+        }
+
+        for (Class<?> element : first) {
+            if (!second.contains(element)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void writeDifferenceInInnerClasses(StringBuilder diffClasses, Class firstClass, Class secondClass) {
         if (firstClass.getDeclaredClasses().length != 0 && secondClass.getDeclaredClasses().length != 0) {
             Class[] firstInnerClasses = firstClass.getDeclaredClasses();
             Class[] secondInnerClasses = secondClass.getDeclaredClasses();
@@ -416,18 +456,18 @@ public class ClassBuilder {
 
                 for (int j = 0; j < secondInnerClasses.length; j++) {
                     Class curSecondClass = secondInnerClasses[j];
-                    getDifference(file, curClass, curSecondClass);
+                    getDifference(diffClasses, curClass, curSecondClass);
                 }
             }
         } else if (firstClass.getDeclaredClasses().length != 0 && secondClass.getDeclaredClasses().length == 0) {
             Class[] innerClasses = firstClass.getDeclaredClasses();
             for (int i = 0; i < innerClasses.length; i++) {
-                getStructure(file, innerClasses[i]);
+                getStructure(diffClasses, innerClasses[i]);
             }
         } else if (firstClass.getDeclaredClasses().length == 0 && secondClass.getDeclaredClasses().length != 0) {
             Class[] innerClasses = secondClass.getDeclaredClasses();
             for (int i = 0; i < innerClasses.length; i++) {
-                getStructure(file, innerClasses[i]);
+                getStructure(diffClasses, innerClasses[i]);
             }
         }
     }
