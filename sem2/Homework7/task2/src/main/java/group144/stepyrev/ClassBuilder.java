@@ -5,12 +5,12 @@ import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.List;
 
-
 /** A class that builds a file with a text of inputted file. */
 public class ClassBuilder {
     public static void main(String[] args) throws IOException {
         ClassBuilder classBuilder = new ClassBuilder();
-        classBuilder.printStructure(String.class);
+        classBuilder.printStructure(group144.stepyrev.test.DifficultClass.class);
+        classBuilder.diffClasses(group144.stepyrev.test.DifficultClass.class, group144.stepyrev.buildClass.DifficultClass.class);
     }
 
     /**
@@ -46,7 +46,8 @@ public class ClassBuilder {
     private void writeClassDeclaration(StringBuilder buildClass, Class clazz) {
         writeClassModifiers(buildClass, clazz);
         buildClass.append("class ");
-        writeClassNameWithParameters(buildClass, clazz); // space here
+        writeClassNameWithParameters(buildClass, clazz);
+        buildClass.append(" "); // space here
         writeSuperclass(buildClass, clazz); // space here
         writeInterfaces(buildClass, clazz); // space here
     }
@@ -59,7 +60,6 @@ public class ClassBuilder {
 
     private void writeClassNameWithParameters(StringBuilder buildClass, Class clazz) {
         buildClass.append(clazz.getSimpleName());
-        buildClass.append(" ");
         if (clazz.getTypeParameters().length != 0) {
             TypeVariable[] parameters = clazz.getTypeParameters();
             buildClass.append("<");
@@ -71,7 +71,7 @@ public class ClassBuilder {
                 }
             }
 
-            buildClass.append("> ");
+            buildClass.append(">");
         }
     }
 
@@ -79,6 +79,7 @@ public class ClassBuilder {
         if (clazz.getSuperclass() != null) {
             buildClass.append("extends ");
             writeClassNameWithParameters(buildClass, clazz.getSuperclass());
+            buildClass.append(" ");
         }
     }
 
@@ -87,7 +88,8 @@ public class ClassBuilder {
             buildClass.append("implements ");
             Class[] interfaces = clazz.getInterfaces();
             for (int i = 0; i < interfaces.length; i++) {
-                buildClass.append(interfaces[i].getName());
+                writeOneInterface(buildClass, interfaces[i]);
+
                 if (i != interfaces.length - 1) {
                     buildClass.append(", ");
                 }
@@ -95,6 +97,22 @@ public class ClassBuilder {
         }
 
         buildClass.append(" ");
+    }
+
+    private void writeOneInterface(StringBuilder buildClass, Class interfaceClass) {
+        buildClass.append(interfaceClass.getName());
+        if (interfaceClass.getTypeParameters().length != 0) {
+            buildClass.append("<");
+            TypeVariable[] parameters = interfaceClass.getTypeParameters();
+            for (int i = 0; i < parameters.length; i++) {
+                buildClass.append(parameters[i].getName());
+
+                if (i != parameters.length - 1) {
+                    buildClass.append(", ");
+                }
+            }
+            buildClass.append(">");
+        }
     }
 
     private void writeFields(StringBuilder buildClass, Class clazz) {
@@ -284,13 +302,20 @@ public class ClassBuilder {
         StringBuilder diffClasses = new StringBuilder();
         getDifference(diffClasses, firstClazz, secondClazz);
 
-        if (diffClasses.length() == 0) {
+        if (diffClasses.length() == 0 || isSpecialCase(firstClazz, diffClasses)) {
             System.out.println("Classes are equal!");
             return true;
         }
 
         System.out.println(diffClasses);
         return false;
+    }
+
+    private boolean isSpecialCase(Class clazz, StringBuilder buildClass) { // this adds in case of inner class
+        StringBuilder specialCase = new StringBuilder("final ");
+        specialCase.append(clazz.getSimpleName() + " ");
+        specialCase.append("this$0$ = null;" + (char) 10);
+        return specialCase.toString().equals(buildClass.toString());
     }
 
     private void getDifference(StringBuilder diffClasses, Class firstClazz, Class secondClazz) {

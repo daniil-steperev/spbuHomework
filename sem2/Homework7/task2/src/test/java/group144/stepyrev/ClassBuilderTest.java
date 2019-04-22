@@ -3,6 +3,8 @@ package group144.stepyrev;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,11 +12,13 @@ class ClassBuilderTest {
     private static ClassBuilder classBuilder = new ClassBuilder();
 
     @Test
-    public void printStructureTest() throws IOException {
-        String result = classBuilder.printStructure(group144.stepyrev.test.TwoTuple.class);
+    public void printStructureTest() throws IOException, ClassNotFoundException {
+        ClassLoader printedClassLoader = new URLClassLoader(new URL[]{new URL("file://")});
+        Class<?> printedClass = printedClassLoader.loadClass("group144.stepyrev.test.TwoTuple");
+        String result = classBuilder.printStructure(printedClass);
         String expected = "package group144.stepyrev.buildClass;\n" +
                 "\n" +
-                "public class TwoTuple <A, B> extends Object  {\n" +
+                "public class TwoTuple<A, B> extends Object  {\n" +
                 "\tpublic final Object first = null;\n" +
                 "\tpublic final Object second = null;\n" +
                 "\t\n" +
@@ -28,8 +32,35 @@ class ClassBuilderTest {
     }
 
     @Test
-    public void diffStructureTest() throws IOException {
-        classBuilder.printStructure(ClassBuilder.class);
-        assertTrue(classBuilder.diffClasses(ClassBuilder.class, group144.stepyrev.buildClass.ClassBuilder.class));
+    public void diffStructureTrueTest() throws IOException, ClassNotFoundException {
+        ClassLoader printedClassLoader = new URLClassLoader(new URL[]{new URL("file://")});
+        Class<?> printedClass = printedClassLoader.loadClass("group144.stepyrev.ClassBuilder");
+        classBuilder.printStructure(printedClass);
+
+        ClassLoader buildClassLoader = new URLClassLoader(new URL[]{new URL("file://")});
+        Class<?> buildClass = buildClassLoader.loadClass("group144.stepyrev.buildClass.ClassBuilder");
+        assertTrue(classBuilder.diffClasses(printedClass, buildClass));
+    }
+
+    @Test
+    public void diffStructureDifficultTest() throws IOException, ClassNotFoundException {
+        ClassLoader printedClassLoader = new URLClassLoader(new URL[]{new URL("file://")});
+        Class<?> printedClass = printedClassLoader.loadClass("group144.stepyrev.test.DifficultClass");
+        classBuilder.printStructure(printedClass);
+
+        ClassLoader buildClassLoader = new URLClassLoader(new URL[]{new URL("file://")});
+        Class<?> buildClass = buildClassLoader.loadClass("group144.stepyrev.buildClass.DifficultClass");
+        assertTrue(classBuilder.diffClasses(printedClass, buildClass));
+    }
+
+    @Test
+    public void diffStructureFalseTest() throws IOException, ClassNotFoundException {
+        ClassLoader printedClassLoader = new URLClassLoader(new URL[]{new URL("file://")});
+        Class<?> printedClass = printedClassLoader.loadClass("group144.stepyrev.test.TwoTupleMoreMethod");
+        classBuilder.printStructure(printedClass);
+
+        ClassLoader buildClassLoader = new URLClassLoader(new URL[]{new URL("file://")});
+        Class<?> buildClass = buildClassLoader.loadClass("group144.stepyrev.buildClass.TwoTuple");
+        assertFalse(classBuilder.diffClasses(printedClass, buildClass));
     }
 }
