@@ -1,36 +1,33 @@
 package group144.stepyrev;
 
-import org.joor.Reflect;
-
 import java.io.*;
 import java.lang.reflect.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Supplier;
 
 
 /** A class that builds a file with a text of inputted file. */
 public class ClassBuilder {
     public static void main(String[] args) throws IOException {
         ClassBuilder classBuilder = new ClassBuilder();
-        StringBuilder buildClass = new StringBuilder();
-        classBuilder.printStructure(buildClass, String.class);
-
-        StringBuilder diffClases = new StringBuilder();
-        classBuilder.diffClasses(diffClases, String.class, String.class);
-        System.out.println(diffClases);
+        classBuilder.printStructure(String.class);
     }
 
     /**
      * A method that builds a file with a text of class.
      * @param clazz - a class which should be build in the file
      */
-    public void printStructure(StringBuilder buildClass, Class clazz) throws IOException {
-        buildClass.append("package group144.stepyrev;\n\n");
-        buildClass.append("import java.io.*;\n");
-        buildClass.append("import java.util.*;\n\n");
+    public String printStructure(Class clazz) throws IOException {
+        StringBuilder buildClass = new StringBuilder();
+        FileWriter fileWriter = new FileWriter("src\\main\\java\\group144\\stepyrev\\buildClass\\" + clazz.getSimpleName() + ".java");
+
+        buildClass.append("package group144.stepyrev.buildClass;\n\n");
         getStructure(buildClass, clazz);
+
+        fileWriter.write(buildClass.toString());
+        fileWriter.close();
+
+        return buildClass.toString();
     }
 
     private void getStructure(StringBuilder buildClass, Class clazz) {
@@ -90,7 +87,7 @@ public class ClassBuilder {
             buildClass.append("implements ");
             Class[] interfaces = clazz.getInterfaces();
             for (int i = 0; i < interfaces.length; i++) {
-                buildClass.append(interfaces[i].getSimpleName());
+                buildClass.append(interfaces[i].getName());
                 if (i != interfaces.length - 1) {
                     buildClass.append(", ");
                 }
@@ -118,7 +115,6 @@ public class ClassBuilder {
 
         buildClass.append(field.getType().getSimpleName() + " " + field.getName() + " = ");
         writeType(buildClass, field.getType());
-        buildClass.append("\n");
     }
 
     private void writeConstructors(StringBuilder buildClass, Class clazz) {
@@ -247,7 +243,7 @@ public class ClassBuilder {
             buildClass.append("throws ");
             Class[] exceptions = method.getExceptionTypes();
             for (int i = 0; i < exceptions.length; i++) {
-                buildClass.append(exceptions[i].getSimpleName());
+                buildClass.append(exceptions[i].getName());
                 if (i != exceptions.length - 1) {
                     buildClass.append(", ");
                 }
@@ -258,7 +254,7 @@ public class ClassBuilder {
 
     private void writeParameters(StringBuilder buildClass, Parameter[] parameters) {
         for (int i = 0; i < parameters.length; i++) {
-            buildClass.append(parameters[i].getType().getSimpleName() + " " + parameters[i].getName());
+            buildClass.append(parameters[i].getParameterizedType().getTypeName() + " " + parameters[i].getName());
             if (i != parameters.length - 1) {
                 buildClass.append(", ");
             }
@@ -284,14 +280,17 @@ public class ClassBuilder {
      * @param firstClazz - a first class
      * @param secondClazz - a second class
      */
-    public void diffClasses(StringBuilder diffClasses, Class firstClazz, Class secondClazz) {
+    public boolean diffClasses(Class firstClazz, Class secondClazz) {
+        StringBuilder diffClasses = new StringBuilder();
         getDifference(diffClasses, firstClazz, secondClazz);
 
         if (diffClasses.length() == 0) {
             System.out.println("Classes are equal!");
-        } else {
-            System.out.println(diffClasses);
+            return true;
         }
+
+        System.out.println(diffClasses);
+        return false;
     }
 
     private void getDifference(StringBuilder diffClasses, Class firstClazz, Class secondClazz) {
@@ -422,24 +421,28 @@ public class ClassBuilder {
         List<Class<?>> firstExceptions = Arrays.asList(first.getExceptionTypes());
         List<Class<?>> secondExceptions = Arrays.asList(second.getExceptionTypes());
 
-        return isArraysEqual(firstExceptions, secondExceptions);
-    }
-
-    private boolean isParametersEqualInMethods(Method first, Method second) {
-        List<Class<?>> firstParemeters = Arrays.asList(first.getParameterTypes());
-        List<Class<?>> secondParameters = Arrays.asList(second.getParameterTypes());
-
-        return isArraysEqual(firstParemeters, secondParameters);
-    }
-
-    private boolean isArraysEqual(List<Class<?>> first, List<Class<?>> second) {
-
-        if (first.size() != second.size()) {
+        if (firstExceptions.size() != secondExceptions.size()) {
             return false;
         }
 
-        for (Class<?> element : first) {
-            if (!second.contains(element)) {
+        for (Class<?> element : firstExceptions) {
+            if (!secondExceptions.contains(element)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isParametersEqualInMethods(Method first, Method second) {
+        Class<?>[] firstParemeters = first.getParameterTypes();
+        Class<?>[] secondParameters = second.getParameterTypes();
+
+        if (firstParemeters.length != secondParameters.length) {
+            return false;
+        }
+
+        for (int i = 0; i < firstParemeters.length; i++) {
+            if (!firstParemeters[i].equals(secondParameters[i])) {
                 return false;
             }
         }
