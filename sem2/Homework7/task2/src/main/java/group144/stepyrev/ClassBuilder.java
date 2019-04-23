@@ -15,7 +15,7 @@ public class ClassBuilder {
 
     /**
      * A method that builds a file with a text of class.
-     * @param clazz - a class which should be build in the file
+     * @param clazz - a class which should be built in the file
      */
     public String printStructure(Class clazz) throws IOException {
         StringBuilder buildClass = new StringBuilder();
@@ -30,6 +30,11 @@ public class ClassBuilder {
         return buildClass.toString();
     }
 
+    /**
+     * A method that writes a class.
+     * @param buildClass - a string builder with current class
+     * @param clazz - a class that should be built
+     */
     private void getStructure(StringBuilder buildClass, Class clazz) {
         writeClassDeclaration(buildClass, clazz);
         buildClass.append("{\n\t");
@@ -43,6 +48,11 @@ public class ClassBuilder {
         buildClass.append("\n\n\t");
     }
 
+    /**
+     * A method that writes a declaration of the class.
+     * @param buildClass - a string builder with current class
+     * @param clazz - a class that declaration should be built
+     */
     private void writeClassDeclaration(StringBuilder buildClass, Class clazz) {
         writeClassModifiers(buildClass, clazz);
         buildClass.append("class ");
@@ -52,12 +62,24 @@ public class ClassBuilder {
         writeInterfaces(buildClass, clazz); // space here
     }
 
+    /**
+     * A method that writes a modifiers of the class.
+     * @param buildClass - a string builder with current class
+     * @param clazz - a class that modifiers should be built
+     */
     private void writeClassModifiers(StringBuilder buildClass, Class clazz) {
         if (clazz.getModifiers() != 0) {
             buildClass.append(Modifier.toString(clazz.getModifiers()) + " ");
         }
     }
 
+    /**
+     * A method that writes a class name and it's parameters.
+     *
+     * If class does not have any parameters, nothing adds.
+     * @param buildClass - a string builder with current class
+     * @param clazz - a class that name and parameters should be built
+     */
     private void writeClassNameWithParameters(StringBuilder buildClass, Class clazz) {
         buildClass.append(clazz.getSimpleName());
         if (clazz.getTypeParameters().length != 0) {
@@ -75,6 +97,13 @@ public class ClassBuilder {
         }
     }
 
+    /**
+     * A method that writes the superclass of the class.
+     *
+     * Adds word 'extends'.
+     * @param buildClass - a string builder with current class
+     * @param clazz - a class that superclass should be built
+     */
     private void writeSuperclass(StringBuilder buildClass, Class clazz) {
         if (clazz.getSuperclass() != null) {
             buildClass.append("extends ");
@@ -83,6 +112,11 @@ public class ClassBuilder {
         }
     }
 
+    /**
+     * A method that writes interfaces of the class.
+     * @param buildClass - a string builder with current class
+     * @param clazz - a class that interfaces should be built
+     */
     private void writeInterfaces(StringBuilder buildClass, Class clazz) {
         if (clazz.getInterfaces().length != 0) {
             buildClass.append("implements ");
@@ -99,6 +133,11 @@ public class ClassBuilder {
         buildClass.append(" ");
     }
 
+    /**
+     * A method that writes one interface.
+     * @param buildClass - a string builder with current class
+     * @param interfaceClass - an interface that should be written
+     */
     private void writeOneInterface(StringBuilder buildClass, Class interfaceClass) {
         buildClass.append(interfaceClass.getName());
         if (interfaceClass.getTypeParameters().length != 0) {
@@ -115,6 +154,11 @@ public class ClassBuilder {
         }
     }
 
+    /**
+     * A method that writes fields of the class.
+     * @param buildClass - a string builder with current class
+     * @param clazz - a class that fields should be built
+     */
     private void writeFields(StringBuilder buildClass, Class clazz) {
         if (clazz.getDeclaredFields().length != 0) {
             Field[] fields = clazz.getDeclaredFields();
@@ -125,6 +169,13 @@ public class ClassBuilder {
         }
     }
 
+    /**
+     * A method that writes one field.
+     *
+     * This method also initializing the field (there is an error when field modifier is 'final').
+     * @param buildClass - a string builder with current class
+     * @param field - a field that should be built
+     */
     private void writeOneField(StringBuilder buildClass, Field field) {
         if (field.getModifiers() != 0) {
             buildClass.append(Modifier.toString(field.getModifiers()));
@@ -135,6 +186,11 @@ public class ClassBuilder {
         writeType(buildClass, field.getType());
     }
 
+    /**
+     * A method that prints constructors of the class.
+     * @param buildClass - a string builder with current class
+     * @param clazz - a class that constructors should be built
+     */
     private void writeConstructors(StringBuilder buildClass, Class clazz) {
         buildClass.append("\n\t");
         if (clazz.getDeclaredConstructors().length != 0) {
@@ -146,6 +202,12 @@ public class ClassBuilder {
         }
     }
 
+    /**
+     * A method that writes one constructor of the class.
+     * @param buildClass - a string builder with current class
+     * @param clazz - a class that constructors should be built
+     * @param constructor - a constructor that should be built
+     */
     private void writeOneConstructor(StringBuilder buildClass, Class clazz, Constructor constructor) {
         if (constructor.getModifiers() != 0) {
             buildClass.append(Modifier.toString(constructor.getModifiers()) + " ");
@@ -159,6 +221,11 @@ public class ClassBuilder {
         buildClass.append("{ }");
     }
 
+    /**
+     * A method that writes methods of the class.
+     * @param buildClass - a string builder with current class
+     * @param clazz - a class that methods should be built
+     */
     private void writeMethods(StringBuilder buildClass, Class clazz) {
         if (clazz.getDeclaredMethods().length != 0) {
             Method[] methods = clazz.getDeclaredMethods();
@@ -172,6 +239,14 @@ public class ClassBuilder {
         }
     }
 
+    /**
+     * A method that writes one method of the class.
+     *
+     * This method also writes 'return ' + currentTypeNullElement.
+     * In case of 'void' the method just writes '{ }'.
+     * @param buildClass - a string builder with current class
+     * @param method - a method that should be built
+     */
     private void writeOneMethod(StringBuilder buildClass, Method method) {
         if (method.getModifiers() != 0) {
             buildClass.append(Modifier.toString(method.getModifiers()) + " ");
@@ -197,6 +272,13 @@ public class ClassBuilder {
         buildClass.append("}");
     }
 
+    /**
+     * A method that writes a common element of the type.
+     *
+     * This method is useful in case of method and fields building.
+     * @param buildClass - a string builder with current class
+     * @param type - a type that element should be built
+     */
     private void writeType(StringBuilder buildClass, Type type) {
         switch (type.getTypeName()) {
             case "Integer":
@@ -256,6 +338,11 @@ public class ClassBuilder {
         }
     }
 
+    /**
+     * A method that writes the exceptions of the class.
+     * @param buildClass - a string builder with current class
+     * @param method - a method that exceptions should be built
+     */
     private void writeExceptions(StringBuilder buildClass, Method method) {
         if (method.getExceptionTypes().length != 0) {
             buildClass.append("throws ");
@@ -270,6 +357,13 @@ public class ClassBuilder {
         buildClass.append(" ");
     }
 
+    /**
+     * A method that writes parameters.
+     *
+     * This method is useful in case of building constructors, methods, class.
+     * @param buildClass - a string builder with current class
+     * @param parameters - an array with parameters that should be built
+     */
     private void writeParameters(StringBuilder buildClass, Parameter[] parameters) {
         for (int i = 0; i < parameters.length; i++) {
             buildClass.append(parameters[i].getParameterizedType().getTypeName() + " " + parameters[i].getName());
@@ -279,6 +373,11 @@ public class ClassBuilder {
         }
     }
 
+    /**
+     * A method that writes inner classes of the class.
+     * @param buildClass - a string builder with current class
+     * @param clazz - a class that inner classes should be built
+     */
     private void writeInnerClasses(StringBuilder buildClass, Class clazz) {
         if (clazz.getDeclaredClasses().length != 0) {
             buildClass.append("\n\t");
@@ -311,6 +410,16 @@ public class ClassBuilder {
         return false;
     }
 
+    /**
+     * A method that checks if the build class has a 'special case'.
+     *
+     * There is a problem when we builds inner classes to the buildClass file adds a special string:
+     * 'final' + *className* + ' this$0$ = null;'.
+     * However, buildClass equals inputted class (that's why this method is useful).
+     * @param clazz - a class that was built
+     * @param buildClass - a string builder with current class
+     * @return - true if this case is special, false otherwise
+     */
     private boolean isSpecialCase(Class clazz, StringBuilder buildClass) { // this adds in case of inner class
         StringBuilder specialCase = new StringBuilder("final ");
         specialCase.append(clazz.getSimpleName() + " ");
@@ -318,12 +427,24 @@ public class ClassBuilder {
         return specialCase.toString().equals(buildClass.toString());
     }
 
+    /**
+     * A method that gets difference between two classes.
+     * @param diffClasses - a string builder with difference of two comparable classes
+     * @param firstClazz - a first comparable class
+     * @param secondClazz - a second comparable class
+     */
     private void getDifference(StringBuilder diffClasses, Class firstClazz, Class secondClazz) {
         writeDifferenceInFields(diffClasses, firstClazz, secondClazz);
         writeDifferenceInMethods(diffClasses, firstClazz, secondClazz);
         writeDifferenceInInnerClasses(diffClasses, firstClazz, secondClazz);
     }
 
+    /**
+     * A method that writes difference between two classes in fields.
+     * @param diffClasses - a string builder with difference of two comparable classes
+     * @param firstClazz - a first comparable class
+     * @param secondClazz - a second comparable class
+     */
     private void writeDifferenceInFields(StringBuilder diffClasses, Class firstClazz, Class secondClazz) {
         Field[] firstClassFields = firstClazz.getDeclaredFields();
         Field[] secondClassFields = secondClazz.getDeclaredFields();
@@ -376,12 +497,27 @@ public class ClassBuilder {
         }
     }
 
+    /**
+     * A method that checks if the fields are equal.
+     * @param firstField - a first comparable field
+     * @param secondField - a second comparable field
+     * @return - true if fields are equal, false otherwise
+     */
     private boolean isFieldEquals(Field firstField, Field secondField) {
         return firstField.getType().getSimpleName().equals(secondField.getType().getSimpleName()) &&
                 Modifier.toString(firstField.getModifiers()).equals(Modifier.toString(secondField.getModifiers()));
 
     }
 
+    /**
+     * A method that writes difference of two classes in methods.
+     *
+     * This method compares all methods from first class to all from the second one. If there is a method with such name
+     * but different from the original, it writes both of them to the diffClasses. If there is not, writes only first.
+     * @param diffClasses - a string builder with difference of two comparable classes
+     * @param firstClass - a first comparable class
+     * @param secondClass - a second comparable class
+     */
     private void writeDifferenceInMethods(StringBuilder diffClasses, Class firstClass, Class secondClass) {
         Method[] firstClassMethods = firstClass.getDeclaredMethods();
         Method[] secondClassMethods = secondClass.getDeclaredMethods();
@@ -435,6 +571,12 @@ public class ClassBuilder {
         }
     }
 
+    /**
+     * A method that checks if two methods are equal.
+     * @param firstMethod - a first comparable method.
+     * @param secondMethod - a second comparable method.
+     * @return - true if equal, false otherwise
+     */
     private boolean isMethodEquals(Method firstMethod, Method secondMethod) {
         return firstMethod.getReturnType().getSimpleName().equals(secondMethod.getReturnType().getSimpleName()) &&
                 isExceptionsEqual(firstMethod, secondMethod) &&
@@ -442,6 +584,14 @@ public class ClassBuilder {
                 isParametersEqualInMethods(firstMethod, secondMethod);
     }
 
+    /**
+     * A method that checks if the exceptions of two methods are equal.
+     *
+     * The order of the exceptions is not important that's why we should check 'contains'.
+     * @param first - a first comparable method
+     * @param second - a second comparable method
+     * @return - true if equal, false otherwise
+     */
     private boolean isExceptionsEqual(Method first, Method second) {
         List<Class<?>> firstExceptions = Arrays.asList(first.getExceptionTypes());
         List<Class<?>> secondExceptions = Arrays.asList(second.getExceptionTypes());
@@ -458,22 +608,38 @@ public class ClassBuilder {
         return true;
     }
 
+    /**
+     * A method that checks if the parameters of two methods are equal.
+     *
+     * The order of the exceptions IS important that's why we should check element by element.
+     * @param first - a first comparable method
+     * @param second - a second comparable method
+     * @return - true if equal, false otherwise
+     */
     private boolean isParametersEqualInMethods(Method first, Method second) {
-        Class<?>[] firstParemeters = first.getParameterTypes();
+        Class<?>[] firstParameters = first.getParameterTypes();
         Class<?>[] secondParameters = second.getParameterTypes();
 
-        if (firstParemeters.length != secondParameters.length) {
+        if (firstParameters.length != secondParameters.length) {
             return false;
         }
 
-        for (int i = 0; i < firstParemeters.length; i++) {
-            if (!firstParemeters[i].equals(secondParameters[i])) {
+        for (int i = 0; i < firstParameters.length; i++) {
+            if (!firstParameters[i].equals(secondParameters[i])) {
                 return false;
             }
         }
         return true;
     }
 
+    /**
+     * A method that writes a difference of the inner classes between two methods.
+     *
+     * If the there are not any inner class from one class in another, the method builds the inner class.
+     * @param diffClasses - a string builder with difference of two comparable classes
+     * @param firstClass - a first comparable class
+     * @param secondClass - a second comparable class
+     */
     private void writeDifferenceInInnerClasses(StringBuilder diffClasses, Class firstClass, Class secondClass) {
         if (firstClass.getDeclaredClasses().length != 0 && secondClass.getDeclaredClasses().length != 0) {
             Class[] firstInnerClasses = firstClass.getDeclaredClasses();
