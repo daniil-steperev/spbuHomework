@@ -85,7 +85,7 @@ public class List<T> {
      * @throws EmptyListException an exception that should be raised when user tries to remove from empty list
      * @throws AbsenceElementException an exception that should be raised when user tries to remove missing element
      */
-    public T remove(T value) throws EmptyListException, AbsenceElementException, AlreadyAddedElementException, WrongIndexException {
+    public T removeByValue(T value) throws EmptyListException, AbsenceElementException, AlreadyAddedElementException, WrongIndexException {
         if (isEmpty()) {
             throw new EmptyListException();
         }

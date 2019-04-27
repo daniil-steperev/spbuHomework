@@ -125,7 +125,7 @@ class ListTest {
         list.addFirst(1);
         String printedList = "1 3";
 
-        list.remove(Integer.valueOf(2));
+        list.removeByValue(Integer.valueOf(2));
         assertEquals(printedList, list.print());
     }
 
