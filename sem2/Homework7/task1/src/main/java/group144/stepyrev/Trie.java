@@ -1,12 +1,17 @@
 package group144.stepyrev;
 
 import java.io.*;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /** A class that represents a structure trie. */
-public class Trie implements Serializable {
+public class Trie {
     private Node root;
+    private ArrayList<String> words = new ArrayList<>(); // this field would be useful in serialization
 
+    /** An ordinary constructor of the trie. */
     public Trie() {
         root = new Node();
     }
@@ -36,6 +41,7 @@ public class Trie implements Serializable {
 
             if (current.content.equals(element)) {
                 current.isEndOfWord = true;
+                words.add(element);
                 return true;
             }
 
@@ -150,9 +156,16 @@ public class Trie implements Serializable {
      * @throws IOException - an exception that should be raised when the trie couldn't be written to the out
      */
     public void serialize(OutputStream out) throws IOException {
-        ObjectOutputStream outputStream = new ObjectOutputStream(out);
-        outputStream.writeObject(this);
-        outputStream.close();
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+        writeElements(writer); // as root is first element, it's content means node char
+        writer.close();
+    }
+
+    private void writeElements(BufferedWriter out) throws IOException {
+        for (int i = 0; i < words.size(); i++) {
+            out.write(words.get(i));
+            out.write("\n"); // new word
+        }
     }
 
     /**
@@ -162,9 +175,21 @@ public class Trie implements Serializable {
      * @throws ClassNotFoundException - an exception that should be raised when we couldn't find the class Trie
      */
     public void deserialize(InputStream in) throws IOException, ClassNotFoundException {
-        ObjectInputStream inputStream = new ObjectInputStream(in);
-        Trie newTrie = (Trie) inputStream.readObject();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        Trie newTrie = getElements(reader);
         this.root = newTrie.root;
+        this.words = newTrie.words;
+        reader.close();
+    }
+
+    private Trie getElements(BufferedReader reader) throws IOException {
+        Trie newTrie = new Trie();
+        while (reader.ready()) {
+            String word = reader.readLine();
+            newTrie.add(word);
+        }
+
+        return newTrie;
     }
 
     /**

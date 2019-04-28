@@ -55,9 +55,9 @@ class TrieTest {
     @Test
     public void serializationTest() throws IOException, ClassNotFoundException {
         Trie trie = new Trie();
-        trie.add("i");
+        trie.add("I");
         trie.add("love");
-        trie.add("java");
+        trie.add("Java");
 
         String fileName = "test.txt";
         trie.serialize(new FileOutputStream(new File(fileName)));
@@ -66,9 +66,9 @@ class TrieTest {
         trie.deserialize(inputStream);
 
         assertEquals(3, trie.size());
-        assertTrue(trie.contains("i"));
+        assertTrue(trie.contains("Java"));
         assertTrue(trie.contains("love"));
-        assertTrue(trie.contains("java"));
+        assertTrue(trie.contains("I"));
 
         inputStream.close();
     }
