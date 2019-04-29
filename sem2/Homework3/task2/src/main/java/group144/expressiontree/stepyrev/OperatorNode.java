@@ -1,7 +1,7 @@
 package group144.expressiontree.stepyrev;
 
 /** A class that represents an operator node from the expression tree */
-public class OperatorNode extends Node {
+public class OperatorNode implements Node {
     private char operation;
     private Node leftChild;
     private Node rightChild;

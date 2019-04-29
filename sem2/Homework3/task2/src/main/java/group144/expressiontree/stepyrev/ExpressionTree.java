@@ -48,21 +48,21 @@ public class ExpressionTree {
             }
 
             newNode = new OperatorNode(symbol);
-            Pair scanedElements = scanTree(expression, index);
-            ((OperatorNode) newNode).setLeftChild((Node) scanedElements.object);
-            index = scanedElements.index;
+            Pair<Node> scannedElements = scanTree(expression, index);
+            ((OperatorNode) newNode).setLeftChild(scannedElements.object);
+            index = scannedElements.index;
 
             index++; // get space
 
-            scanedElements = scanTree(expression, index);
-            ((OperatorNode) newNode).setRightChild((Node) scanedElements.object);
-            index = scanedElements.index;
+            scannedElements = scanTree(expression, index);
+            ((OperatorNode) newNode).setRightChild(scannedElements.object);
+            index = scannedElements.index;
 
             index++; // move to next symbol
         } else {
-            Pair pairOfInts = countNumber(expression, index, symbol);
+            Pair<Integer> pairOfInts = countNumber(expression, index, symbol);
             index = pairOfInts.index;
-            Integer number = (Integer) pairOfInts.object;
+            Integer number = (pairOfInts.object);
 
             newNode = new OperandNode(number.intValue());
         }
@@ -94,11 +94,11 @@ public class ExpressionTree {
         return symbol - '0';
     }
 
-    private class Pair {
-        private Object object;
+    private class Pair<T> {
+        private T object;
         private int index;
 
-        private Pair(Object object, int index) {
+        private Pair(T object, int index) {
             this.object = object;
             this.index = index;
         }
