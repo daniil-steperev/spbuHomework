@@ -4,7 +4,7 @@ package group144.calculator.stepyrev;
 public class Converter {
     /** A method that coverts infix string to postfix form */
     public StringBuilder convertToPostfix(String expression) throws EmptyStackException {
-        ListStack<String> stack = new ListStack<String>();
+        ListStack<String> stack = new ListStack<>();
         StringBuilder postfixString = new StringBuilder();
         expression = setSpaces(expression);
         String[] separatedExpression = expression.split(" ");
@@ -26,19 +26,19 @@ public class Converter {
     }
 
     private String setSpaces(String expression) {
-        String rightExpression = "";
+        StringBuilder rightExpression = new StringBuilder();
         char[] expressionLetters = expression.toCharArray();
         for (int i = 0; i < expressionLetters.length; i++) {
             if (expressionLetters[i] == ' ') {
 
             } else if (isNumber(expressionLetters[i])) {
-                rightExpression = rightExpression + expressionLetters[i];
+                rightExpression.append(expressionLetters[i]);
             } else {
-                rightExpression = rightExpression + " "  + expressionLetters[i] + " ";
+                rightExpression.append(" "  + expressionLetters[i] + " ");
             }
         }
 
-        return rightExpression;
+        return rightExpression.toString();
     }
 
     private StringBuilder convertFromStack(ListStack<String> stack, StringBuilder postfixString) throws EmptyStackException {

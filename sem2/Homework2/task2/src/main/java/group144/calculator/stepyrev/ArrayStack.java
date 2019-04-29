@@ -12,15 +12,12 @@ public class ArrayStack<Type> implements Stack<Type> {
     /** {@inheritDoc} */
     @Override
     public void push(Type value) {
-        if (length == size) {
-            increaseStack();
-            values[length] = value;
-            length++;
-            return;
-        }
-
         values[length] = value;
         length++;
+
+        if (length == size) {
+            increaseStack();
+        }
     }
 
     /** {@inheritDoc} */
@@ -33,6 +30,10 @@ public class ArrayStack<Type> implements Stack<Type> {
         Type returnElement = values[length - 1];
         values[length - 1] = null;
         length--;
+
+        if (length * length < size) {
+            decreaseStack();
+        }
 
         return returnElement;
     }
