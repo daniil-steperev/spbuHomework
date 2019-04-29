@@ -83,9 +83,9 @@ public class List<T> {
      * @param value a value of the element that should be removed
      * @return a value of the removed element
      * @throws EmptyListException an exception that should be raised when user tries to remove from empty list
-     * @throws AbsenceElementException an exception that should be raised when user tries to remove missing element
+     * @throws ElementNotFoundException an exception that should be raised when user tries to remove missing element
      */
-    public T removeByValue(T value) throws EmptyListException, AbsenceElementException, AlreadyAddedElementException, WrongIndexException {
+    public T removeByValue(T value) throws EmptyListException, ElementNotFoundException, AlreadyAddedElementException, WrongIndexException {
         if (isEmpty()) {
             throw new EmptyListException();
         }
@@ -108,7 +108,7 @@ public class List<T> {
             return value; // as value equals we can return inputted value
         }
 
-        throw new AbsenceElementException();
+        throw new ElementNotFoundException();
     }
 
     /**
@@ -116,9 +116,8 @@ public class List<T> {
      * @param index an index of the element that should be removed from the list
      * @return a value of the removed element
      * @throws EmptyListException an exception that should be raised when user tries to remove from empty list
-     * @throws AbsenceElementException an exception that should be raised when user tries to remove missing element
      */
-    public T remove(int index) throws EmptyListException, WrongIndexException, AlreadyAddedElementException {
+    public T remove(int index) throws EmptyListException, WrongIndexException {
         if (isEmpty()) {
             throw new EmptyListException();
         }
@@ -171,9 +170,9 @@ public class List<T> {
      * @param value means a value that's index should be returned
      * @return an index of the element
      * @throws EmptyListException an exception that should be raised when user tries to remove from empty list
-     * @throws AbsenceElementException an exception that should be raised when user tries to remove missing element
+     * @throws ElementNotFoundException an exception that should be raised when user tries to remove missing element
      */
-    public int getIndexOf(T value) throws EmptyListException, AbsenceElementException {
+    public int getIndexOf(T value) throws EmptyListException, ElementNotFoundException {
         if (isEmpty()) {
             throw new EmptyListException();
         }
@@ -189,7 +188,7 @@ public class List<T> {
             current = current.next;
         }
 
-        throw new AbsenceElementException();
+        throw new ElementNotFoundException();
     }
 
     public int getLength() {

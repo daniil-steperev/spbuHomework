@@ -118,7 +118,7 @@ class ListTest {
     }
 
     @Test
-    void removeFromListByValue() throws AlreadyAddedElementException, AbsenceElementException, EmptyListException, WrongIndexException {
+    void removeFromListByValue() throws AlreadyAddedElementException, ElementNotFoundException, EmptyListException, WrongIndexException {
         List<Integer> list = new List<>();
         list.addFirst(3);
         list.addFirst(2);
@@ -164,7 +164,7 @@ class ListTest {
     }
 
     @Test
-    void getIndexOfElementInList() throws AlreadyAddedElementException, AbsenceElementException, EmptyListException, WrongIndexException {
+    void getIndexOfElementInList() throws AlreadyAddedElementException, ElementNotFoundException, EmptyListException, WrongIndexException {
         List<Integer> list = new List<>();
         list.addFirst(2);
 
