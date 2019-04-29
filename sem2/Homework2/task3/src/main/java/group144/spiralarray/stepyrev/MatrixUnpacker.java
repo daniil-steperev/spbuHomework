@@ -11,8 +11,7 @@ public class MatrixUnpacker {
      * @param matrix means Matrix that should be converted
      * @return means array representing converted Matrix
      */
-    public static StringBuilder convertMatrixToList (Matrix matrix) {
-        StringBuilder elements = new StringBuilder(); // array of Matrix elements
+    public static void writeMatrixSpirally (Matrix matrix, SpiralWriter writer) throws WrongInputException {
         int array[][] = matrix.getMatrix(); // Matrix in table form
         int size = matrix.getSize();
 
@@ -21,27 +20,25 @@ public class MatrixUnpacker {
         int currentJ = size / 2; // index of current second coordinate of the element in table form
         Position position = new Position(currentI, currentJ); // consists of current position
         while (shift < size) {
-            position =  makeMove(array, elements, position, shift, "right");
+            position =  makeMove(array, writer, position, shift, "right");
 
-            position = makeMove(array, elements, position, shift, "down");
+            position = makeMove(array, writer, position, shift, "down");
             shift++;
 
-            position = makeMove(array, elements, position, shift, "left");
+            position = makeMove(array, writer, position, shift, "left");
 
-            position = makeMove(array, elements, position, shift, "up");
+            position = makeMove(array, writer, position, shift, "up");
             shift++;
         }
 
-        shift = array.length;
-        position = makeMove(array, elements, position, shift, "right");
-
-        return elements;
+        shift = array.length; // last move
+        position = makeMove(array, writer, position, shift, "right");
     }
 
-    private static Position makeMove(int[][] array, StringBuilder list, Position position, int shift, String direction) {
+    private static Position makeMove(int[][] array, SpiralWriter writer, Position position, int shift, String direction) throws WrongInputException {
         int counter = 0;
         while (counter < shift) {
-            list.append(array[position.currentI][position.currentJ] + " ");
+            writer.write(array[position.currentI][position.currentJ] + " ");
             counter++;
 
             if (direction.equals("right")) {

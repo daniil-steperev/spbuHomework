@@ -4,37 +4,26 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static group144.spiralarray.stepyrev.MatrixUnpacker.convertMatrixToList;
-
 /** A class that represents spiral writer of Matrix to the File */
 public class FileWriter implements SpiralWriter {
-    private String fileName = "";
+    private FileOutputStream file;
 
-    public FileWriter (String fileName) {
-        this.fileName = fileName;
+    /**
+     * A constructor of FileWriter.
+     * @param fileName - a name of the file
+     * @throws FileNotFoundException - if file was not found -- create new one
+     */
+    public FileWriter (String fileName) throws FileNotFoundException {
+        file = new FileOutputStream(fileName, true);
     }
 
+    /** {@inheritDoc}*/
     @Override
-    public void write(Matrix matrix) {
-        if (fileName.equals("")) {
-            System.out.println("Enter filename: ");
-            return;
-        }
-
+    public void write(String expression) {
         try {
-            FileOutputStream fileOutput = new FileOutputStream(fileName);
-
-            StringBuilder convertedMatrix = convertMatrixToList(matrix);
-            String stringMatrix = convertedMatrix.toString();
-
-            byte[] bufferedData = stringMatrix.getBytes();
-            fileOutput.write(bufferedData);
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-            return;
+            file.write(expression.getBytes());
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-            return;
+            e.printStackTrace();
         }
     }
 }
