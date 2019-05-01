@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/** A class that represents a server application. */
 public class ServerApplication extends Application {
     private ServerController controller;
 
@@ -13,6 +14,7 @@ public class ServerApplication extends Application {
         launch(args);
     }
 
+    /** A method that starts a server application. */
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("server.fxml"));
@@ -26,9 +28,10 @@ public class ServerApplication extends Application {
         primaryStage.show();
     }
 
+    /** A method that stops a server application. */
     @Override
     public void stop() {
-        if (controller.getIsEndOfGame()) {
+        if (controller.getIsGamePlaying()) {
             controller.sentExitMessage();
         } else {
             controller.closeConnection();

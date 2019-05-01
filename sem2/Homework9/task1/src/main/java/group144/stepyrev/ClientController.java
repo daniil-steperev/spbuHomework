@@ -14,16 +14,21 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.SocketException;
 
+/** A class that represents a client controller. */
 public class ClientController {
+    /** An array with board buttons. */
     @FXML
     private Button[] buttons;
 
+    /** A button that starts a new game. */
     @FXML
     private Button startButton;
 
+    /** A text field where the data about the game is published. */
     @FXML
     private TextField gameInfo;
 
+    /** A grid pane to get buttons. */
     @FXML
     private GridPane parent;
 
@@ -34,12 +39,17 @@ public class ClientController {
     private TicTacToeBoard board;
     private int size;
 
+    /** A stream where a data about the game should be published. */
     private InputStream in;
+    /** A stream from where a data about the game should be got. */
     private PrintStream out;
 
+    /** An indicator of a new game. */
     private boolean isNewGame = false;
-    private boolean isEndOfGame = true;
+    /** An indicator of a current game (if player left, it would be false). */
+    private boolean isGamePlaying = true;
 
+    /** A method that initializes the client. */
     public void initialize() {
         board = new TicTacToeBoard();
         size = board.getSize();
@@ -55,12 +65,11 @@ public class ClientController {
 
         while (true) {
             try {
-                client = new Socket("local", portID);
+                client = new Socket("localhost", portID);
                 in = client.getInputStream();
                 out = new PrintStream(client.getOutputStream());
                 break;
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }
 
@@ -69,6 +78,7 @@ public class ClientController {
         waitOpponentTurn();
     }
 
+    /** A method that is called when game button is pressed. */
     @FXML
     private void pressButton(ActionEvent event) {
         for (int i = 0; i < size; i++) {
@@ -106,6 +116,10 @@ public class ClientController {
         }
     }
 
+    /** A method that waits opponent turn.
+     *
+     *  A thread is used here to make checking a turn more optimised.
+     */
     private void waitOpponentTurn() {
         new Thread(() -> {
             int position = 'x';
@@ -115,7 +129,7 @@ public class ClientController {
                         try {
                             position = toNumber(in.read());
                         } catch (SocketException e) {
-                            isEndOfGame = false;
+                            isGamePlaying = false;
                         }
 
                         break;
@@ -130,6 +144,10 @@ public class ClientController {
         }).start();
     }
 
+    /** A method that gets an opponent turn.
+     *
+     *  If the opponent has left the game, current player is considered as winner.
+     */
     private void getOpponentTurn(int position) {
         if (position == 9) {
             isNewGame = true;
@@ -144,9 +162,9 @@ public class ClientController {
         } else {
             Alert message = new Alert(Alert.AlertType.INFORMATION);
             message.setTitle("Game over");
-            message.setTitle("Your opponent left the game. My lord, you are winner!");
+            message.setContentText("Your opponent left the game. My lord, you are winner!");
             message.showAndWait();
-            isEndOfGame = false;
+            isGamePlaying = false;
             Platform.exit();
         }
     }
@@ -155,6 +173,7 @@ public class ClientController {
         return element - '0';
     }
 
+    /** A method that checks what is the result of the game. */
     private void checkWinner() {
         if (board.getGameStatus() == TicTacToeBoard.GameStatus.WIN) {
             StringBuilder message = new StringBuilder("Won of ");
@@ -167,6 +186,7 @@ public class ClientController {
         }
     }
 
+    /** A method that shows the end of the game. */
     private void showEndOfGame(String message) {
         isNewGame = true;
 
@@ -196,15 +216,21 @@ public class ClientController {
         isNewGame = false;
     }
 
-    public boolean getIsEndOfGame() {
-        return isEndOfGame;
+    /**
+     * A method that return current isGamePlaying.
+     * @return - isGamePlaying field
+     */
+    public boolean getGamePlaying() {
+        return isGamePlaying;
     }
 
-    public void sentExitMessage() {
+    /** A method that sends an exit message to application. */
+    public void sendExitMessage() {
         out.print(-1);
         out.flush();
     }
 
+    /** A method that closes current client. */
     public void closeConnection() {
         try {
             client.close();

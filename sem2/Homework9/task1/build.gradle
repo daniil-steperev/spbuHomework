@@ -22,4 +22,4 @@ javafx {
     version = '11.0.2'
 }
 
-mainClassName = 'group144.stepyrev.Main'
+mainClassName = 'group144.stepyrev.ServerApplication'

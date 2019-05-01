@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-import java.awt.event.ActionEvent;
+import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -16,32 +16,42 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
+/** A class that represents a server controller. */
 public class ServerController {
+    /** An array with board buttons. */
     @FXML
     private Button[] buttons;
 
+    /** A button that starts a new game. */
     @FXML
     private Button startButton;
 
+    /** A text field where the data about the game is published. */
     @FXML
     private TextField gameInfo;
 
+    /** A grid pane to get buttons. */
     @FXML
     private GridPane parent;
+
+    private Socket client;
 
     private static final int portID = 11111;
 
     private TicTacToeBoard board;
     private int size;
 
+    /** A stream where a data about the game should be published. */
     private InputStream in;
+    /** A stream from where a data about the game should be got. */
     private PrintStream out;
 
-    private Socket client;
-
+    /** An indicator of a new game. */
     private boolean isNewGame = false;
-    private boolean isEndOfGame = true;
+    /** An indicator of a current game (if player left, it would be false). */
+    private boolean isGamePlaying = true;
 
+    /** A method that initializes a controller. */
     public void initialize() {
         board = new TicTacToeBoard();
         size = board.getSize();
@@ -50,13 +60,13 @@ public class ServerController {
         for (int i = 0; i < size; i++) {
             buttons[i] = (Button) parent.getChildren().get(i);
         }
-        unlockAllButtons();
+        lockAllButtons();
 
         try {
             ServerSocket socket = new ServerSocket(portID);
 
             Alert message = new Alert(Alert.AlertType.INFORMATION);
-            message.setContentText("Click here to connect to other user.");
+            message.setContentText("Click here to start connection to the other player.");
             message.showAndWait();
 
             client = socket.accept();
@@ -64,12 +74,12 @@ public class ServerController {
             in = client.getInputStream();
 
             gameInfo.setText("Your turn, my lord");
-            lockAllButtons();
+            unlockAllButtons();
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
+    /** A method that is called when game button is pressed. */
     @FXML
     private void pressButton(ActionEvent event) {
         for (int i = 0; i < size; i++) {
@@ -107,6 +117,10 @@ public class ServerController {
         }
     }
 
+    /** A method that waits opponent turn.
+     *
+     *  A thread is used here to make checking a turn more optimised.
+     */
     private void waitOpponentTurn() {
         new Thread(() -> {
             int position = 'x';
@@ -116,7 +130,7 @@ public class ServerController {
                         try {
                             position = toNumber(in.read());
                         } catch (SocketException e) {
-                            isEndOfGame = false;
+                            isGamePlaying = false;
                         }
 
                         break;
@@ -131,6 +145,10 @@ public class ServerController {
         }).start();
     }
 
+    /** A method that gets an opponent turn.
+     *
+     *  If the opponent has left the game, current player is considered as winner.
+     */
     private void getOpponentTurn(int position) {
         if (position == 9) {
             isNewGame = true;
@@ -145,9 +163,9 @@ public class ServerController {
         } else {
             Alert message = new Alert(Alert.AlertType.INFORMATION);
             message.setTitle("Game over");
-            message.setTitle("Your opponent left the game. My lord, you are winner!");
+            message.setContentText("Your opponent left the game. My lord, you are winner!");
             message.showAndWait();
-            isEndOfGame = false;
+            isGamePlaying = false;
             Platform.exit();
         }
     }
@@ -156,6 +174,7 @@ public class ServerController {
         return element - '0';
     }
 
+    /** A method that checks what is the result of the game. */
     private void checkWinner() {
         if (board.getGameStatus() == TicTacToeBoard.GameStatus.WIN) {
             StringBuilder message = new StringBuilder("Won of ");
@@ -168,6 +187,7 @@ public class ServerController {
         }
     }
 
+    /** A method that shows the end of the game. */
     private void showEndOfGame(String message) {
         isNewGame = true;
 
@@ -180,15 +200,21 @@ public class ServerController {
         newGame();
     }
 
-    public boolean getIsEndOfGame() {
-        return isEndOfGame;
+    /**
+     * A method that return current isGamePlaying.
+     * @return - isGamePlaying field
+     */
+    public boolean getIsGamePlaying() {
+        return isGamePlaying;
     }
 
+    /** A method that sends an exit message to application. */
     public void sentExitMessage() {
         out.print(-1);
         out.flush();
     }
 
+    /** A method that closes current client. */
     public void closeConnection() {
         try {
             client.close();

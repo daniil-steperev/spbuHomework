@@ -1,5 +1,6 @@
 package group144.stepyrev;
 
+/** A class that represents a tic-tac-toe board. */
 public class TicTacToeBoard {
     private char[] board = new char[9];
     private char currentPlayer = 'X';
@@ -16,27 +17,44 @@ public class TicTacToeBoard {
         currentPlayer = 'X';
     }
 
+    /**
+     * A method that returns a current player.
+     * @return - 'X' in case of first player, 'O' in case of the second one
+     */
     public String getCurrentPlayer() {
         return String.valueOf(currentPlayer);
     }
 
 
+    /**
+     * A method that makes a move.
+     *
+     * In case of true, it changes current player.
+     * @param cellNumber - a number of the cell number that player has chosen
+     * @return - true if move is correct, false otherwise
+     */
     public boolean makeMove(int cellNumber) {
-        if (board[cellNumber] == 'X' || board[cellNumber] == 'O') {
+        if (cellNumber < 0 || cellNumber > 8 || board[cellNumber] == 'X' || board[cellNumber] == 'O') {
             return false;
         }
 
         board[cellNumber] = currentPlayer;
         emptyCells--;
+        changeCurrentPlayer();
         return true;
     }
 
+    /** An enum with statuses of the game. */
     public enum GameStatus {
         PLAYING,
         DRAW,
         WIN
     }
 
+    /**
+     * A method that returns a current game status.
+     * @return - a current game status
+     */
     public GameStatus getGameStatus() {
         if (isAllFilled()) {
             return GameStatus.DRAW;
@@ -87,7 +105,10 @@ public class TicTacToeBoard {
         return currentPlayer;
     }
 
-
+    /**
+     * A method that gets current size of the board.
+     * @return - a size of the board.
+     */
     public int getSize() {
         return size;
     }

@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/** A class that represents a client application. */
 public class ClientApplication extends Application {
     private ClientController controller;
 
@@ -13,6 +14,7 @@ public class ClientApplication extends Application {
         launch(args);
     }
 
+    /** A method that starts a client application. */
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("game.fxml"));
@@ -26,9 +28,20 @@ public class ClientApplication extends Application {
         primaryStage.show();
     }
 
+    /** A method that stops a client application. */
     @Override
-    public void stop() throws Exception {
-        super.stop();
+    public void stop() {
+        if (controller.getGamePlaying()) {
+            controller.sendExitMessage();
+        } else {
+            controller.closeConnection();
+        }
+
+        try {
+            super.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
