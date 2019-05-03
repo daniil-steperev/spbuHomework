@@ -147,6 +147,17 @@ class AVLTreeTest {
     }
 
     @Test
+    public void iteratorEmptyTreeTest() {
+        AVLTree<Integer> tree = new AVLTree<>();
+        Iterator<Integer> treeIterator = tree.iterator();
+        assertFalse(treeIterator.hasNext());
+
+        for (int i = 0; i < 10; i++) {
+            assertEquals(null, treeIterator.next());
+        }
+    }
+
+    @Test
     public void toArrayTest() {
         AVLTree<Integer> tree = new AVLTree<>();
         Integer[] normalArray = new Integer[] {1, 2, 2, 3};

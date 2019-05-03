@@ -9,12 +9,11 @@ import java.util.Iterator;
  * @param <T> means type of elements that AVLTree keeps
  */
 public class AVLTree<T extends Comparable<T>> implements Collection<T> {
-    private NodeOperator root;
+    private NodeOperator root = new NodeOperator();
     private int size;
 
     /** A constructor of an AVLTree */
     public AVLTree() {
-        root = new NodeOperator();
         size = 0;
     }
 
@@ -33,7 +32,7 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
      */
     @Override
     public boolean isEmpty() {
-        return root == null;
+        return size == 0;
     }
 
     /**
@@ -64,7 +63,7 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
     @Override
     public Object[] toArray() {
         ArrayList<T> elements = new ArrayList<>();
-        root.addAll(elements);
+        root.getAllToList(elements);
 
         return elements.toArray();
     }
@@ -193,7 +192,7 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
 
         private TreeIterator() {
             elements = new ArrayList<>();
-            root.addAll(elements);
+            root.getAllToList(elements);
         }
 
         @Override
@@ -467,16 +466,16 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
          * This method is useful for converting tree to the array
          * @param elements means an array in which elements should be added
          */
-        private void addAll(ArrayList<T> elements) {
+        private void getAllToList(ArrayList<T> elements) {
             if (currentNode == null) {
                 return;
             }
 
-            currentNode.leftChild.addAll(elements);
+            currentNode.leftChild.getAllToList(elements);
             for (int i = 0; i < currentNode.quantity; i++) {
                 elements.add(currentNode.value);
             }
-            currentNode.rightChild.addAll(elements);
+            currentNode.rightChild.getAllToList(elements);
         }
 
         private class Pair {
