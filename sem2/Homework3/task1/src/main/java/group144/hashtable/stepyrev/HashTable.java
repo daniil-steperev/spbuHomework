@@ -151,7 +151,7 @@ public class HashTable {
         int counter = 0;
         for (int i = 0; i < size; i++) {
             if (hashTable[i].getLength() > 1) {
-                counter++;
+                counter += hashTable[i].getLength();
             }
         }
 
