@@ -1,0 +1,5 @@
+language: java 
+jdk: oraclejdk8 
+script: 
+- cd sem2 
+os: linux
