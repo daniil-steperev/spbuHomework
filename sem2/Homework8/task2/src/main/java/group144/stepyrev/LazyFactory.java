@@ -21,11 +21,11 @@ public class LazyFactory {
             public T get() {
                 if (wasCalculated) {
                     return value;
-                } else {
-                    value = supplier.get();
-                    wasCalculated = true;
-                    return value;
                 }
+
+                value = supplier.get();
+                wasCalculated = true;
+                return value;
             }
         };
     }
@@ -47,14 +47,14 @@ public class LazyFactory {
             public T get() {
                 if (wasCalculated) {
                     return value;
-                } else {
-                    synchronized (this) {
-                        if (!wasCalculated) {
+                }
+
+                synchronized (this) {
+                    if (!wasCalculated) {
                             value = supplier.get();
                             wasCalculated = true;
                         }
                     }
-                }
 
                 return value;
             }

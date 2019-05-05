@@ -4,13 +4,15 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Supplier;
 
+import static group144.stepyrev.LazyFactory.createNonSynchronizedLazy;
+import static group144.stepyrev.LazyFactory.createSynchronizedLazy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LazyFactoryTest {
     @Test
     void createNonSynchronizedLazyCommonTest() {
         SmartSupplier<Integer> supplier = new SmartSupplier<>(1);
-        Lazy<Integer> lazy = new LazyFactory().createNonSynchronizedLazy(supplier);
+        Lazy<Integer> lazy = createNonSynchronizedLazy(supplier);
 
         assertEquals(Integer.valueOf(1), lazy.get());
 
@@ -24,7 +26,7 @@ class LazyFactoryTest {
     @Test
     void createNonSynchronizedLazyNullTest() {
         SmartSupplier<Integer> supplier = new SmartSupplier<>(null);
-        Lazy<Integer> lazy = new LazyFactory().createNonSynchronizedLazy(supplier);
+        Lazy<Integer> lazy = createNonSynchronizedLazy(supplier);
 
         assertEquals(null, lazy.get());
 
@@ -38,7 +40,7 @@ class LazyFactoryTest {
     @Test
     void createSynchronizedLazyCommonTest() {
         SmartSupplier<String> supplier = new SmartSupplier<>("ABC");
-        Lazy<String> lazy = new LazyFactory().createSynchronizedLazy(supplier);
+        Lazy<String> lazy = createSynchronizedLazy(supplier);
 
         assertEquals("ABC", lazy.get());
 
@@ -52,7 +54,7 @@ class LazyFactoryTest {
     @Test
     void createSynchronizedLazyNullTest() {
         SmartSupplier<Integer> supplier = new SmartSupplier<>(null);
-        Lazy<Integer> lazy = new LazyFactory().createSynchronizedLazy(supplier);
+        Lazy<Integer> lazy = createSynchronizedLazy(supplier);
 
         assertEquals(null, lazy.get());
 
@@ -66,7 +68,7 @@ class LazyFactoryTest {
     @Test
     void synchronizedRaceCaseTest() {
         SmartSupplier<String> supplier = new SmartSupplier<>("Race");
-        Lazy<String> lazy = new LazyFactory().createSynchronizedLazy(supplier);
+        Lazy<String> lazy = createSynchronizedLazy(supplier);
 
         int NUMBER_OF_THREADS = 1000;
         Thread[] threads = new Thread[NUMBER_OF_THREADS];
