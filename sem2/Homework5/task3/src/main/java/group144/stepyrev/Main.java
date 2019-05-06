@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
 public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
@@ -18,10 +19,12 @@ public class Main extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("GUI.fxml"));
 
-            Scene scene = new Scene(root, 400, 200);
+            Scene scene = new Scene(root, 350, 250);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Calculator");
-            primaryStage.setResizable(false);
+            primaryStage.setResizable(true);
+            primaryStage.setMinHeight(250);
+            primaryStage.setMinWidth(350);
 
             primaryStage.show();
         } catch (IOException e) {

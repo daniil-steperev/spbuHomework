@@ -67,15 +67,18 @@ public class Controller {
 
     private Button[] numberButtons;
 
+    private Button[] operationButton;
+
     /** A method that initializes buttons and text fields. */
     public void initialize() {
         numberButtons = new Button[]{number0, number1, number2, number3, number4, number5, number6,
                 number7, number8, number9};
+        operationButton = new Button[]{buttonEqual, buttonDivide, buttonMultiply, buttonMinus, buttonPlus};
         answer.setText("0");
     }
 
     /**
-     * A method that is called when number button was pressed.
+     * A method that is called when a number button was pressed.
      * @param actionEvent an event which led to a button click
      */
     @FXML
@@ -101,32 +104,43 @@ public class Controller {
         unlockOperations();
     }
 
-    /** A method that is called when button "+" was pressed.
-     *
-     * Updates buffer, answer fields.
-     * Initializes calculator if it was not.
+    /**
+     * A method that is called when a number button was pressed.
+     * @param actionEvent an event which led to a button click
      */
     @FXML
-    public void pressAddButton() {
+    public void pressOperationButton(ActionEvent actionEvent) {
+        String operation = "";
+        for (int i = 0; i < operationButton.length; i++) {
+            if (actionEvent.getSource().equals(operationButton[i])) {
+                operation = operationButton[i].getText();
+            }
+        }
+
+        if (operation.equals("=")) {
+            pressEqualButton();
+            return;
+        }
+
         if (isNewNumber) {
             String tmp = buffer.getText();
             if (!tmp.equals("")) {
                 String newTmp = tmp.substring(0, tmp.length() - 2);
                 StringBuilder newBuffer = new StringBuilder(newTmp);
-                newBuffer.append("+ ");
+                newBuffer.append(operation + " ");
                 buffer.setText(newBuffer.toString());
             }
 
-            calculator.setOperation("+");
+            calculator.setOperation(operation);
             return;
         }
 
-        updateBuffer(" + ");
+        updateBuffer(" " + operation + " ");
 
         if (calculator.isEmpty()) {
-            calculator.initialize(answer.getText(), "+");
+            calculator.initialize(answer.getText(), operation);
         } else {
-            calculator.calculate(answer.getText(), "+");
+            calculator.calculate(answer.getText(), operation);
         }
 
         answer.setText(String.valueOf(calculator.getAnswer()));
@@ -135,107 +149,6 @@ public class Controller {
         lockOperations();
     }
 
-    /** A method that is called when button "-" was pressed.
-     *
-     * Updates buffer, answer fields.
-     * Initializes calculator if it was not.
-     */
-    @FXML
-    public void pressMinusButton() {
-        if (isNewNumber) {
-            String tmp = buffer.getText();
-            if (!tmp.equals("")) {
-                String newTmp = tmp.substring(0, tmp.length() - 2);
-                StringBuilder newBuffer = new StringBuilder(newTmp);
-                newBuffer.append("- ");
-                buffer.setText(newBuffer.toString());
-            }
-
-            calculator.setOperation("-");
-            return;
-        }
-
-        updateBuffer(" - ");
-
-        if (calculator.isEmpty()) {
-            calculator.initialize(answer.getText(), "-");
-        } else {
-            calculator.calculate(answer.getText(), "-");
-        }
-
-        answer.setText(String.valueOf(calculator.getAnswer()));
-        isNewNumber = true;
-
-        lockOperations();
-    }
-
-    /** A method that is called when button "*" was pressed.
-     *
-     * Updates buffer, answer fields.
-     * Initializes calculator if it was not.
-     */
-    @FXML
-    public void pressMultiplyButton() {
-        if (isNewNumber) {
-            String tmp = buffer.getText();
-            if (!tmp.equals("")) {
-                String newTmp = tmp.substring(0, tmp.length() - 2);
-                StringBuilder newBuffer = new StringBuilder(newTmp);
-                newBuffer.append("* ");
-                buffer.setText(newBuffer.toString());
-            }
-
-            calculator.setOperation("*");
-            return;
-        }
-
-        updateBuffer(" * ");
-
-        if (calculator.isEmpty()) {
-            calculator.initialize(answer.getText(), "*");
-        } else {
-            calculator.calculate(answer.getText(), "*");
-        }
-
-        answer.setText(String.valueOf(calculator.getAnswer()));
-        isNewNumber = true;
-
-        lockOperations();
-    }
-
-    /** A method that is called when button "/" was pressed.
-     *
-     * Updates buffer, answer fields.
-     * Initializes calculator if it was not.
-     */
-    @FXML
-    public void pressDivideButton() {
-        if (isNewNumber) {
-            String tmp = buffer.getText();
-            if (!tmp.equals("")) {
-                String newTmp = tmp.substring(0, tmp.length() - 2);
-                StringBuilder newBuffer = new StringBuilder(newTmp);
-                newBuffer.append("/ ");
-                buffer.setText(newBuffer.toString());
-            }
-
-            calculator.setOperation("/");
-            return;
-        }
-
-        updateBuffer(" / ");
-
-        if (calculator.isEmpty()) {
-            calculator.initialize(answer.getText(), "/");
-        } else {
-            calculator.calculate(answer.getText(), "/");
-        }
-
-        answer.setText(String.valueOf(calculator.getAnswer()));
-        isNewNumber = true;
-
-        lockOperations();
-    }
 
     /** A method that is called when button "=" was pressed.
      *

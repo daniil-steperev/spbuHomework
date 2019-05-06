@@ -9,87 +9,87 @@
 <?import javafx.scene.layout.VBox?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group144.stepyrev.Controller">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
+<columnConstraints>
+   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+</columnConstraints>
+<rowConstraints>
+<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+</rowConstraints>
+<children>
+<HBox prefHeight="100.0" prefWidth="300.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
    <children>
-      <HBox prefHeight="100.0" prefWidth="300.0" GridPane.rowIndex="1">
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" HBox.hgrow="ALWAYS">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button fx:id="number1" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="1" />
-                  <Button fx:id="number4" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="4" />
-                  <Button fx:id="number7" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="7" />
-               </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button fx:id="number2" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="2" />
-                  <Button fx:id="number5" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="5" />
-                  <Button fx:id="number8" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="8" />
-               </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button fx:id="number3" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="3" />
-                  <Button fx:id="number6" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="6" />
-                  <Button fx:id="number9" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="9" />
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <children>
-            <Button fx:id="buttonMultiply" mnemonicParsing="false" onAction="#pressMultiplyButton" prefHeight="39.0" prefWidth="39.0" text="*" />
-            <Button fx:id="buttonPlus" mnemonicParsing="false" onAction="#pressAddButton" prefHeight="39.0" prefWidth="39.0" text="+" />
-            <Button fx:id="buttonMinus" mnemonicParsing="false" onAction="#pressMinusButton" prefHeight="39.0" prefWidth="39.0" text="-" />
+            <Button fx:id="number1" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" VBox.vgrow="ALWAYS" />
+            <Button fx:id="number4" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="number7" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </VBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" HBox.hgrow="ALWAYS">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button fx:id="number0" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="0" />
-               </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button fx:id="buttonAC" mnemonicParsing="false" onAction="#pressCleanAllButton" prefHeight="39.0" prefWidth="39.0" text="AC" />
-               </children></VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button fx:id="buttonEqual" mnemonicParsing="false" onAction="#pressEqualButton" prefHeight="39.0" prefWidth="39.0" text="=" />
-               </children></VBox>
+            <Button fx:id="number2" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="number5" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="number8" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="8" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
-      </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" HBox.hgrow="ALWAYS">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button fx:id="buttonDivide" mnemonicParsing="false" onAction="#pressDivideButton" prefHeight="39.0" prefWidth="39.0" text="/" />
-               </children>
-            </VBox>
+            <Button fx:id="number3" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="number6" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="number9" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="9" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
-      </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <TextField fx:id="buffer" prefWidth="39.0" />
-               </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <TextField fx:id="answer" prefWidth="39.0" />
-               </children>
-            </VBox>
-         </children>
-      </HBox>
+      </VBox>
    </children>
-</GridPane>
+</HBox>
+<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+   <children>
+      <Button fx:id="buttonMultiply" mnemonicParsing="false" onAction="#pressOperationButton" prefHeight="39.0" prefWidth="39.0" text="*" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Button fx:id="buttonPlus" mnemonicParsing="false" onAction="#pressOperationButton" prefHeight="39.0" prefWidth="39.0" text="+" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Button fx:id="buttonMinus" mnemonicParsing="false" onAction="#pressOperationButton" prefHeight="39.0" prefWidth="39.0" text="-" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+   </children>
+</VBox>
+<HBox prefHeight="100.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+         <children>
+            <Button fx:id="number0" mnemonicParsing="false" onAction="#numberButtonPress" prefHeight="39.0" prefWidth="39.0" text="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+         <children>
+            <Button fx:id="buttonAC" mnemonicParsing="false" onAction="#pressCleanAllButton" prefHeight="39.0" prefWidth="39.0" text="AC" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+         </children></VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+         <children>
+            <Button fx:id="buttonEqual" mnemonicParsing="false" onAction="#pressEqualButton" prefHeight="39.0" prefWidth="39.0" text="=" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+         </children></VBox>
+   </children>
+</HBox>
+<HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="buttonDivide" mnemonicParsing="false" onAction="#pressOperationButton" prefHeight="39.0" prefWidth="39.0" text="/" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+         </children>
+      </VBox>
+   </children>
+</HBox>
+<HBox prefHeight="100.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" HBox.hgrow="ALWAYS">
+         <children>
+            <TextField fx:id="buffer" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+         </children>
+      </VBox>
+   </children>
+</HBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <children>
+            <TextField fx:id="answer" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+</children>
+        </GridPane>
