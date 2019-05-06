@@ -33,9 +33,10 @@ class TicTacToeBoardTest {
         board.changeCurrentPlayer();
 
         board.makeMove(5);
+        board.changeCurrentPlayer();
 
-        assertTrue(board.checkWinner());
-        assertEquals('X', board.returnCurrentPlayer());
+        assertTrue(board.checkForWinningCombination());
+        assertEquals('O', board.returnCurrentPlayer());
     }
 
     @Test
@@ -60,9 +61,10 @@ class TicTacToeBoardTest {
         board.changeCurrentPlayer();
 
         board.makeMove(6);
+        board.changeCurrentPlayer();
 
-        assertTrue(board.checkWinner());
-        assertEquals('X', board.returnCurrentPlayer());
+        assertTrue(board.checkForWinningCombination());
+        assertEquals('O', board.returnCurrentPlayer());
     }
 
     @Test
@@ -87,9 +89,10 @@ class TicTacToeBoardTest {
         board.changeCurrentPlayer();
 
         board.makeMove(8);
+        board.changeCurrentPlayer();
 
-        assertTrue(board.checkWinner());
-        assertEquals('X', board.returnCurrentPlayer());
+        assertTrue(board.checkForWinningCombination());
+        assertEquals('O', board.returnCurrentPlayer());
     }
 
     @Test
@@ -126,8 +129,9 @@ class TicTacToeBoardTest {
         board.changeCurrentPlayer();
 
         board.makeMove(7);
+        board.changeCurrentPlayer();
 
-        assertFalse(board.checkWinner());
+        assertFalse(board.checkForWinningCombination());
         assertTrue(board.isAllFilled());
     }
 }

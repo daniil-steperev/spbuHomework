@@ -1,5 +1,7 @@
 package group144.stepyrev;
 
+import javafx.scene.Parent;
+
 public class TicTacToeBoard {
     private char[] board = new char[9];
     private char currentPlayer = 'X';
@@ -29,29 +31,28 @@ public class TicTacToeBoard {
         return emptyCells == 0;
     }
 
-    /** A method that checks if the player has won the game. */
-    public boolean checkWinner() {
-        return checkHorizontals() || checkVerticals() || checkDiagonals();
+    /** A method that checks if the game has ended. */
+    public boolean checkForWinningCombination() {
+        return checkOneCombination(0,board.length / 3, board.length / 3, 1) || // verticals
+                checkOneCombination(0,board.length, 1, board.length / 3) || // horizontals
+                checkOneCombination(0,1, 4, 1) || // main diagonal
+                checkOneCombination(2, 3, 2, 2); // incidental diagonal
     }
 
-    /** A method that checks if there is a winning combination horizontally. */
-    private boolean checkHorizontals() {
-        return (board[0] == board[1] && board[0] ==  board[2]) && (board[0] == 'X' || board[0] == 'O') ||
-                (board[3] == board[4] && board[3] == board[5]) && (board[3] == 'X' || board[3] == 'O') ||
-                (board[6] == board[7] && board[6] == board[8]) && (board[6] == 'X' || board[6] == 'O');
-    }
+    private boolean checkOneCombination(int start, int repeatNumber, int addedNumber, int increment) {
+        boolean result = false;
+        char cellNumber = board[0];
 
-    /** A method that checks if there is a winning combination vertically. */
-    private boolean checkVerticals() {
-        return (board[0] == board[3] && board[0] ==  board[6]) && (board[0] == 'X' || board[0] == 'O') ||
-                (board[1] == board[4] && board[1] == board[7]) && (board[1] == 'X' || board[1] == 'O') ||
-                (board[2] == board[5] && board[2] == board[8]) && (board[2] == 'X' || board[2] == 'O');
-    }
+        for (int i = start; i < repeatNumber; i += increment) {
+            cellNumber = board[i];
+            result = (board[i] == board[i + addedNumber] && board[i] == board[i + addedNumber * 2]);
 
-    /** A method that checks if there is a winning combination diagonally. */
-    private boolean checkDiagonals() {
-        return (board[0] == board[4] && board[0] ==  board[8]) && (board[0] == 'X' || board[0] == 'O') ||
-                (board[2] == board[4] && board[2] == board[6]) && (board[2] == 'X' || board[2] == 'O');
+            if (result && (cellNumber == 'X' || cellNumber == 'O')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

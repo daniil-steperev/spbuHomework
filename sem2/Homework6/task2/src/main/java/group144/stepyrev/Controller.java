@@ -67,7 +67,7 @@ public class Controller {
         }
 
         if (board.isAllFilled()) {
-            if (board.checkWinner()) {
+            if (board.checkForWinningCombination()) {
                 if (board.returnCurrentPlayer() == 'X') {
                     text.setText("First player won!");
                 } else {
@@ -78,7 +78,7 @@ public class Controller {
             return;
         }
 
-        if (board.checkWinner()) {
+        if (board.checkForWinningCombination()) {
             char winner = board.returnCurrentPlayer();
             if (winner == 'X') {
                 text.setText("First player won!");
@@ -91,6 +91,7 @@ public class Controller {
         }
 
         board.changeCurrentPlayer();
+
         if (board.returnCurrentPlayer() == 'X') {
             text.setText("First player turn");
         } else {
