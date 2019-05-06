@@ -9,8 +9,7 @@ import java.util.List;
 public class ClassBuilder {
     public static void main(String[] args) throws IOException {
         ClassBuilder classBuilder = new ClassBuilder();
-        classBuilder.printStructure(group144.stepyrev.test.DifficultClass.class);
-        classBuilder.diffClasses(group144.stepyrev.test.DifficultClass.class, group144.stepyrev.buildClass.DifficultClass.class);
+        classBuilder.printStructure(ClassBuilder.class);
     }
 
     /**
@@ -182,7 +181,10 @@ public class ClassBuilder {
             buildClass.append(" ");
         }
 
-        buildClass.append(field.getType().getSimpleName() + " " + field.getName() + " = ");
+        buildClass.append(field.getType().getSimpleName());
+        buildClass.append(" ");
+        buildClass.append(field.getName());
+        buildClass.append(" = ");
         writeType(buildClass, field.getType());
     }
 
@@ -210,7 +212,8 @@ public class ClassBuilder {
      */
     private void writeOneConstructor(StringBuilder buildClass, Class clazz, Constructor constructor) {
         if (constructor.getModifiers() != 0) {
-            buildClass.append(Modifier.toString(constructor.getModifiers()) + " ");
+            buildClass.append(Modifier.toString(constructor.getModifiers()));
+            buildClass.append(" ");
         }
 
         buildClass.append(clazz.getSimpleName());
@@ -249,11 +252,14 @@ public class ClassBuilder {
      */
     private void writeOneMethod(StringBuilder buildClass, Method method) {
         if (method.getModifiers() != 0) {
-            buildClass.append(Modifier.toString(method.getModifiers()) + " ");
+            buildClass.append(Modifier.toString(method.getModifiers()));
+            buildClass.append(" ");
         }
 
-        buildClass.append(method.getReturnType().getSimpleName() + " ");
-        buildClass.append(method.getName() + " (");
+        buildClass.append(method.getReturnType().getSimpleName());
+        buildClass.append(" ");
+        buildClass.append(method.getName());
+        buildClass.append(" (");
         Parameter[] parameters = method.getParameters();
         writeParameters(buildClass, parameters);
         buildClass.append(") ");
@@ -366,7 +372,9 @@ public class ClassBuilder {
      */
     private void writeParameters(StringBuilder buildClass, Parameter[] parameters) {
         for (int i = 0; i < parameters.length; i++) {
-            buildClass.append(parameters[i].getParameterizedType().getTypeName() + " " + parameters[i].getName());
+            buildClass.append(parameters[i].getParameterizedType().getTypeName());
+            buildClass.append(" ");
+            buildClass.append(parameters[i].getName());
             if (i != parameters.length - 1) {
                 buildClass.append(", ");
             }
@@ -423,7 +431,8 @@ public class ClassBuilder {
     private boolean isSpecialCase(Class clazz, StringBuilder buildClass) { // this adds in case of inner class
         StringBuilder specialCase = new StringBuilder("final ");
         specialCase.append(clazz.getSimpleName() + " ");
-        specialCase.append("this$0$ = null;" + (char) 10);
+        specialCase.append("this$0$ = null;");
+        specialCase.append((char) 10);
         return specialCase.toString().equals(buildClass.toString());
     }
 
@@ -449,13 +458,9 @@ public class ClassBuilder {
         Field[] firstClassFields = firstClazz.getDeclaredFields();
         Field[] secondClassFields = secondClazz.getDeclaredFields();
 
-        for (int i = 0; i < firstClassFields.length; i++) {
-            Field curField = firstClassFields[i];
-
+        for (Field curField : firstClassFields) {
             boolean contains = false;
-            for (int j = 0; j < secondClassFields.length; j++) {
-                Field secondField = secondClassFields[j];
-
+            for (Field secondField : secondClassFields) {
                 if (curField.getName().equals(secondField.getName())) {
                     if (!isFieldEquals(curField, secondField)) {
                         writeOneField(diffClasses, curField);
@@ -477,13 +482,9 @@ public class ClassBuilder {
             }
         }
 
-        for (int i = 0; i < secondClassFields.length; i++) {
-            Field curField = secondClassFields[i];
-
+        for (Field curField: secondClassFields) {
             boolean contains = false;
-            for (int j = 0; j < firstClassFields.length; j++) {
-                Field firstField = firstClassFields[j];
-
+            for (Field firstField : firstClassFields) {
                 if (curField.getName().equals(firstField.getName())) {
                     contains = true;
                     break;
@@ -523,13 +524,9 @@ public class ClassBuilder {
         Method[] secondClassMethods = secondClass.getDeclaredMethods();
         StringBuilder addedMethods = new StringBuilder();
 
-        for (int i = 0; i < firstClassMethods.length; i++) {
-            Method curMethod = firstClassMethods[i];
-
+        for (Method curMethod : firstClassMethods) {
             boolean contains = false;
-            for (int j = 0; j < secondClassMethods.length; j++) {
-                Method secondMethod = secondClassMethods[j];
-
+            for (Method secondMethod : secondClassMethods) {
                 if (curMethod.getName().equals(secondMethod.getName())) {
                     if (!isMethodEquals(curMethod, secondMethod)) {
                         writeOneMethod(addedMethods, curMethod);
@@ -552,13 +549,9 @@ public class ClassBuilder {
             }
         }
 
-        for (int i = 0; i < secondClassMethods.length; i++) {
-            Method curMethod = secondClassMethods[i];
-
+        for (Method curMethod : secondClassMethods) {
             boolean contains = false;
-            for (int j = 0; j < firstClassMethods.length; j++) {
-                Method firstMethod = firstClassMethods[j];
-
+            for (Method firstMethod : firstClassMethods) {
                 if (curMethod.getName().equals(firstMethod.getName())) {
                     contains = true;
                     break;
@@ -645,11 +638,8 @@ public class ClassBuilder {
             Class[] firstInnerClasses = firstClass.getDeclaredClasses();
             Class[] secondInnerClasses = secondClass.getDeclaredClasses();
 
-            for (int i = 0; i < firstInnerClasses.length; i++) {
-                Class curClass = firstInnerClasses[i];
-
-                for (int j = 0; j < secondInnerClasses.length; j++) {
-                    Class curSecondClass = secondInnerClasses[j];
+            for (Class curClass : firstInnerClasses) {
+                for ( Class curSecondClass : secondInnerClasses) {
                     getDifference(diffClasses, curClass, curSecondClass);
                 }
             }

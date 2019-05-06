@@ -14,7 +14,7 @@ class ClassBuilderTest {
     @Test
     public void printStructureTest() throws IOException, ClassNotFoundException {
         ClassLoader printedClassLoader = new URLClassLoader(new URL[]{new URL("file://")});
-        Class<?> printedClass = printedClassLoader.loadClass("group144.stepyrev.test.TwoTuple");
+        Class<?> printedClass = printedClassLoader.loadClass("group144.stepyrev.testClasses.TwoTuple");
         String result = classBuilder.printStructure(printedClass);
         String expected = "package group144.stepyrev.buildClass;\n" +
                 "\n" +
@@ -27,7 +27,9 @@ class ClassBuilderTest {
                 "\tpublic String toString ()  {\n" +
                 "\t\treturn null;\n" +
                 "\t}\n" +
-                "}\n\n\t";
+                "}\n" +
+                "\n" +
+                "\t";
         assertEquals(expected, result);
     }
 
@@ -45,7 +47,7 @@ class ClassBuilderTest {
     @Test
     public void diffStructureDifficultTest() throws IOException, ClassNotFoundException {
         ClassLoader printedClassLoader = new URLClassLoader(new URL[]{new URL("file://")});
-        Class<?> printedClass = printedClassLoader.loadClass("group144.stepyrev.test.DifficultClass");
+        Class<?> printedClass = printedClassLoader.loadClass("group144.stepyrev.testClasses.DifficultClass");
         classBuilder.printStructure(printedClass);
 
         ClassLoader buildClassLoader = new URLClassLoader(new URL[]{new URL("file://")});
@@ -56,7 +58,7 @@ class ClassBuilderTest {
     @Test
     public void diffStructureFalseTest() throws IOException, ClassNotFoundException {
         ClassLoader printedClassLoader = new URLClassLoader(new URL[]{new URL("file://")});
-        Class<?> printedClass = printedClassLoader.loadClass("group144.stepyrev.test.TwoTupleMoreMethod");
+        Class<?> printedClass = printedClassLoader.loadClass("group144.stepyrev.testClasses.TwoTupleMoreMethod");
         classBuilder.printStructure(printedClass);
 
         ClassLoader buildClassLoader = new URLClassLoader(new URL[]{new URL("file://")});
