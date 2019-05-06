@@ -24,6 +24,8 @@ public class ServerApplication extends Application {
         Scene scene = new Scene(root, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Tic-tac-toe server");
+        primaryStage.setMinHeight(300);
+        primaryStage.setMinWidth(350);
 
         primaryStage.show();
     }

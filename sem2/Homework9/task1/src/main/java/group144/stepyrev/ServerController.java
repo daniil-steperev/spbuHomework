@@ -66,7 +66,7 @@ public class ServerController {
             ServerSocket socket = new ServerSocket(portID);
 
             Alert message = new Alert(Alert.AlertType.INFORMATION);
-            message.setContentText("Click here to start connection to the other player.");
+            message.setContentText("Click here to start a server.");
             message.showAndWait();
 
             client = socket.accept();

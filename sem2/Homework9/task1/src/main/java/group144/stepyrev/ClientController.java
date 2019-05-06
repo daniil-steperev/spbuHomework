@@ -60,7 +60,7 @@ public class ClientController {
         }
 
         Alert message = new Alert(Alert.AlertType.INFORMATION);
-        message.setContentText("Click here to start connection");
+        message.setContentText("Click here to connect to the server");
         message.showAndWait();
 
         while (true) {
