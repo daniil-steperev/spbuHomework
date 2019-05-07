@@ -82,7 +82,7 @@ public class Controller {
      * @param actionEvent an event which led to a button click
      */
     @FXML
-    public void numberButtonPress(ActionEvent actionEvent) {
+    public void pressNumberButton(ActionEvent actionEvent) {
         if (isNewNumber) {
             answer.setText("0");
             isNewNumber = false;
