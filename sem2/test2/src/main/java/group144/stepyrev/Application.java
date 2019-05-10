@@ -23,7 +23,8 @@ public class Application {
         }
     }
 
-    /** A method that prints the set. */
+    /** A method that prints the set.
+     *  @return - a string with elements */
     public String printSet() {
         sortedSet.print();
         return sortedSet.getElements();
