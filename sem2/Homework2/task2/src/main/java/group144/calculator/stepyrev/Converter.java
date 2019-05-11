@@ -13,7 +13,8 @@ public class Converter {
         {
             if (isNumber(separatedExpression[i]))
             {
-                postfixString.append(separatedExpression[i] + " ");
+                postfixString.append(separatedExpression[i]);
+                postfixString.append(" ");
             } else if (isOperation(separatedExpression[i])) {
                 stack.push(separatedExpression[i]);
             } else if (separatedExpression[i].equals(")")) {
@@ -34,7 +35,9 @@ public class Converter {
             } else if (isNumber(expressionLetters[i])) {
                 rightExpression.append(expressionLetters[i]);
             } else {
-                rightExpression.append(" "  + expressionLetters[i] + " ");
+                rightExpression.append(" ");
+                rightExpression.append(expressionLetters[i]);
+                rightExpression.append(" ");
             }
         }
 
@@ -46,7 +49,8 @@ public class Converter {
         while (stack.getLength() > 0)
         {
             element = stack.pop();
-            postfixString.append(element + " ");
+            postfixString.append(element);
+            postfixString.append(" ");
         }
 
         return postfixString;
@@ -61,7 +65,8 @@ public class Converter {
                 return postfixString;
             }
 
-            postfixString.append(element + " ");
+            postfixString.append(element);
+            postfixString.append(" ");
         }
     }
 
