@@ -1,13 +1,13 @@
-package group144.expressiontree.stepyrev;
+package group144.stepyrev;
 
 /** A class that represents an operator node from the expression tree */
 public class OperatorNode implements Node {
-    private char operation;
+    private int operation;
     private Node leftChild;
     private Node rightChild;
 
     /** A constructor of Operator Node */
-    public OperatorNode(char operation) {
+    public OperatorNode(int operation) {
         this.operation = operation;
     }
 
@@ -27,11 +27,7 @@ public class OperatorNode implements Node {
 
     /** {@inheritDoc}*/
     @Override
-    public int calculate() throws WrongInputException {
-        if (leftChild == null || rightChild == null) {
-            throw new WrongInputException();
-        }
-
+    public int calculate() {
         if (operation == '+') {
             return leftChild.calculate() + rightChild.calculate();
         }
@@ -45,7 +41,7 @@ public class OperatorNode implements Node {
             return leftChild.calculate() / rightChild.calculate();
         }
 
-        throw new WrongInputException();
+        return 0;
     }
 
     /** {@inheritDoc}*/

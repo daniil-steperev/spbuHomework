@@ -1,6 +1,6 @@
-package group144.expressiontree.stepyrev;
+package group144.stepyrev;
 
-/** A class that represents an operant from the expression tree */
+/** A class that represents an operand from the expression tree */
 public class OperandNode implements Node {
     private int value;
     private Node leftChild;
