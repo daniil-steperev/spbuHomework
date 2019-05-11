@@ -69,7 +69,7 @@ public class Controller {
                 result = first * second;
                 break;
             case "/":
-                result = first / second;
+                result = (double)first / (double)second;
                 break;
         }
 

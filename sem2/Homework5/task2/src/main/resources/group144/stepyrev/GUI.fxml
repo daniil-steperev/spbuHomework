@@ -22,10 +22,10 @@
     <RowConstraints maxHeight="153.0" minHeight="10.0" prefHeight="153.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TextField fx:id="answer" prefHeight="20.0" prefWidth="50.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+      <TextField fx:id="answer" prefHeight="20.0" prefWidth="50.0" GridPane.columnIndex="4" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity" />
       <Label text="=" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      <ChoiceBox fx:id="operations" prefWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Spinner fx:id="firstNumber" prefHeight="39.0" prefWidth="67.0" GridPane.rowIndex="1" />
-      <Spinner fx:id="secondNumber" prefHeight="39.0" prefWidth="67.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <ChoiceBox fx:id="operations" prefWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity"/>
+      <Spinner fx:id="firstNumber" prefHeight="39.0" prefWidth="67.0" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity" />
+      <Spinner fx:id="secondNumber" prefHeight="39.0" prefWidth="67.0" GridPane.columnIndex="2" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity" />
    </children>
 </GridPane>
