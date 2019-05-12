@@ -12,7 +12,7 @@ class AVLTreeTest {
     @Test
     public void makeRightRotate() {
         AVLTree<Integer> tree = new AVLTree<>();
-        String balancedTree = "(4{1} (3{1} null null) (5{1} null null))";
+        String balancedTree = "(4 (3 null null) (5 null null))";
         tree.add(5);
         tree.add(4);
         tree.add(3);
@@ -23,7 +23,7 @@ class AVLTreeTest {
     @Test
     public void makeLeftRotate() {
         AVLTree<Integer> tree = new AVLTree<>();
-        String balancedTree = "(2{1} (1{1} null null) (3{1} null null))";
+        String balancedTree = "(2 (1 null null) (3 null null))";
         tree.add(1);
         tree.add(2);
         tree.add(3);
@@ -34,19 +34,19 @@ class AVLTreeTest {
     @Test
     public void addSimilarElements() {
         AVLTree<Integer> tree = new AVLTree<>();
-        String normalTree = "(1{3} null null)";
+        String normalTree = "(1 null null)";
         tree.add(1);
-        tree.add(1);
-        tree.add(1);
+        assertFalse(tree.add(1));
+        assertFalse(tree.add(1));
 
         assertEquals(normalTree, tree.toString());
     }
 
     @Test
-    public void addFirstTenElements() {
+    public void addFirstNineElements() {
         AVLTree<Integer> tree = new AVLTree<>();
-        String balancedTree = "(6{1} (4{1} (2{1} (1{1} null null) (3{1} null null)) (5{1} null null)) (8{1} (7{1} null null) (9{1} null (10{1} null null))))";
-        for (int i = 1; i <= 10; i++) {
+        String balancedTree = "(4 (2 (1 null null) (3 null null)) (6 (5 null null) (8 (7 null null) (9 null null))))";
+        for (int i = 1; i <= 9; i++) {
             tree.add(i);
         }
 
@@ -56,7 +56,7 @@ class AVLTreeTest {
     @Test
     public void makeBigRotate() {
         AVLTree<Integer> tree = new AVLTree<>();
-        String balancedTree = "(15{1} (10{1} (5{1} null null) null) (30{1} (20{1} null null) (40{1} null null)))";
+        String balancedTree = "(15 (10 (5 null null) null) (30 (20 null null) (40 null null)))";
         tree.add(30);
         tree.add(15);
         tree.add(40);
@@ -70,7 +70,7 @@ class AVLTreeTest {
     @Test
     public void removeRoot() {
         AVLTree<Integer> tree = new AVLTree<>();
-        String normalTree = "(6{1} null null)";
+        String normalTree = "(6 null null)";
         tree.add(5);
         tree.add(6);
         tree.remove(5);
@@ -81,7 +81,7 @@ class AVLTreeTest {
     @Test
     public void removeAloneElement() {
         AVLTree<Integer> tree = new AVLTree<>();
-        String normalTree = "(2{1} null (3{1} null null))";
+        String normalTree = "(2 null (3 null null))";
         tree.add(3);
         tree.add(2);
         tree.add(1);
@@ -93,7 +93,7 @@ class AVLTreeTest {
     @Test
     public void removeRightest() {
         AVLTree<Integer> tree = new AVLTree<>();
-        String normalTree = "(5{1} (4{1} (3{1} null null) null) (7{1} (6{1} null null) (9{1} null (10{1} null null))))";
+        String normalTree = "(5 (4 (3 null null) null) (7 (6 null null) (9 null (10 null null))))";
         tree.add(5);
         tree.add(4);
         tree.add(8);
@@ -160,7 +160,7 @@ class AVLTreeTest {
     @Test
     public void toArrayTest() {
         AVLTree<Integer> tree = new AVLTree<>();
-        Integer[] normalArray = new Integer[] {1, 2, 2, 3};
+        Integer[] normalArray = new Integer[] {1, 2, 3};
         tree.add(2);
         tree.add(2);
         tree.add(1);
@@ -216,7 +216,7 @@ class AVLTreeTest {
     @Test
     public void addString() {
         AVLTree<String> tree = new AVLTree<>();
-        String normalTree = "(ABC{1} (AAA{1} null null) (BCD{1} null null))";
+        String normalTree = "(ABC (AAA null null) (BCD null null))";
         tree.add("ABC");
         tree.add("BCD");
         tree.add("AAA");
@@ -227,7 +227,7 @@ class AVLTreeTest {
     @Test
     public void removeString() {
         AVLTree<String> tree = new AVLTree<>();
-        String normalTree = "(AAA{1} null (BCD{1} null null))";
+        String normalTree = "(AAA null (BCD null null))";
         tree.add("ABC");
         tree.add("BCD");
         tree.add("AAA");

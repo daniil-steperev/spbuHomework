@@ -9,12 +9,20 @@ import java.util.Iterator;
  * @param <T> means type of elements that AVLTree keeps
  */
 public class AVLTree<T extends Comparable<T>> implements Collection<T> {
-    private NodeOperator root = new NodeOperator();
+    private Node<T> root;
     private int size;
 
     /** A constructor of an AVLTree */
     public AVLTree() {
         size = 0;
+    }
+
+    public void setRoot(Node<T> root) {
+      this.root = root;
+    }
+
+    public Node<T> getRoot() {
+        return root;
     }
 
     /**
@@ -42,7 +50,7 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
      */
     @Override
     public boolean contains(Object o) {
-        return !isEmpty() && root.contain((T) o);
+        return !isEmpty() && root.containsNode((T) o);
     }
 
     /**
@@ -53,7 +61,7 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
      */
     @Override
     public Iterator<T> iterator() {
-        return new TreeIterator();
+        return new TreeIterator(this);
     }
 
     /**
@@ -94,7 +102,17 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
      */
     @Override
     public boolean add(T value) {
-        root.add(value);
+        if (root == null) {
+            root = new Node<>(value, null);
+            size++;
+            return true;
+        }
+
+        if (contains(value)) {
+            return false;
+        }
+
+        root.addNode(value, this);
         size++;
         return true;
     }
@@ -109,7 +127,7 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
      */
     @Override
     public boolean remove(Object o) {
-        if (root.remove((T) o)) {
+        if (root.remove((T) o, this)) {
             size--;
             return true;
         }
@@ -186,30 +204,6 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
         return !c.isEmpty();
     }
 
-    /** A class that represents tree iterator */
-    private class TreeIterator implements Iterator<T> {
-        ArrayList<T> elements;
-
-        private TreeIterator() {
-            elements = new ArrayList<>();
-            root.getAllToList(elements);
-        }
-
-        @Override
-        public boolean hasNext() {
-            return !elements.isEmpty();
-        }
-
-        @Override
-        public T next() {
-            if (isEmpty()) {
-                return null;
-            }
-
-            return elements.remove(0);
-        }
-    }
-
     /**
      * A method that prints the tree
      * @return printed tree
@@ -221,271 +215,5 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
         }
 
         return root.toString();
-    }
-
-    /** A class that represents tree element (node) */
-    private class Node {
-        private T value;
-        private NodeOperator leftChild;
-        private NodeOperator rightChild;
-        private int height;
-        private int quantity;
-
-        private Node(T value) {
-            this.value = value;
-            height = 1;
-            quantity = 1;
-            leftChild = new NodeOperator();
-            rightChild = new NodeOperator();
-        }
-
-        /** A method that updates a height of the element   */
-        private void updateHeight() {
-            int leftHeight = (leftChild.currentNode == null) ? 0 : leftChild.currentNode.height;
-            int rightHeight = (rightChild.currentNode == null) ? 0 : rightChild.currentNode.height;
-
-            height = ((leftHeight > rightHeight) ? leftHeight : rightHeight) + 1;
-        }
-
-        /** A method that returns a balance factor of the element */
-        private int balanceFactor() {
-            int leftHeight = (leftChild.currentNode == null) ? 0 : leftChild.currentNode.height;
-            int rightHeight = (rightChild.currentNode == null) ? 0 : rightChild.currentNode.height;
-
-            return rightHeight - leftHeight;
-        }
-    }
-
-    /** A class that performs operations with node */
-    private class NodeOperator {
-        private Node currentNode;
-
-        /**
-         * A method that adds element to the tree
-         * @param value means value of the added element
-         */
-        private void add(T value) {
-            if (currentNode == null) {
-                currentNode = new Node(value);
-                return;
-            }
-
-            if (currentNode.value.equals(value)) {
-                currentNode.quantity++;
-                return;
-            }
-
-            if (currentNode.value.compareTo(value) > 0) {
-                currentNode.leftChild.add(value);
-            } else {
-                currentNode.rightChild.add(value);
-            }
-
-            balance();
-        }
-
-        /**
-         * A method that removes the element from the tree
-         * @param value means value of the removed element
-         * @return true if element was successfully removed
-         */
-        private boolean remove(T value) {
-            boolean result = false;
-
-            if (currentNode == null) {
-                return false;
-            }
-
-            if (currentNode.value.equals(value)) {
-                currentNode.quantity--;
-                if (currentNode.quantity == 0) {
-                    removeNode();
-                }
-                return true;
-            }
-
-            if (currentNode.value.compareTo(value) > 0) {
-                result = currentNode.leftChild.remove(value);
-            } else {
-                result = currentNode.rightChild.remove(value);
-            }
-
-            currentNode.updateHeight();
-            this.balance();
-            return result;
-        }
-
-        /** A method that removes the node from the tree */
-        private void removeNode() {
-            if (currentNode.leftChild.currentNode == null && currentNode.rightChild.currentNode == null) {
-                currentNode = null;
-                return;
-            }
-
-            if (currentNode.leftChild.currentNode != null && currentNode.rightChild.currentNode == null) {
-                currentNode = currentNode.leftChild.currentNode;
-                return;
-            }
-
-            if (currentNode.leftChild.currentNode == null && currentNode.rightChild.currentNode != null) {
-                currentNode = currentNode.rightChild.currentNode;
-                return;
-            }
-
-            Pair returnNode = currentNode.leftChild.removeRightest();
-
-            currentNode.value = returnNode.value;
-            currentNode.quantity = returnNode.quantity;
-            currentNode.updateHeight();
-        }
-
-        /**
-         * A method that removes the rightest node of the tree
-         *
-         * This method would be useful to method removeNode (in case when both children is present)
-         * @return a removed rightest node
-         */
-        private Pair removeRightest() {
-            if (currentNode.rightChild.currentNode != null) {
-                Pair pair = currentNode.rightChild.removeRightest();
-                currentNode.updateHeight();
-                this.balance();
-                return pair;
-            } else {
-                Pair returnNode = new Pair(currentNode.value, currentNode.quantity);
-                this.removeNode();
-                return returnNode;
-            }
-        }
-
-        /** A method that performs balance with the tree
-         *
-         * This method is used in method add and remove
-         */
-        private void balance() {
-            currentNode.updateHeight();
-            NodeOperator currentLeft = currentNode.leftChild;
-            NodeOperator currentRight = currentNode.rightChild;
-
-            if (currentNode.balanceFactor() == 2) {
-                if (currentRight.currentNode.balanceFactor() < 0) {
-                    currentRight.rotateRight();
-                }
-
-                this.rotateLeft();
-                return;
-            }
-
-            if (currentNode.balanceFactor() == -2) {
-                if (currentLeft.currentNode.balanceFactor() > 0) {
-                    currentLeft.rotateLeft();
-                }
-
-                this.rotateRight();
-            }
-        }
-
-        /** A method that performs right rotate */
-        private void rotateRight() {
-            NodeOperator tmp = currentNode.leftChild;
-            NodeOperator newNode = new NodeOperator();
-
-            newNode.currentNode = currentNode;
-            newNode.currentNode.leftChild = tmp.currentNode.rightChild;
-            tmp.currentNode.rightChild = newNode;
-
-            tmp.currentNode.updateHeight();
-            newNode.currentNode.updateHeight();
-
-            currentNode = tmp.currentNode;
-        }
-
-        /** A method that performs left rotate */
-        private void rotateLeft() {
-            NodeOperator tmp = currentNode.rightChild;
-            NodeOperator newNode = new NodeOperator();
-
-            newNode.currentNode = currentNode;
-            newNode.currentNode.rightChild = tmp.currentNode.leftChild;
-            tmp.currentNode.leftChild = newNode;
-
-            tmp.currentNode.updateHeight();
-            newNode.currentNode.updateHeight();
-
-            currentNode = tmp.currentNode;
-        }
-
-        /** A method that checks if the value is in the tree
-         *
-         * @return true if value is in the tree and false if isn't
-         * */
-        private boolean contain(T value) {
-            if (currentNode == null) {
-                return false;
-            }
-
-            if (currentNode.value.equals(value)) {
-                return true;
-            }
-
-            if (currentNode.value.compareTo(value) > 0) {
-                return currentNode.leftChild.contain(value);
-            } else {
-                return currentNode.rightChild.contain(value);
-            }
-        }
-
-        /**
-         * A method that converts node to the string
-         * @return node in a line representation
-         */
-        @Override
-        public String toString() {
-            String result = "(" + currentNode.value + "{" + currentNode.quantity + "} ";
-            if (currentNode.leftChild.currentNode != null) {
-                result = result + currentNode.leftChild.toString();
-            } else {
-                result = result + "null";
-            }
-
-            result = result + " ";
-
-            if (currentNode.rightChild.currentNode != null) {
-                result = result + currentNode.rightChild.toString();
-            } else {
-                result = result + "null";
-            }
-
-            result = result + ")";
-            return result;
-        }
-
-        /**
-         * A method that adds of elements of the tree to the array
-         *
-         * This method is useful for converting tree to the array
-         * @param elements means an array in which elements should be added
-         */
-        private void getAllToList(ArrayList<T> elements) {
-            if (currentNode == null) {
-                return;
-            }
-
-            currentNode.leftChild.getAllToList(elements);
-            for (int i = 0; i < currentNode.quantity; i++) {
-                elements.add(currentNode.value);
-            }
-            currentNode.rightChild.getAllToList(elements);
-        }
-
-        private class Pair {
-            private T value;
-            private int quantity;
-
-            private Pair(T value, int quantity) {
-                this.value = value;
-                this.quantity = quantity;
-            }
-        }
     }
 }
