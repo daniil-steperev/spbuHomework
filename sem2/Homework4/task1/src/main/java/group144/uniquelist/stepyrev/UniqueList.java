@@ -9,6 +9,7 @@ public class UniqueList<T> extends List<T> {
      * A method that adds the value to the head of the stack
      * @param value means value of the element that should be added
      * @throws AlreadyAddedElementException an exception that should be raised when user tries to add already presented element to the unique list
+     * @throws WrongIndexException - an exception that should be raised when user inputted wrong index
      */
     @Override
     public void addFirst(T value) throws AlreadyAddedElementException, WrongIndexException {
@@ -23,6 +24,7 @@ public class UniqueList<T> extends List<T> {
      * A method that adds the value to the end of the stack
      * @param value means value of the element that should be added
      * @throws AlreadyAddedElementException an exception that should be raised when user tries to add already presented element to the unique list
+     * @throws WrongIndexException - an exception that should be raised when user inputted wrong index
      */
     @Override
     public void addLast(T value) throws AlreadyAddedElementException, WrongIndexException {

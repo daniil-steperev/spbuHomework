@@ -11,6 +11,8 @@ public class List<T> {
     /**
      * A method that adds new value to the head of the list
      * @param value means value of the element that should be added
+     * @throws AlreadyAddedElementException - an exception that should be raised when element already added to the list
+     * @throws WrongIndexException - an exception that should be raised when user inputted wrong index
      */
     public void addFirst(T value) throws AlreadyAddedElementException, WrongIndexException {
         add(value, 0);
@@ -19,6 +21,8 @@ public class List<T> {
     /**
      * A method that adds new value to the end of the list
      * @param value means value of the element that should be added
+     * @throws AlreadyAddedElementException - an exception that should be raised when element already added to the list
+     * @throws WrongIndexException - an exception that should be raised when user inputted wrong index
      */
     public void addLast(T value) throws AlreadyAddedElementException, WrongIndexException {
         add(value, length);
@@ -29,6 +33,7 @@ public class List<T> {
      * @param value means value of the element
      * @param index means number of the position to that element should be added
      * @throws WrongIndexException an exception that should be raised when user tries to add an element to the wrong position (e.g. index is negative)
+     * @throws AlreadyAddedElementException - an exception that should be raised when element already added to the list
      */
     public void add(T value, int index) throws WrongIndexException, AlreadyAddedElementException {
         if (index < 0 || (index > length && length > 0)) {
@@ -56,8 +61,9 @@ public class List<T> {
      * A method that removes first element from the list
      * @return value of the removed element
      * @throws EmptyListException an exception that should be raised when user tries to remove from empty list
+     * @throws WrongIndexException an exception that should be raised when user inputted wrong index
      */
-    public T removeFirst() throws EmptyListException, AlreadyAddedElementException, WrongIndexException {
+    public T removeFirst() throws EmptyListException, WrongIndexException {
         if (isEmpty()) {
             throw new EmptyListException();
         }
@@ -69,8 +75,9 @@ public class List<T> {
      * A method that removes last element from the list
      * @return value of the removed element
      * @throws EmptyListException an exception that should be raised when user tries to remove from empty list
+     * @throws WrongIndexException - an exception that should be raised when user inputted wrong index
      */
-    public T removeLast() throws EmptyListException, AlreadyAddedElementException, WrongIndexException {
+    public T removeLast() throws EmptyListException, WrongIndexException {
         if (isEmpty()) {
             throw new EmptyListException();
         }
@@ -85,7 +92,7 @@ public class List<T> {
      * @throws EmptyListException an exception that should be raised when user tries to remove from empty list
      * @throws ElementNotFoundException an exception that should be raised when user tries to remove missing element
      */
-    public T removeByValue(T value) throws EmptyListException, ElementNotFoundException, AlreadyAddedElementException, WrongIndexException {
+    public T removeByValue(T value) throws EmptyListException, ElementNotFoundException, WrongIndexException {
         if (isEmpty()) {
             throw new EmptyListException();
         }
@@ -116,6 +123,7 @@ public class List<T> {
      * @param index an index of the element that should be removed from the list
      * @return a value of the removed element
      * @throws EmptyListException an exception that should be raised when user tries to remove from empty list
+     * @throws WrongIndexException - an exception that should be raised when user inputted wrong index
      */
     public T remove(int index) throws EmptyListException, WrongIndexException {
         if (isEmpty()) {
