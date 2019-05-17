@@ -1,7 +1,6 @@
 package group144.stepyrev;
 
-import javafx.scene.Parent;
-
+/** A class that represents a tic-tac-toe board. */
 public class TicTacToeBoard {
     private char[] board = new char[9];
     private char currentPlayer = 'X';
