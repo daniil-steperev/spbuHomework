@@ -17,10 +17,18 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
         size = 0;
     }
 
+    /**
+     * A method that sets a root
+     * @param root - a node that should be set as a root
+     */
     public void setRoot(Node<T> root) {
       this.root = root;
     }
 
+    /**
+     * A method that gets a root
+     * @return - a root node
+     */
     public Node<T> getRoot() {
         return root;
     }
