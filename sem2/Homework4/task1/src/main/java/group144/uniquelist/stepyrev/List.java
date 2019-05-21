@@ -91,6 +91,7 @@ public class List<T> {
      * @return a value of the removed element
      * @throws EmptyListException an exception that should be raised when user tries to remove from empty list
      * @throws ElementNotFoundException an exception that should be raised when user tries to remove missing element
+     * @throws WrongIndexException an exception that should be raised when user inputted wrong index
      */
     public T removeByValue(T value) throws EmptyListException, ElementNotFoundException, WrongIndexException {
         if (isEmpty()) {
@@ -155,7 +156,11 @@ public class List<T> {
         return removedValue;
     }
 
-    /** A method that checks if the element contains in the list */
+    /**
+     * A method that checks if the element contains in the list
+     * @param value - a value of element that should be found
+     * @return true if it presents, false otherwise
+     */
     public boolean contains(T value) {
         if (isEmpty()) {
             return false;
@@ -199,6 +204,10 @@ public class List<T> {
         throw new ElementNotFoundException();
     }
 
+    /**
+     * A method that returns a length of the list
+     * @return - a length of the list
+     */
     public int getLength() {
         return length;
     }
