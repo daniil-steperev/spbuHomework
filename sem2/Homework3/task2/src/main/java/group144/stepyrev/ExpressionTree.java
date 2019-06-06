@@ -2,19 +2,26 @@ package group144.stepyrev;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 
 /** A class that represents the expression tree structure */
 public class ExpressionTree {
-    private Node head = null;
+    private Node head;
 
     /**
-     * A method that gets a tree from the file.
-     * @param fileName - a file name from which a tree should be got
-     * @throws IOException if reader cannot read from file
+     * A constructor that uses a new root.
+     * @param root - a new root.
      */
-    public void getTree(String fileName) throws IOException {
+    public ExpressionTree(Node root) {
+        head = root;
+    }
+
+    /**
+     * A constructor that fills the tree from the file.
+     * @param fileName - a name of the file
+     * @throws IOException - should be raised when file can not be read
+     */
+    public ExpressionTree(String fileName) throws IOException {
         try {
             FileReader reader = new FileReader(fileName);
             reader.read(); // get open bracket
@@ -56,9 +63,7 @@ public class ExpressionTree {
      * @return a result that was calculated
      */
     public int calculate() {
-        int result = head.calculate();
-
-        return result;
+        return head.calculate();
     }
 
     /** A method that prints the expression tree */

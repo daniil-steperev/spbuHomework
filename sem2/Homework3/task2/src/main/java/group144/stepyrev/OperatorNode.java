@@ -12,6 +12,18 @@ public class OperatorNode implements Node {
     }
 
     /**
+     * A constructor of Operator Node
+     * @param operation - a node operation
+     * @param leftChild - a left child
+     * @param rightChild - a right child
+     */
+    public OperatorNode(int operation, Node leftChild, Node rightChild) {
+        this.operation = operation;
+        this.leftChild = leftChild;
+        this.rightChild = rightChild;
+    }
+
+    /**
      * A method that sets the left child of the current Operator Node
      * @param node means Node that should be set as child
      */

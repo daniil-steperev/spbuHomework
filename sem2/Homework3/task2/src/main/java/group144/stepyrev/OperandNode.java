@@ -11,6 +11,18 @@ public class OperandNode implements Node {
         this.value = value;
     }
 
+    /**
+     * A construcot of Operand Node
+     * @param value - a value of node
+     * @param leftChild - a left child
+     * @param rightChild - a right child
+     */
+    public OperandNode(int value, Node leftChild, Node rightChild) {
+        this.value = value;
+        this.leftChild = leftChild;
+        this.rightChild = rightChild;
+    }
+
     /** {@inheritDoc}*/
     @Override
     public int calculate() {
