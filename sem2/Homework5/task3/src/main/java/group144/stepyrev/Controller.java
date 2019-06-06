@@ -157,6 +157,7 @@ public class Controller {
      */
     @FXML
     public void pressEqualButton() {
+        lockOperations();
         buffer.setText("");
         if (isNewNumber) {
             return;

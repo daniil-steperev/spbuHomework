@@ -23,8 +23,8 @@ public class Main extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Calculator");
             primaryStage.setResizable(true);
-            primaryStage.setMinHeight(250);
             primaryStage.setMinWidth(350);
+            primaryStage.setMinHeight(250);
 
             primaryStage.show();
         } catch (IOException e) {
