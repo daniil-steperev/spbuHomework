@@ -131,7 +131,7 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
      * If the amount of the element is more than 1, number of it
      * will be decreased.
      * @param o means value of the removed element
-     * @return
+     * @return true if element was successfully removed, false otherwise
      */
     @Override
     public boolean remove(Object o) {

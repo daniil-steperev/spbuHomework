@@ -54,11 +54,7 @@ public class Node<T extends Comparable<T>> {
      * @return - true if a node was removes successfully, false otherwise
      */
     public boolean remove(T value, AVLTree<T> tree) {
-        boolean result = false;
-
-        if (this == null) {
-            return false;
-        }
+        boolean result;
 
         if (this.value.equals(value)) {
             removeNode(tree);
@@ -82,10 +78,6 @@ public class Node<T extends Comparable<T>> {
      * @return - true if contains, false otherwise
      */
     public boolean containsNode(T value) {
-        if (this == null) {
-            return false;
-        }
-
         if (this.value.equals(value)) {
             return true;
         }
@@ -131,10 +123,6 @@ public class Node<T extends Comparable<T>> {
      * @return - a list with added elements
      */
     public ArrayList<T> getAllToList(ArrayList<T> elements) {
-        if (this == null) {
-            return elements;
-        }
-
         if (leftChild != null) {
             elements = leftChild.getAllToList(elements);
         }
@@ -161,22 +149,17 @@ public class Node<T extends Comparable<T>> {
         }
 
         if (leftChild != null && rightChild == null) {
-            if (isRoot(this.value, tree.getRoot())) {
-                tree.setRoot(leftChild);
-                return;
+            if (!setNewRoot(value, tree, leftChild)){
+                changeParentChildren(leftChild);
             }
-
-            changeParentChildren(leftChild);
             return;
         }
 
         if (leftChild == null && rightChild != null) {
-            if (isRoot(this.value, tree.getRoot())) {
-                tree.setRoot(rightChild);
-                return;
+            if (!setNewRoot(value, tree, rightChild)){
+                changeParentChildren(rightChild);
             }
 
-            changeParentChildren(rightChild);
             return;
         }
 
@@ -185,11 +168,16 @@ public class Node<T extends Comparable<T>> {
         balance(tree);
     }
 
-    private boolean isEqualNode(Node<T> node) {
-        if (this == null || node == null) {
-            return false;
+    private boolean setNewRoot(T value, AVLTree<T> tree, Node<T> newRoot) {
+        if (isRoot(value, tree.getRoot())) {
+            tree.setRoot(newRoot);
+            return true;
         }
 
+        return false;
+    }
+
+    private boolean isEqualNode(Node<T> node) {
         return this.equals(node);
     }
 
