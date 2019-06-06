@@ -4,7 +4,7 @@ package group144.uniquelist.stepyrev;
  * A class that represents single linked list without similar elements
  * @param <T> means a value of elements that unique list is consisted of
  */
-public class UniqueList<T> extends List<T> {
+public class UniqueList<T> extends MyList<T> {
     /**
      * A method that adds the value to the head of the stack
      * @param value means value of the element that should be added
