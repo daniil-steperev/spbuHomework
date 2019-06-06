@@ -111,9 +111,9 @@ public class Controller {
     @FXML
     public void pressOperationButton(ActionEvent actionEvent) {
         String operation = "";
-        for (int i = 0; i < operationButton.length; i++) {
-            if (actionEvent.getSource().equals(operationButton[i])) {
-                operation = operationButton[i].getText();
+        for (Button button : operationButton) {
+            if (actionEvent.getSource().equals(button)) {
+                operation = button.getText();
             }
         }
 
@@ -127,7 +127,8 @@ public class Controller {
             if (!tmp.equals("")) {
                 String newTmp = tmp.substring(0, tmp.length() - 2);
                 StringBuilder newBuffer = new StringBuilder(newTmp);
-                newBuffer.append(operation + " ");
+                newBuffer.append(operation);
+                newBuffer.append(" ");
                 buffer.setText(newBuffer.toString());
             }
 
