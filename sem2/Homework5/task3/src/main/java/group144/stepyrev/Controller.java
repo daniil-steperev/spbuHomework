@@ -110,6 +110,7 @@ public class Controller {
      */
     @FXML
     public void pressOperationButton(ActionEvent actionEvent) {
+        unlockNumbers();
         String operation = "";
         for (Button button : operationButton) {
             if (actionEvent.getSource().equals(button)) {
@@ -175,6 +176,7 @@ public class Controller {
         buffer.setText(calculatedAnswer);
         calculator = new Calculator();
         calculator.initialize(calculatedAnswer, "+");
+        lockNumbers();
     }
 
     /** A method that is called when button "AC" was pressed.
@@ -187,6 +189,8 @@ public class Controller {
         answer.setText("0");
         buffer.setText("");
         calculator = new Calculator();
+        unlockNumbers();
+        unlockOperations();
     }
 
     /**
@@ -211,6 +215,18 @@ public class Controller {
         buttonMultiply.setDisable(true);
         buttonDivide.setDisable(true);
         buttonEqual.setDisable(true);
+    }
+
+    private void lockNumbers() {
+        for (int i = 0; i < numberButtons.length; i++) {
+            numberButtons[i].setDisable(true);
+        }
+    }
+
+    private void unlockNumbers() {
+        for (int i = 0; i < numberButtons.length; i++) {
+            numberButtons[i].setDisable(false);
+        }
     }
 
     /**
