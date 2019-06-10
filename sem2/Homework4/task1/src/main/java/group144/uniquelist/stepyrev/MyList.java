@@ -246,7 +246,7 @@ public class MyList<T> {
             this.value = value;
         }
 
-        private Node(T value, Node next) {
+        private Node(T value, Node<T> next) {
             this.value = value;
             this.next = next;
         }

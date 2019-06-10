@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="group144.uniquelist.stepyrev.ListTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2019-06-10T16:07:13" hostname="Danik" time="0.023">
+  <properties/>
+  <testcase name="getIndexOfElementInEmptyList()" classname="group144.uniquelist.stepyrev.ListTest" time="0.008"/>
+  <testcase name="addToEmptyList()" classname="group144.uniquelist.stepyrev.ListTest" time="0.001"/>
+  <testcase name="isContainInEmptyList()" classname="group144.uniquelist.stepyrev.ListTest" time="0.001"/>
+  <testcase name="removeLastFromEmptyList()" classname="group144.uniquelist.stepyrev.ListTest" time="0.001"/>
+  <testcase name="isContainInList()" classname="group144.uniquelist.stepyrev.ListTest" time="0.001"/>
+  <testcase name="addFirstToEmptyList()" classname="group144.uniquelist.stepyrev.ListTest" time="0.0"/>
+  <testcase name="addLastToEmptyList()" classname="group144.uniquelist.stepyrev.ListTest" time="0.0"/>
+  <testcase name="addFirstToList()" classname="group144.uniquelist.stepyrev.ListTest" time="0.0"/>
+  <testcase name="removeLastFromList()" classname="group144.uniquelist.stepyrev.ListTest" time="0.0"/>
+  <testcase name="addToList()" classname="group144.uniquelist.stepyrev.ListTest" time="0.0"/>
+  <testcase name="getIndexOfElementInList()" classname="group144.uniquelist.stepyrev.ListTest" time="0.0"/>
+  <testcase name="removeFromEmptyListByIndex()" classname="group144.uniquelist.stepyrev.ListTest" time="0.001"/>
+  <testcase name="removeFromEmptyListByValue()" classname="group144.uniquelist.stepyrev.ListTest" time="0.001"/>
+  <testcase name="addToListWithNegativeindex()" classname="group144.uniquelist.stepyrev.ListTest" time="0.0"/>
+  <testcase name="removeFirstFromList()" classname="group144.uniquelist.stepyrev.ListTest" time="0.0"/>
+  <testcase name="removeFromListByIndex()" classname="group144.uniquelist.stepyrev.ListTest" time="0.0"/>
+  <testcase name="removeFromListByValue()" classname="group144.uniquelist.stepyrev.ListTest" time="0.0"/>
+  <testcase name="addLastToList()" classname="group144.uniquelist.stepyrev.ListTest" time="0.0"/>
+  <testcase name="removeFirstFromEmptyList()" classname="group144.uniquelist.stepyrev.ListTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
