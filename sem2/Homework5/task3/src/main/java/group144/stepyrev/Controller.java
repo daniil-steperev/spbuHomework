@@ -158,7 +158,6 @@ public class Controller {
      */
     @FXML
     public void pressEqualButton() {
-        lockOperations();
         buffer.setText("");
         if (isNewNumber) {
             return;
@@ -171,8 +170,11 @@ public class Controller {
         }
 
         calculator.calculate(answer.getText(), "+");
-        answer.setText(String.valueOf(calculator.getAnswer()));
+        String calculatedAnswer = String.valueOf(calculator.getAnswer());
+        answer.setText(calculatedAnswer);
+        buffer.setText(calculatedAnswer);
         calculator = new Calculator();
+        calculator.initialize(calculatedAnswer, "+");
     }
 
     /** A method that is called when button "AC" was pressed.
