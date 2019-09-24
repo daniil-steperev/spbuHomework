@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane fx:id="parent" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group144.stepyrev.ServerController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" percentWidth="33.33333" prefWidth="100.0" />
+        <ColumnConstraints hgrow="ALWAYS" minWidth="200" percentWidth="33.33333" prefWidth="100.0" />
+        <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" percentWidth="33.33333" prefWidth="100.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="200.0" percentHeight="10" prefHeight="30.0" vgrow="ALWAYS" />
+        <RowConstraints minHeight="200.0" percentHeight="25" prefHeight="30.0" vgrow="ALWAYS" />
+        <RowConstraints minHeight="200.0" percentHeight="25" prefHeight="30.0" vgrow="ALWAYS" />
+        <RowConstraints minHeight="200.0" percentHeight="25" prefHeight="30.0" vgrow="ALWAYS" />
+        <RowConstraints minHeight="200.0" percentHeight="15" prefHeight="30.0" vgrow="ALWAYS" />
+    </rowConstraints>
+    <children>
+        <Button mnemonicParsing="false" onAction="#pressButton" prefHeight="Infinity" prefWidth="Infinity" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+        <Button mnemonicParsing="false" onAction="#pressButton" prefHeight="Infinity" prefWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+        <Button mnemonicParsing="false" onAction="#pressButton" prefHeight="Infinity" prefWidth="Infinity" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+        <Button mnemonicParsing="false" onAction="#pressButton" prefHeight="Infinity" prefWidth="Infinity" GridPane.rowIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+        <Button mnemonicParsing="false" onAction="#pressButton" prefHeight="Infinity" prefWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+        <Button mnemonicParsing="false" onAction="#pressButton" prefHeight="Infinity" prefWidth="Infinity" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+        <Button mnemonicParsing="false" onAction="#pressButton" prefHeight="Infinity" prefWidth="Infinity" GridPane.rowIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+        <Button mnemonicParsing="false" onAction="#pressButton" prefHeight="Infinity" prefWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+        <Button mnemonicParsing="false" onAction="#pressButton" prefHeight="Infinity" prefWidth="Infinity" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+        <Button fx:id="startButton" mnemonicParsing="false" onAction="#newGame" prefHeight="Infinity" prefWidth="Infinity" text="New Game" textFill="#1bff4c" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+        <TextField fx:id="gameInfo" alignment="CENTER" disable="true" prefHeight="Infinity" prefWidth="Infinity" text="Waiting for connection" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+    </children>
+</GridPane>
