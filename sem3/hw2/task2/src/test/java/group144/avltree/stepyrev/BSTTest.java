@@ -96,8 +96,6 @@ class BSTTest {
 
         Iterator<Integer> iterator = tree.iterator();
 
-        assertTrue(iterator.hasNext());
-
         assertEquals(Integer.valueOf(0), iterator.next());
         assertEquals(Integer.valueOf(1), iterator.next());
         assertEquals(Integer.valueOf(2), iterator.next());
@@ -183,5 +181,40 @@ class BSTTest {
 
         secondIterator.next();
         assertFalse(secondIterator.next().equals(3));
+    }
+
+    @Test
+    public void hardTwoIteratorsTest() {
+        BST<Integer> tree = new BST<>();
+
+        tree.add(3);
+        tree.add(5);
+        tree.add(2);
+        tree.add(6);
+        tree.add(7);
+        tree.add(8);
+
+        Iterator<Integer> firstIterator = tree.iterator();
+        Iterator<Integer> secondIterator = tree.iterator();
+
+        firstIterator.remove();
+        firstIterator.next();
+
+        firstIterator.remove();
+        firstIterator.next();
+
+        firstIterator.remove();
+        firstIterator.next();
+
+        assertEquals(Integer.valueOf(6), secondIterator.next());
+
+        firstIterator.remove();
+        firstIterator.next();
+
+        firstIterator.remove();
+        assertEquals(Integer.valueOf(8), firstIterator.next());
+        firstIterator.remove(); // remove all elements
+
+        assertThrows(NoSuchElementException.class, () -> secondIterator.next());
     }
 }

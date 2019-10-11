@@ -1,5 +1,6 @@
 package group144.avltree.stepyrev;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -353,21 +354,34 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
         }
     }
 
+    private ArrayList<Node<T>> getAllElements(Node<T> node, ArrayList<Node<T>> elements) {
+        if (node.leftChild != null) {
+            elements = getAllElements(node.leftChild, elements);
+        }
+        elements.add(node);
+        if (node.rightChild != null) {
+            elements = getAllElements(node.rightChild, elements);
+        }
+
+        return elements;
+    }
+
     /** A class that represents a tree iterator. */
     private class TreeIterator implements Iterator<T> {
         /** A current element. */
         private Node<T> current;
         /** A next element. */
-        private Node<T> next;
+        private ArrayList<Node<T>> uncheckedElements;
 
         /** A method that initializes a tree iterator. */
         private TreeIterator() {
-            current = null;
-            next = root;
+            uncheckedElements = new ArrayList<>();
 
-            while ((next != null) && (next.getLeftChild() != null)) {
-                next = next.getLeftChild();
+            if (!BST.this.isEmpty()) {
+                BST.this.getAllElements(root, uncheckedElements); // get all elements to unchecked list
             }
+
+            current = uncheckedElements.size() > 0 ? uncheckedElements.get(0) : null; // get first unchecked or null
         }
 
         /**
@@ -376,7 +390,21 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
          */
         @Override
         public boolean hasNext() {
-            return next != null;
+            return (uncheckedElements.size() > 0 && atLeastOneContains());
+        }
+
+        /**
+         * A method that checks if at least one unchecked element still contatins in the tree.
+         * @return - true if it is, false otherwise
+         */
+        private boolean atLeastOneContains() {
+            for (Node<T> element : uncheckedElements) {
+                if (BST.this.contains(element.value)) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /**
@@ -385,38 +413,36 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
          */
         @Override
         public T next() {
-            if (next == null) {
+            current = getNext();
+
+            if (current == null) {
                 throw new NoSuchElementException();
             }
 
-            current = next;
-            next = getNext();
             return current.getValue();
         }
 
         /**
-         * A method that returns the next after 'next' element.
-         * @return - the next element
+         * A method that returns next minimum element from unchecked list.
+         *
+         * If element doesn't in tree, remove it.
+         * @return - minimum unchecked element in tree
          */
         private Node<T> getNext() {
-            Node<T> tmp;
+            if (uncheckedElements.size() == 0) {
+                return null;
+            }
 
-            if (next.getRightChild() != null) {
-                tmp = next.getRightChild();
-                while (tmp.getLeftChild() != null) {
-                    tmp = tmp.getLeftChild();
+            for (Node<T> element : uncheckedElements) {
+                if (BST.this.contains(element.value)) {
+                    uncheckedElements.remove(element);
+                    return element;
                 }
-
-                return tmp;
             }
 
-            tmp = next;
-            while (isPossibleToStepUp(tmp)) { // get one step up
-                tmp = tmp.getParent();
-            }
-
-            return tmp.getParent(); // we checked all left children and all right ones that's why we should check parent
+            return null;
         }
+
 
         /** A method that removes the current element from the tree. */
         @Override
@@ -424,12 +450,6 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
             if (current != null) {
                 BST.this.remove(current.getValue());
             }
-        }
-
-        private boolean isPossibleToStepUp(Node<T> node) {
-            return node.getParent() != null &&
-                    node.getParent().rightChild != null &&
-                    node.getParent().getRightChild().equals(node);
         }
     }
 }
