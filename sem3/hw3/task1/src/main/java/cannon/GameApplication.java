@@ -7,11 +7,11 @@ public class GameApplication extends Game {
     /** A width of the game field. */
     public static final int WIDTH = 100;
     /** A height of the game field. */
-    public static final int HEIGHT = 100;
+    public static final int HEIGHT = 70;
     /** A start x coordinate of the cannon. */
     public static final int START_X = 2;
     /** A start y coordinate of the cannon. */
-    public static final int START_Y = HEIGHT / 2;
+    public static final int START_Y = 37;
 
     /** A cannon controller. */
     private CannonController controller;
@@ -58,7 +58,7 @@ public class GameApplication extends Game {
     /** A method that creates a game objects. */
     private void createGameObjects() {
         cannon = new Cannon(START_X, START_Y);
-        landscape = new GameObject(0 ,25, ShapeMatrix.LANDSCAPE);
+        landscape = new GameObject(0 ,0, ShapeMatrix.LANDSCAPE);
     }
 
     /** A method that realizes events that occurs during one turn. */

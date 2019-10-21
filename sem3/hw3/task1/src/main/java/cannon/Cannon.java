@@ -1,13 +1,15 @@
 package cannon;
 
-import static cannon.GameApplication.START_X;
-import static cannon.GameApplication.START_Y;
+import java.awt.*;
+
+import static cannon.GameApplication.*;
 import static cannon.ShapeMatrix.LANDSCAPE;
+import static java.lang.Math.round;
 
 /** A class that represents a cannon. */
 public class Cannon extends GameObject {
-    private final double SHIFT = 0.07;
-    private final int LENGTH = 5;
+    private final double SHIFT = 0.125;
+    private final int LENGTH = 6;
 
     /** A field that represents if the cannon is alive. */
     private boolean isAlive;
@@ -57,26 +59,27 @@ public class Cannon extends GameObject {
         }
     }
 
-    private void checkUpAndDown() {
-        if (isCellBelow()) {
-            if (isMountain()) {
-               y -= SHIFT;
-            }
-        } else {
-            y += SHIFT;
+    private void checkUpAndDown() { // FIXME
+        if (isMountain()) {
+            y -= SHIFT;
+            barrel.makeBarrelHorizontal(y - 6);
+            return;
         }
 
-        barrel.makeBarrelHorizontal(y - 6); // FIXME
+        if (isEmptyCellsBelow()) {
+            y += SHIFT;
+            barrel.makeBarrelHorizontal(y - 6);
+        }
     }
 
     /**
-     * A method that checks if all cells below the cannon is not empty.
+     * A method that checks if all cells below the cannon is empty.
      * @return - true if is not, false otherwise
      */
-    private boolean isCellBelow() { // FIXME
+    private boolean isEmptyCellsBelow() { // FIXME
         for (int i = 0; i < LENGTH; i++) {
-            if (LANDSCAPE[(int) y + 1][(int) x + i] == 0) {
-                System.out.println((int) (y + 1) + " " + (int) (x + i));
+            if (LANDSCAPE[(int) y + 2][(int) round(x) + i] != 0) { // FIXME
+                System.out.println(((int) y + 2) + " " + ((int) round(x)));
                 return false;
             }
         }
@@ -85,13 +88,19 @@ public class Cannon extends GameObject {
     }
 
     private boolean isMountain() {
-        if (LANDSCAPE[(int) y + 1][(int) x] != 0) {
+        if (LANDSCAPE[(int) y + 1][(int) round(x)] != 0 && LANDSCAPE[(int) y][(int) round(x)] == 0) {
             System.out.println("HERE!!");
             return true;
         }
 
-        if (LANDSCAPE[(int) y + 1][(int) x + LENGTH] != 0) {
+        if (LANDSCAPE[(int) y + 1][(int) round(x) + LENGTH] != 0 && LANDSCAPE[(int) y][(int) round(x) + LENGTH] == 0) {
             return true;
+        }
+
+        for (int i = 0; i < LENGTH; i++) {
+            if (LANDSCAPE[(int) y + 1][(int) x + i] != 0 && LANDSCAPE[(int) y][(int) x + i] == 0) {
+                return true;
+            }
         }
 
         return false;

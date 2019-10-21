@@ -10,6 +10,8 @@ public class CannonController {
     private boolean isLeftPressed;
     /** A flag that represents if the right button was pressed. */
     private boolean isRightPressed;
+    /** A flag that represents if the enter button was pressed. */
+    private boolean isEnterPressed;
 
     /** A constructor of cannon controller class. */
     public CannonController() {
@@ -17,6 +19,7 @@ public class CannonController {
         isDownPressed = false;
         isLeftPressed = false;
         isRightPressed = false;
+        isEnterPressed = false;
     }
 
     /**
@@ -49,6 +52,14 @@ public class CannonController {
      */
     public void setRightPressed(boolean state) {
         isRightPressed = state;
+    }
+
+    /**
+     * A method that sets a new value to the enterPressed flag.
+     * @param state - a value that rightPressed should be.
+     */
+    public void setEnterPressed(boolean state) {
+        isEnterPressed = true;
     }
 
     /**
