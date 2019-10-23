@@ -4,11 +4,21 @@ import static java.lang.Math.*;
 
 /** A class that represents a barrel of the cannon. */
 public class Barrel extends GameObject {
+    /** A last x coordinate of the barrel. */
     private double lastX;
+    /** A last y coordinate of the barrel. */
     private double lastY;
+
+    /** A barrel rotation radius. */
     private final double RADIUS = 6;
+
+    /** A barrel size. */
     private final int BARREL_SIZE = 6;
 
+    /** A current shell. */
+    private Shell shell;
+
+    /** A matrix that represents barrel view in pixels. */
     private static int[][] barrel = new int[][] {
             {0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0},
@@ -21,8 +31,10 @@ public class Barrel extends GameObject {
     /** A constructor of the barrel. */
     public Barrel(double x, double y) {
         super(x, y, barrel);
-        lastX = x + 5;
+        lastX = x + BARREL_SIZE - 1;
         lastY = y;
+
+        shell = new Shell(lastX, lastY + BARREL_SIZE - 1); // lastY + BARREL_SIZE - 1 - because we have invereted matrix
     }
 
     /** A method that moves the barrel.
@@ -31,6 +43,8 @@ public class Barrel extends GameObject {
      * */
     public void move(double shift, double angle) {
         x += shift;
+        lastX += shift;
+        shell.changeCoordinates(lastX, lastY + BARREL_SIZE - 1);
 
         if (y == lastY && angle <= 0) { // horizontal orientation
             return;
@@ -41,16 +55,24 @@ public class Barrel extends GameObject {
         }
 
         if (angle != 0) {
-            lastY += angle;
+            lastY -= angle;
             lastX = getXOnCircle();
         }
     }
 
-    /** A method that draws the cannon. */
+    /** A method that realizes the shot. */
+    public void shoot() {
+        double angle = toDegrees(atan((lastY - y) / (lastX - x)));
+        shell.changeCoordinates(lastX, lastY + BARREL_SIZE - 1);
+        shell.shoot(angle);
+    }
+
+    /** {@inheritDoc}*/
     @Override
     public void draw(GameApplication game) {
         super.draw(game);
         drawBresenhamLine(x, y, lastX, lastY);
+        shell.draw(game);
     }
 
     /**
@@ -60,10 +82,12 @@ public class Barrel extends GameObject {
      * @return - a value of x
      */
     private double getXOnCircle() {
-        double yLength = pow(RADIUS, 2) - pow(lastY, 2);
-        return x - sqrt(abs(yLength));
+        double yLength = sqrt(abs(pow(RADIUS, 2) - pow(lastY - y, 2)));
+        System.out.println((pow(x + yLength, 2) + pow(lastY - y, 2)));
+        return x + yLength;
     }
 
+    /** A method that resets the barrel matrix. */
     private void resetMatrix() {
         for (int i = 0; i < BARREL_SIZE; i++) {
             for (int j = 0; j < BARREL_SIZE; j++) {
@@ -83,7 +107,7 @@ public class Barrel extends GameObject {
     {
         resetMatrix();
 
-        double angle = atan(abs((yStart - yEnd) / (xStart - xEnd)));
+        double angle = toDegrees(atan(abs((yStart - yEnd) / (xStart - xEnd))));
         if (angle >= 45.0 && angle <= 90.0) {
             drawLineAbove(xStart, yStart, xEnd, yEnd);
         } else if (angle < 45.0 && angle >= 0){
@@ -91,6 +115,13 @@ public class Barrel extends GameObject {
         }
     }
 
+    /**
+     * A mehod that draws a line below the 45 degrees line.
+     * @param xStart - a start x coordinate
+     * @param yStart - a start y coordinate
+     * @param xEnd - an end x coordinate
+     * @param yEnd - an end y coordinate
+     */
     private void drawLineBelow(double xStart, double yStart, double xEnd, double yEnd)
     {
         double currentY = yStart;
@@ -111,6 +142,13 @@ public class Barrel extends GameObject {
         }
     }
 
+    /**
+     * A mehod that draws a line above the 45 degrees line.
+     * @param xStart - a start x coordinate
+     * @param yStart - a start y coordinate
+     * @param xEnd - an end x coordinate
+     * @param yEnd - an end y coordinate
+     */
     private void drawLineAbove(double xStart, double yStart, double xEnd, double yEnd)
     {
         double currentX = xStart;
@@ -125,23 +163,17 @@ public class Barrel extends GameObject {
             currentX += xShift;
 
             yCoordinate += 1;
-            xCoordinate = abs((int) Math.round(xStart - currentX) % BARREL_SIZE);
-            matrix[yCoordinate][xCoordinate] = 2;
+            xCoordinate = abs((int) (round(currentX) - round(xStart)) % BARREL_SIZE);
+            matrix[BARREL_SIZE - yCoordinate - 1][xCoordinate] = 2;
         }
     }
 
-    private boolean isAboveDiagonal() {
-        for (int i = 0; i < BARREL_SIZE; i++) {
-            for (int j = 0; j < BARREL_SIZE; j++) {
-                if (barrel[i][j] != 0 && i >= j) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
+    /**
+     * A method that gets the shift.
+     * @param firstCoordinate - a first coordinate
+     * @param lastCoordinate - a last coordinate
+     * @return - the shift between two coordinates
+     */
     private double getShift(double firstCoordinate, double lastCoordinate) {
         double result = lastCoordinate - firstCoordinate;
         if (result < 0) {
@@ -160,5 +192,8 @@ public class Barrel extends GameObject {
     public void makeBarrelHorizontal(double cannonY) {
         y = cannonY;
         lastY = y;
+        lastX = x + BARREL_SIZE - 1;
+
+        shell.changeCoordinates(lastX, lastY + BARREL_SIZE - 1);
     }
 }

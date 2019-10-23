@@ -1,6 +1,6 @@
 package cannon;
 
-import java.awt.*;
+import java.util.concurrent.TimeUnit;
 
 import static cannon.GameApplication.*;
 import static cannon.ShapeMatrix.LANDSCAPE;
@@ -8,34 +8,34 @@ import static java.lang.Math.round;
 
 /** A class that represents a cannon. */
 public class Cannon extends GameObject {
+    /** A shift value. */
     private final double SHIFT = 0.125;
-    private final int LENGTH = 6;
 
-    /** A field that represents if the cannon is alive. */
-    private boolean isAlive;
+    /** A length of the cannon. */
+    private final int CANNON_LENGTH = 6;
+    /** A length of the cannon's barrel*/
+    private final int BARREL_LENGTH = 8;
+    /** A height of the canon*/
+    private final int CANNON_HEIGHT = 2;
 
+    /** A cannon's barrel. */
     private Barrel barrel;
 
     /** A constructor of cannon class. */
     public Cannon(double x, double y) {
         super(x, y, ShapeMatrix.CANNON);
-        barrel = new Barrel(x + 2, y - 6);
-    }
-
-    /** A method that realizes the cannon's shot. */
-    public void shoot() {
-
+        barrel = new Barrel(x + CANNON_HEIGHT, y - CANNON_LENGTH);
     }
 
     /** A method that moves the cannon. */
     public void move(CannonController controller) {
-        if (controller.getLeftPressed()) {
+        if (controller.getLeftPressed() && LANDSCAPE[(int) y][(int) x - 1] == 0) { // x - 1 - previous cell before cannon
             x -= SHIFT;
             barrel.move(-SHIFT, 0);
             checkUpAndDown();
         }
 
-        if (controller.getRightPressed()) {
+        if (controller.getRightPressed() && LANDSCAPE[(int) y - CANNON_HEIGHT][(int) x + BARREL_LENGTH] == 0) {
             x += SHIFT;
             barrel.move(SHIFT, 0);
             checkUpAndDown();
@@ -46,6 +46,10 @@ public class Cannon extends GameObject {
         }
 
         checkBorders();
+    }
+
+    public void shoot() {
+        barrel.shoot();
     }
 
     /** A method that moves the cannon's barrel. */
@@ -59,16 +63,17 @@ public class Cannon extends GameObject {
         }
     }
 
-    private void checkUpAndDown() { // FIXME
+    /** A method that checks if the cannon should get up or down. */
+    private void checkUpAndDown() {
         if (isMountain()) {
             y -= SHIFT;
-            barrel.makeBarrelHorizontal(y - 6);
+            barrel.makeBarrelHorizontal(y - CANNON_LENGTH);
             return;
         }
 
         if (isEmptyCellsBelow()) {
             y += SHIFT;
-            barrel.makeBarrelHorizontal(y - 6);
+            barrel.makeBarrelHorizontal(y - CANNON_LENGTH);
         }
     }
 
@@ -76,10 +81,9 @@ public class Cannon extends GameObject {
      * A method that checks if all cells below the cannon is empty.
      * @return - true if is not, false otherwise
      */
-    private boolean isEmptyCellsBelow() { // FIXME
-        for (int i = 0; i < LENGTH; i++) {
-            if (LANDSCAPE[(int) y + 2][(int) round(x) + i] != 0) { // FIXME
-                System.out.println(((int) y + 2) + " " + ((int) round(x)));
+    private boolean isEmptyCellsBelow() {
+        for (int i = 0; i < CANNON_LENGTH; i++) {
+            if (LANDSCAPE[(int) y + CANNON_HEIGHT][(int) round(x) + i] != 0) {
                 return false;
             }
         }
@@ -87,17 +91,21 @@ public class Cannon extends GameObject {
         return true;
     }
 
+    /**
+     * A method that checks if the mountain.
+     * @return - true if it is, false otherwise
+     */
     private boolean isMountain() {
         if (LANDSCAPE[(int) y + 1][(int) round(x)] != 0 && LANDSCAPE[(int) y][(int) round(x)] == 0) {
             System.out.println("HERE!!");
             return true;
         }
 
-        if (LANDSCAPE[(int) y + 1][(int) round(x) + LENGTH] != 0 && LANDSCAPE[(int) y][(int) round(x) + LENGTH] == 0) {
+        if (LANDSCAPE[(int) y + 1][(int) round(x) + CANNON_LENGTH] != 0 && LANDSCAPE[(int) y][(int) round(x) + CANNON_LENGTH] == 0) {
             return true;
         }
 
-        for (int i = 0; i < LENGTH; i++) {
+        for (int i = 0; i < CANNON_LENGTH; i++) {
             if (LANDSCAPE[(int) y + 1][(int) x + i] != 0 && LANDSCAPE[(int) y][(int) x + i] == 0) {
                 return true;
             }
@@ -110,17 +118,18 @@ public class Cannon extends GameObject {
     private void checkBorders() {
         if (x < 0) {
             x = START_X;
-            barrel.x = x + 2;
+            barrel.x = x + CANNON_HEIGHT;
         } else if (x + width > GameApplication.WIDTH) {
             x = GameApplication.WIDTH - width;
-            barrel.x = x + 2;
+            barrel.x = x + CANNON_HEIGHT;
         }
-        if (y - (LENGTH - 2) <= 0) { // FIXME: MAKE CONSTANT LENGTH -2 = BARREL LENGTH + CANNON HEIGHT
+        if (y - BARREL_LENGTH <= 0) {
             y = START_Y;
-            barrel.makeBarrelHorizontal(y - 6);
+            barrel.makeBarrelHorizontal(y - CANNON_LENGTH);
         }
     }
 
+    /** {@inheritDoc}*/
     @Override
     public void draw(GameApplication game) {
         super.draw(game);

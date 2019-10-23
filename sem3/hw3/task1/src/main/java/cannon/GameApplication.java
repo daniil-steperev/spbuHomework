@@ -37,10 +37,6 @@ public class GameApplication extends Game {
         setTurnTimer(10);
 
         controller = new CannonController();
-        controller.setLeftPressed(false);
-        controller.setRightPressed(false);
-        controller.setUpPressed(false);
-        controller.setDownPressed(false);
     }
 
     /** A method that draws a scene. */
@@ -87,7 +83,8 @@ public class GameApplication extends Game {
                 controller.setRightPressed(false);
                 break;
             case ENTER:
-
+                cannon.shoot();
+                break;
         }
     }
 
@@ -106,10 +103,6 @@ public class GameApplication extends Game {
             case LEFT:
                 controller.setLeftPressed(false);
                 break;
-            case ENTER:
-                //FIXME
-                break;
         }
     }
-
 }
