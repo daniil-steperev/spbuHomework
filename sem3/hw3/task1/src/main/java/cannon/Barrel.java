@@ -62,7 +62,7 @@ public class Barrel extends GameObject {
 
     /** A method that realizes the shot. */
     public void shoot() {
-        double angle = toDegrees(atan((lastY - y) / (lastX - x)));
+        double angle = atan(abs((y - lastY) / (x - lastX)));
         shell.changeCoordinates(lastX, lastY + BARREL_SIZE - 1);
         shell.shoot(angle);
     }
@@ -83,7 +83,6 @@ public class Barrel extends GameObject {
      */
     private double getXOnCircle() {
         double yLength = sqrt(abs(pow(RADIUS, 2) - pow(lastY - y, 2)));
-        System.out.println((pow(x + yLength, 2) + pow(lastY - y, 2)));
         return x + yLength;
     }
 

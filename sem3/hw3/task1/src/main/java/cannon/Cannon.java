@@ -97,7 +97,6 @@ public class Cannon extends GameObject {
      */
     private boolean isMountain() {
         if (LANDSCAPE[(int) y + 1][(int) round(x)] != 0 && LANDSCAPE[(int) y][(int) round(x)] == 0) {
-            System.out.println("HERE!!");
             return true;
         }
 

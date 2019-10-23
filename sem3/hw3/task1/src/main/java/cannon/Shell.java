@@ -6,15 +6,18 @@ import static java.lang.StrictMath.sin;
 
 /** A class that represents a shell. */
 public class Shell extends GameObject {
-    private final double START_SPEED = 0.7;
-    private final double GRAVITY_ACCELERATION = 0.41;
+    private final double START_SPEED = 0.8;
+    private final double GRAVITY_ACCELERATION = 0.4;
 
     /** A shell's X coordinate speed. */
     private double speedX;
     /** A shell's Y coordinate speed. */
     private double speedY;
 
-    private boolean isShooting;
+    /** A flag that represents if the shell is flying. */
+    private boolean isFlying;
+    /** A flag that represents if the shell is visible. */
+    private boolean isVisible;
 
     /**
      * A constructor of the shell class.
@@ -23,17 +26,23 @@ public class Shell extends GameObject {
      */
     public Shell(double x, double y) {
         super(x, y, ShapeMatrix.SHELL);
-        isShooting = false;
+        isFlying = false;
     }
 
     /** A method that starts a move of the shell. */
     public void shoot(double angle) {
-        isShooting = true;
+        isFlying = true;
+        isVisible = true;
 
         speedX = START_SPEED * cos(angle);
         speedY = START_SPEED * sin(angle);
     }
 
+    /**
+     * A method that changes coordinates of the shell.
+     * @param x - new x
+     * @param y - new y
+     */
     public void changeCoordinates(double x, double y) {
         this.x = x;
         this.y = y;
@@ -45,14 +54,20 @@ public class Shell extends GameObject {
         y -= (speedY - pow(GRAVITY_ACCELERATION, 2) / 2); // orientation changed
     }
 
+    /** {@inheritDoc}*/
     @Override
     public void draw(GameApplication game) {
-        if (isShooting) {
+        if (!isVisible) {
+            return;
+        }
+
+        if (isFlying) {
             fly();
         }
 
         if (x < 0 || x > GameApplication.WIDTH - 1 || y < 0 || y > GameApplication.HEIGHT - 1) {
-            isShooting = false;
+            isFlying = false;
+            isVisible = false;
             return;
         }
 
