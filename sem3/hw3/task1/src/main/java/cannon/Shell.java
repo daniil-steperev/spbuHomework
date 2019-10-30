@@ -6,8 +6,8 @@ import static java.lang.StrictMath.sin;
 
 /** A class that represents a shell. */
 public class Shell extends GameObject {
-    private final double START_SPEED = 0.8;
-    private final double GRAVITY_ACCELERATION = 0.4;
+    private final double START_SPEED = 0.6;
+    private final double GRAVITY_ACCELERATION = 0.1;
 
     /** A shell's X coordinate speed. */
     private double speedX;
@@ -51,7 +51,8 @@ public class Shell extends GameObject {
     /** A method that realizes a parabola flight. */
     private void fly() {
         x += speedX;
-        y -= (speedY - pow(GRAVITY_ACCELERATION, 2) / 2); // orientation changed
+        speedY -= pow(GRAVITY_ACCELERATION, 2) / 2;
+        y -= speedY; // orientation changed
     }
 
     /** {@inheritDoc}*/
