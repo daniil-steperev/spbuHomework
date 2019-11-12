@@ -15,6 +15,9 @@ public class Barrel extends GameObject {
     /** A barrel size. */
     private final int BARREL_SIZE = 6;
 
+    /** A number of the green color in pixel. */
+    private final static int BARREL_COLOR = 6;
+
     /** A current shell. */
     private Shell shell;
 
@@ -34,7 +37,7 @@ public class Barrel extends GameObject {
         lastX = x + BARREL_SIZE - 1;
         lastY = y;
 
-        shell = new Shell(lastX, lastY + BARREL_SIZE - 1); // lastY + BARREL_SIZE - 1 - because we have invereted matrix
+        shell = new Shell(lastX, lastY + BARREL_SIZE - 1); // lastY + BARREL_SIZE - 1 - because we have inverted matrix
     }
 
     /** A method that moves the barrel.
@@ -44,7 +47,6 @@ public class Barrel extends GameObject {
     public void move(double shift, double angle) {
         x += shift;
         lastX += shift;
-        shell.changeCoordinates(lastX, lastY + BARREL_SIZE - 1);
 
         if (y == lastY && angle <= 0) { // horizontal orientation
             return;
@@ -127,7 +129,7 @@ public class Barrel extends GameObject {
         int xCoordinate = 0;
         int yCoordinate = 0;
 
-        matrix[BARREL_SIZE - yCoordinate - 1][xCoordinate] = 2; // initialize first pixel
+        matrix[BARREL_SIZE - yCoordinate - 1][xCoordinate] = BARREL_COLOR; // initialize first pixel
 
         for (int i = 1; i < BARREL_SIZE; i++)
         {
@@ -137,7 +139,7 @@ public class Barrel extends GameObject {
 
             xCoordinate += 1;
             yCoordinate = abs((int) Math.round(yStart - currentY) % BARREL_SIZE);
-            matrix[BARREL_SIZE - yCoordinate - 1][xCoordinate] = 2;
+            matrix[BARREL_SIZE - yCoordinate - 1][xCoordinate] = BARREL_COLOR;
         }
     }
 
@@ -154,7 +156,7 @@ public class Barrel extends GameObject {
         int xCoordinate = 0;
         int yCoordinate = 0;
 
-        matrix[BARREL_SIZE - yCoordinate - 1][xCoordinate] = 2; // initialize first pixel
+        matrix[BARREL_SIZE - yCoordinate - 1][xCoordinate] = BARREL_COLOR; // initialize first pixel
         for (int i = 1; i < BARREL_SIZE; i++)
         {
             double xShift = getShift(xStart, xEnd);
@@ -163,7 +165,7 @@ public class Barrel extends GameObject {
 
             yCoordinate += 1;
             xCoordinate = abs((int) (round(currentX) - round(xStart)) % BARREL_SIZE);
-            matrix[BARREL_SIZE - yCoordinate - 1][xCoordinate] = 2;
+            matrix[BARREL_SIZE - yCoordinate - 1][xCoordinate] = BARREL_COLOR;
         }
     }
 
@@ -192,7 +194,5 @@ public class Barrel extends GameObject {
         y = cannonY;
         lastY = y;
         lastX = x + BARREL_SIZE - 1;
-
-        shell.changeCoordinates(lastX, lastY + BARREL_SIZE - 1);
     }
 }

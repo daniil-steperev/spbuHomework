@@ -5,7 +5,7 @@ import com.javarush.engine.cell.*;
 /** A class that represents a game application. */
 public class GameApplication extends Game {
     /** A width of the game field. */
-    public static final int WIDTH = 100;
+    public static final int WIDTH = 80;
     /** A height of the game field. */
     public static final int HEIGHT = 70;
     /** A start x coordinate of the cannon. */

@@ -27,6 +27,7 @@ public class Shell extends GameObject {
     public Shell(double x, double y) {
         super(x, y, ShapeMatrix.SHELL);
         isFlying = false;
+        isVisible = false;
     }
 
     /** A method that starts a move of the shell. */
@@ -48,27 +49,50 @@ public class Shell extends GameObject {
         this.y = y;
     }
 
+    /**
+     * A method that returns if the shell is flying.
+     * @return - true if is flying, false otherwise
+     */
+    public boolean isFlying() {
+        return isFlying;
+    }
+
     /** A method that realizes a parabola flight. */
     private void fly() {
         x += speedX;
-        speedY -= pow(GRAVITY_ACCELERATION, 2) / 2;
+        speedY -= pow(GRAVITY_ACCELERATION, 2) / 2; // "-" because orientation is changed
         y -= speedY; // orientation changed
     }
 
     /** {@inheritDoc}*/
     @Override
     public void draw(GameApplication game) {
-        if (!isVisible) {
+        if (x < 0 || x > GameApplication.WIDTH - 1 || y > GameApplication.HEIGHT - 1) { // if the shell is below (lefter, righter) the window
+            isFlying = false;
+            isVisible = false;
             return;
         }
 
-        if (isFlying) {
+        if (isVisible && y < 0) { // if the shell is above the window
+            isVisible = false;
+            return;
+        }
+
+        if (!isVisible && y >= 0 && isFlying) { // if the shell above the game window, but it still flying
+            isVisible = true;
+        }
+
+        if (isVisible && ShapeMatrix.LANDSCAPE[(int) y][(int) x] != 0) { // has exploded about the mountain
+            isVisible = false;
+            isFlying = false;
+            return;
+        }
+
+        if (isFlying) { // is still flying
             fly();
         }
 
-        if (x < 0 || x > GameApplication.WIDTH - 1 || y < 0 || y > GameApplication.HEIGHT - 1) {
-            isFlying = false;
-            isVisible = false;
+        if (!isVisible) { // above the window
             return;
         }
 

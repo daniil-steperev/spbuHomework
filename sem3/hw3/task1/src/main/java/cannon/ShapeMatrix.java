@@ -4,8 +4,8 @@ package cannon;
 public class ShapeMatrix {
     /** A cannon matrix. */
     public static final int[][] CANNON = new int[][] {
-            {0, 2, 2, 2, 2, 0, 0},
-            {2, 2, 2, 2, 2, 2, 2},
+            {0, 6, 6, 6, 6, 0, 0},
+            {6, 6, 6, 6, 6, 6, 6},
     };
 
     /** A shell matrix. */
