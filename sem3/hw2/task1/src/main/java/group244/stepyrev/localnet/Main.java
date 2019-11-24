@@ -1,5 +1,10 @@
 package group244.stepyrev.localnet;
 
+import group244.stepyrev.localnet.StandartSystems.DOS;
+import group244.stepyrev.localnet.StandartSystems.Linux;
+import group244.stepyrev.localnet.StandartSystems.MacOS;
+import group244.stepyrev.localnet.StandartSystems.Windows;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -68,34 +73,30 @@ public class Main {
         boolean[][] connections = new boolean[computerNumber][computerNumber];
 
         System.out.println("Enter the connections between computers: ");
-        for (int i = 0; i < computerNumber; i++) {
-            System.out.print("Enter the number of connected computers by pairs (first one, second one)");
-            System.out.print(" without spaces. If you want to stop, enter -1 -1: ");
-            int firstComputer = 0;
-            int secondComputer = 0;
-            while (true) {
+        System.out.print("Enter the number of connected computers by pairs (first one, second one)");
+        System.out.print(" without spaces. If you want to stop, enter -1 -1: ");
+        int firstComputer;
+        int secondComputer;
+        while (true) {
+            firstComputer = scanner.nextInt();
+            while (!isValidComputerNumber(firstComputer)) {
+                System.out.println("Enter valid number of first computer: ");
                 firstComputer = scanner.nextInt();
-                while (!isValidComputerNumber(firstComputer)) {
-                    System.out.println("Enter valid number of first computer: ");
-                    firstComputer = scanner.nextInt();
-                }
-
-                secondComputer = scanner.nextInt();
-                while (!isValidComputerNumber(secondComputer)) {
-                    System.out.println("Enter valid number of the second computer: ");
-                    secondComputer = scanner.nextInt();
-                }
-
-                if (firstComputer == -1) {
-                    System.out.println();
-                    return connections;
-                }
-
-                connections[firstComputer][secondComputer] = true;
             }
-        }
 
-        return connections;
+            secondComputer = scanner.nextInt();
+            while (!isValidComputerNumber(secondComputer)) {
+                System.out.println("Enter valid number of the second computer: ");
+                secondComputer = scanner.nextInt();
+            }
+
+            if (firstComputer == -1) {
+                System.out.println();
+                return connections;
+            }
+
+            connections[firstComputer][secondComputer] = true;
+        }
     }
 
     private static boolean isValidComputerNumber(int number) {
@@ -128,13 +129,13 @@ public class Main {
         while (true) {
             switch (number) {
                 case 1:
-                    return OS.WINDOWS;
+                    return new Windows();
                 case 2:
-                    return OS.LINUX;
+                    return new Linux();
                 case 3:
-                    return OS.MACOS;
+                    return new MacOS();
                 case 4:
-                    return OS.DOS;
+                    return new DOS();
                 default:
                     System.out.println("Enter correct number, please.");
                     number = scanner.nextInt();
@@ -159,7 +160,7 @@ public class Main {
         return new LocalNetwork(computers, connections, virus, firstInfected);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         scanner = new Scanner(new InputStreamReader(System.in));
         LocalNetwork network = getNetwork();
 
@@ -168,13 +169,24 @@ public class Main {
             network.makeTurn();
             System.out.println(network.getComputersStatus());
 
-            System.out.println("Enter 1 to continue: ");
+            System.out.println("Enter 1 to continue, other else to stop: ");
             step = scanner.nextInt();
         }
+
+        callGoodByeMessage(network);
 
         scanner.close();
     }
 
+    private static void callGoodByeMessage(LocalNetwork network) {
+        if (network.isAllInfected()) {
+            System.out.println("Ha-ha! Smart viruses will enslave this world and silly people!");
+        } else {
+            System.out.println("That time you were better that we thought... Beware of us little people!");
+        }
+    }
+
+    /** A virus that infects only windows, linux, mac and dos. */
     private static class MainVirus implements Virus {
         private double infectWin;
         private double infectLin;
@@ -188,39 +200,39 @@ public class Main {
             this.infectDOS = infectDOS;
         }
 
-        @Override
-        public boolean tryInfect(OS os) {
-            switch (os) {
-                case WINDOWS:
-                    return infectWindows();
-                case LINUX:
-                    return infectLinux();
-                case MACOS:
-                    return infectMacos();
-                case DOS:
-                    return infectDOS();
-                default:
-                    return false;
-            }
-        }
-
-        @Override
-        public boolean infectWindows() {
+        /**
+         * A method that checks if the virus has infected Windows.
+         * @param windows - a windows OS
+         * @return - true if virus has infected, false otherwise
+         */
+        public boolean infect(Windows windows) {
             return random.nextDouble() < infectWin;
         }
 
-        @Override
-        public boolean infectLinux() {
+        /**
+         * A method that checks if the virus has infected Linux.
+         * @param linux - a linux OS
+         * @return - true if virus has infected, false otherwise
+         */
+        public boolean infect(Linux linux) {
             return random.nextDouble() < infectLin;
         }
 
-        @Override
-        public boolean infectMacos() {
+        /**
+         * A method that checks if the virus has infected MacOS.
+         * @param macOS - a MacOS
+         * @return - true if virus has infected, false otherwise
+         */
+        public boolean infect(MacOS macOS) {
             return random.nextDouble() < infectMac;
         }
 
-        @Override
-        public boolean infectDOS() {
+        /**
+         * A method that checks if the virus has infected DOS.
+         * @param dos - a DOS
+         * @return - true if virus has infected, false otherwise
+         */
+        public boolean infect(DOS dos) {
             return random.nextDouble() < infectDOS;
         }
     }

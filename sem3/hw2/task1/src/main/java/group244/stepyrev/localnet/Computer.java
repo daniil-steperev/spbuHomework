@@ -15,15 +15,15 @@ public class Computer {
 
     /**
      * A method that tries to infect the computer.
-     * @param nimbdaVirus - a nimbdaVirus that tries to infect the computer.
+     * @param virus - a virus that tries to infect the computer.
      * @return - true if computer was infected, false otherwise.
      */
-    public boolean tryInfect(Virus nimbdaVirus) {
+    public boolean tryInfect(Virus virus) {
         if (isInfected) {
             return true;
         }
 
-        if (nimbdaVirus.tryInfect(os)) {
+        if (os.tryToInfect(virus)) {
             isInfected = true;
             return true;
         }

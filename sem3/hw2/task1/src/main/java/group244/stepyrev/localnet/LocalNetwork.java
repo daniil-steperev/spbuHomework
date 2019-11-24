@@ -17,7 +17,7 @@ public class LocalNetwork {
      *  A constructor of the local network class.
      * @param computers - a list of computers
      * @param matrix - a matrix with computers connections
-     * @param virus - a nimbdaVirus
+     * @param virus - a virus
      * @param index - an index of first infected computer
      */
     public LocalNetwork(ArrayList<Computer> computers, boolean[][] matrix, Virus virus, int index) {
@@ -36,11 +36,11 @@ public class LocalNetwork {
     public void makeTurn() {
         ArrayList<Computer> infected = getInfectedComputers();
 
-        for (int i = 0; i < infected.size(); i++) {
-            ArrayList<Computer> nonInfected = getNonInfectedLinkedComputers(infected.get(i));
+        for (Computer computer : infected) {
+            ArrayList<Computer> nonInfectedComputers = getNonInfectedLinkedComputers(computer);
 
-            for (int j = 0; j < nonInfected.size(); j++) {
-                nonInfected.get(j).tryInfect(virus);
+            for (Computer nonInfected : nonInfectedComputers) {
+                nonInfected.tryInfect(virus);
             }
         }
     }
@@ -52,9 +52,9 @@ public class LocalNetwork {
     private ArrayList<Computer> getInfectedComputers() {
         ArrayList<Computer> infected = new ArrayList<>();
 
-        for (int i = 0; i < computers.size(); i++) {
-            if (computers.get(i).isInfected()) {
-                infected.add(computers.get(i));
+        for (Computer computer : computers) {
+            if (computer.isInfected()) {
+                infected.add(computer);
             }
         }
 
@@ -132,5 +132,14 @@ public class LocalNetwork {
         }
 
         return connections.toString();
+    }
+
+    /**
+     * A method that checks if all computers were infected.
+     * @return - true if they all of them were infected, false otherwise
+     */
+    public boolean isAllInfected() {
+        ArrayList<Computer> infectedComputers = getInfectedComputers();
+        return infectedComputers.size() == computers.size();
     }
 }

@@ -1,5 +1,9 @@
 package group244.stepyrev.localnet;
 
+import group244.stepyrev.localnet.StandartSystems.DOS;
+import group244.stepyrev.localnet.StandartSystems.Linux;
+import group244.stepyrev.localnet.StandartSystems.MacOS;
+import group244.stepyrev.localnet.StandartSystems.Windows;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -104,17 +108,20 @@ class LocalNetworkTest {
 
     }
 
-
     /** A method that adds a computer to computers list. */
     private void initializeComputers() {
         computers = new ArrayList<>();
-        computers.add(new Computer(OS.WINDOWS));
-        computers.add(new Computer(OS.LINUX));
-        computers.add(new Computer(OS.MACOS));
-        computers.add(new Computer(OS.DOS));
-        computers.add(new Computer(OS.DOS));
-    }
+        OS windows = new Windows();
+        OS linux = new Linux();
+        OS macos = new MacOS();
+        OS dos = new DOS();
 
+        computers.add(new Computer(windows));
+        computers.add(new Computer(linux));
+        computers.add(new Computer(macos));
+        computers.add(new Computer(dos));
+        computers.add(new Computer(dos));
+    }
 
     /**
      * A method that initializes a connections.
@@ -148,64 +155,54 @@ class LocalNetworkTest {
 
     /** A virus that infects only windows and dos with 100% probability. */
     private class ConfickerVirus implements Virus {
+        /* {@inheritDoc} */
         @Override
-        public boolean tryInfect(OS os) {
-            switch (os) {
-                case WINDOWS:
-                    return infectWindows();
-                case DOS:
-                    return infectDOS();
-                default:
-                    return false;
-            }
-        }
-
-        @Override
-        public boolean infectWindows() {
+        public boolean infect(DOS os) {
             return true;
         }
 
+        /* {@inheritDoc} */
         @Override
-        public boolean infectLinux() {
+        public boolean infect(Linux os) {
             return false;
         }
 
+        /* {@inheritDoc} */
         @Override
-        public boolean infectMacos() {
+        public boolean infect(MacOS os) {
             return false;
         }
 
+        /* {@inheritDoc} */
         @Override
-        public boolean infectDOS() {
+        public boolean infect(Windows os) {
             return true;
         }
     }
 
     /** A virus that infects all computers with 100% probability. */
     private class SasserVirus implements Virus {
-
+        /* {@inheritDoc} */
         @Override
-        public boolean tryInfect(OS os) {
+        public boolean infect(DOS os) {
             return true;
         }
 
+        /* {@inheritDoc} */
         @Override
-        public boolean infectWindows() {
+        public boolean infect(Linux os) {
             return true;
         }
 
+        /* {@inheritDoc} */
         @Override
-        public boolean infectLinux() {
+        public boolean infect(MacOS os) {
             return true;
         }
 
+        /* {@inheritDoc} */
         @Override
-        public boolean infectMacos() {
-            return true;
-        }
-
-        @Override
-        public boolean infectDOS() {
+        public boolean infect(Windows os) {
             return true;
         }
     }
