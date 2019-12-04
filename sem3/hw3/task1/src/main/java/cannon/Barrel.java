@@ -109,10 +109,21 @@ public class Barrel extends GameObject {
         resetMatrix();
 
         double angle = toDegrees(atan(abs((yStart - yEnd) / (xStart - xEnd))));
-        if (angle >= 45.0 && angle <= 90.0) {
+        if (angle >= 40.0 && angle <= 50.0) {
+            drawDiagonal();
+            return;
+        }
+
+        if (angle > 45.0 && angle <= 90.0) {
             drawLineAbove(xStart, xEnd);
-        } else if (angle < 45.0 && angle >= 0){
+        } else if (angle >= 0.0 && angle <= 45.0){
             drawLineBelow(yStart, yEnd);
+        }
+    }
+
+    private void drawDiagonal() {
+        for (int i = 0; i < BARREL_SIZE; i++) {
+            matrix[BARREL_SIZE - i - 1][i] = BARREL_COLOR;
         }
     }
 

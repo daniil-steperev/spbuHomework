@@ -1,7 +1,6 @@
 package cannon;
 
-import static cannon.GameApplication.START_X;
-import static cannon.GameApplication.START_Y;
+import static cannon.GameApplication.*;
 import static cannon.ShapeMatrix.LANDSCAPE;
 import static java.lang.Math.round;
 
