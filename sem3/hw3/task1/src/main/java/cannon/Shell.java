@@ -49,14 +49,6 @@ public class Shell extends GameObject {
         this.y = y;
     }
 
-    /**
-     * A method that returns if the shell is flying.
-     * @return - true if is flying, false otherwise
-     */
-    public boolean isFlying() {
-        return isFlying;
-    }
-
     /** A method that realizes a parabola flight. */
     private void fly() {
         x += speedX;

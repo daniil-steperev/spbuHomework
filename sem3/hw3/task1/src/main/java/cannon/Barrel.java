@@ -110,20 +110,18 @@ public class Barrel extends GameObject {
 
         double angle = toDegrees(atan(abs((yStart - yEnd) / (xStart - xEnd))));
         if (angle >= 45.0 && angle <= 90.0) {
-            drawLineAbove(xStart, yStart, xEnd, yEnd);
+            drawLineAbove(xStart, xEnd);
         } else if (angle < 45.0 && angle >= 0){
-            drawLineBelow(xStart, yStart, xEnd, yEnd);
+            drawLineBelow(yStart, yEnd);
         }
     }
 
     /**
      * A mehod that draws a line below the 45 degrees line.
-     * @param xStart - a start x coordinate
      * @param yStart - a start y coordinate
-     * @param xEnd - an end x coordinate
      * @param yEnd - an end y coordinate
      */
-    private void drawLineBelow(double xStart, double yStart, double xEnd, double yEnd)
+    private void drawLineBelow(double yStart, double yEnd)
     {
         double currentY = yStart;
         int xCoordinate = 0;
@@ -146,11 +144,9 @@ public class Barrel extends GameObject {
     /**
      * A mehod that draws a line above the 45 degrees line.
      * @param xStart - a start x coordinate
-     * @param yStart - a start y coordinate
      * @param xEnd - an end x coordinate
-     * @param yEnd - an end y coordinate
      */
-    private void drawLineAbove(double xStart, double yStart, double xEnd, double yEnd)
+    private void drawLineAbove(double xStart, double xEnd)
     {
         double currentX = xStart;
         int xCoordinate = 0;
