@@ -38,7 +38,7 @@ doLoop list = do putStrLn "Enter a command 1 to add new record (name, phone)"
                                 fileName <- getLine
                                 phoneBook <- readFile fileName
                                 doLoop $ doLoadFromFile phoneBook
-                    _  :_ -> do putStrLn "Enter a correct command, please"
+                    _     -> do putStrLn "Enter a correct command, please"
                                 doLoop list
                     
 doAddRecord :: [(String, Int)] -> String -> Int -> [(String, Int)]
