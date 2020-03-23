@@ -21,7 +21,7 @@ doLoop list = do
         '3':_ -> do putStr "Current list: "
                     print list
                     doLoop list
-        _  :_ -> do putStrLn "Enter a correct command, please (1 - add value, 2 - remove value, 3 - print list, 0 - exit)"
+        _     -> do putStrLn "Enter a correct command, please (1 - add value, 2 - remove value, 3 - print list, 0 - exit)"
                     doLoop list
     
 doAddElement :: [Int] -> Int -> [Int]
