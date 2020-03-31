@@ -6,4 +6,3 @@ factorization n
     
 decompose 0 _             = [[]]
 decompose lastSum curTerm = [x : res | x <- [curTerm..lastSum], res <- (decompose (lastSum - x) x)]
-    
