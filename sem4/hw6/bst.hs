@@ -1,7 +1,7 @@
 module BinarySearchTree where
 
 import Control.Monad
--- import System.Random
+import System.Random
 
 data BinarySearchTree a = Null |
                           Node (BinarySearchTree a) a (BinarySearchTree a)
@@ -51,10 +51,13 @@ getHeight :: BinarySearchTree a -> Int
 getHeight Null = 0
 getHeight (Node left a right) = 1 + max (getHeight left) (getHeight right)
 
-chgRandomly Null = Null
-chgRandomly (Node l v r) = Node (chgRandomly left) (val) (chgRandomly right) where
-                            val = newRand
-
+chgRandomly :: BinarySearchTree a -> IO (BinarySearchTree Int)
+chgRandomly Null = return Null
+chgRandomly (Node l v r) = do left  <- chgRandomly l
+                              right <- chgRandomly r
+                              val   <- randomIO :: IO Int
+                              return $ Node left val right
+                              
 tree = Node
             (Node Null 1 Null)
             2
@@ -72,9 +75,11 @@ main = do putStrLn("Given tree: " ++ show tree)
           
           putStrLn("")
           putStrLn("Given tree: " ++ show tree)
-          putStrLn("Remove 2 from tree: " ++ show (remove 2 tree))
+          putStrLn("Remove 2 from tree: " ++ show (remove 2 tree))  
 
-                          
-                          
-              
-              
+          putStrLn("")
+          putStrLn("Given tree: " ++ show tree)
+          putStr("Randomized values: ")
+          
+          randTree <- chgRandomly tree
+          putStr(show randTree)
