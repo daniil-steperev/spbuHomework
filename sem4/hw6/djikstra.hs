@@ -5,26 +5,29 @@ data Graph = Graph [Vertex] [Edge] -- vertices belong to classes Ord, Eq, Show
                                    -- edges belong to class Show
 
 dijkstra :: Graph -> [Vertex]
-dijkstra (Graph st end) = dijkstra' [] st
-    where dijkstra' path [] = path
-          dijkstra' path notVisited = dijkstra' path' notVisited'
-          where
-                nearestVert = minimum notVisited
-                path' = closest : path
-                notVisited' = delete closest (map (updateVertex closest) notVisited)
-                updateVertices v1 v2 = min (Vertex (id v2) (addEdge (label v1) (findEdge (id v1) (id v2) es))) v2
-                
-                addEdge' :: Writer [Edge] Int -> Edge -> Writer [Edge] Int
-                addEdge' wr e = do
-                    dist <- wr
-                    tell (e : [])
-                    return (dist + (weight e))
+dijkstra (Graph st end) = dijkstraIteration [] end
+                             
+dijkstraIteration path [] = path
+dijkstraIteration path notVisited =
+    let nearestVert = minimum notVisited
+        path' = nearestVert : path
+        notVisited' = delete nearestVert (map (updateWeights nearestVert) notVisited)
+    in dijkstraIteration path' notVisited'
+        
+updateWeights v1 v2 = min newVert v2
+    where newVert = (Vertex (number v2) (addEdge (label v1) (findEdge (number v1) (number v2) es)))
+                                        
                     
 addEdge :: Maybe (Writer [Edge] Int) -> Maybe Edge -> Maybe (Writer [Edge] Int)
 addEdge Nothing Nothing    = Nothing
 addEdge Nothing (Just wr)  = Nothing
 addEdge (Just wr) Nothing  = Nothing
-addEdge (Just wr) (Just e) = Just (addEdge' wr e) 
+addEdge (Just wr) (Just e) = Just (writeEdge wr e) 
+
+writeEdge :: Writer [Edge] Int -> Edge -> Writer [Edge] Int
+writeEdge writer edge = do dist <- writer
+                        tell (edge : [])
+                        return (dist + (weight edge))
 
 findEdge :: Int -> Int -> [Edge] -> Maybe Edge
 findEdge _ _ [] = Nothing
