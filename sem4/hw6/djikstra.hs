@@ -5,19 +5,21 @@ data Graph = Graph [Vertex] [Edge] -- vertices belong to classes Ord, Eq, Show
                                    -- edges belong to class Show
 
 dijkstra :: Graph -> [Vertex]
-dijkstra (Graph st end) = dijkstraIteration [] end
-                             
-dijkstraIteration path [] = path
-dijkstraIteration path notVisited =
+dijkstra (Graph vertices edges) = dijkstraIteration [] vertices edges
+
+dijkstraIteration :: [Vertex] -> [Vertex] -> [Edge] -> [Vertex]
+dijkstraIteration path [] edges = path
+dijkstraIteration path notVisited edges =
     let nearestVert = minimum notVisited
         path' = nearestVert : path
-        notVisited' = delete nearestVert (map (updateWeights nearestVert) notVisited)
-    in dijkstraIteration path' notVisited'
-        
-updateWeights v1 v2 = min newVert v2
-    where newVert = (Vertex (number v2) (addEdge (label v1) (findEdge (number v1) (number v2) es)))
-                                        
-                    
+        notVisited' = delete nearestVert (map (updateWeights nearestVert edges) notVisited)
+    in dijkstraIteration path' notVisited' edges
+
+updateWeights :: Vertex -> [Edge] -> Vertex -> Vertex
+updateWeights v1 edges v2 = min newVert v2
+    where newVert = (Vertex (number v2) (addEdge (label v1) (findEdge (number v1) (number v2) edges)))
+
+
 addEdge :: Maybe (Writer [Edge] Int) -> Maybe Edge -> Maybe (Writer [Edge] Int)
 addEdge Nothing Nothing    = Nothing
 addEdge Nothing (Just wr)  = Nothing
@@ -25,9 +27,10 @@ addEdge (Just wr) Nothing  = Nothing
 addEdge (Just wr) (Just e) = Just (writeEdge wr e) 
 
 writeEdge :: Writer [Edge] Int -> Edge -> Writer [Edge] Int
-writeEdge writer edge = do dist <- writer
-                        tell (edge : [])
-                        return (dist + (weight edge))
+writeEdge writer edge = do
+                          dist <- writer
+                          tell (edge : [])
+                          return (dist + (weight edge))
 
 findEdge :: Int -> Int -> [Edge] -> Maybe Edge
 findEdge _ _ [] = Nothing
@@ -61,4 +64,4 @@ instance Ord Vertex where
     compare (Vertex _ Nothing) (Vertex _ Nothing)               = EQ
     compare (Vertex _ Nothing) (Vertex _ (Just wr))             = GT
     compare (Vertex _ (Just writer)) (Vertex _ Nothing)         = LT
-    compare (Vertex _ (Just writer1)) (Vertex _ (Just writer2)) = compare (fst (runWriter writer1)) (fst (runWriter writer2))
+    compare (Vertex _ (Just writer1)) (Vertex _ (Just writer2)) = compare (fst (runWriter writer1)) (fst (runWriter writer2)) 
