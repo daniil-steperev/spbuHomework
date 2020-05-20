@@ -16,6 +16,7 @@ doLoop list = do putStrLn "Enter a command 1 to add value with priority"
                  putStrLn "Enter a command 4 to print the queue"
                  putStrLn "Enter a command 5 to get all values with inputted priority"
                  putStrLn "Enter a command 6 to get all values with max priority"
+                 putStrLn "Enter a command 7 to print the queue (with priorities)"
                  putStrLn "Enter a command 0 to quit"
                  
                  command <- getLine
@@ -44,7 +45,10 @@ doLoop list = do putStrLn "Enter a command 1 to add value with priority"
                                 doLoop list
                     '6':_ -> do putStr "Values with max priority: "
                                 doPrintMaxPriorityItems list []
-                                doLoop list            
+                                doLoop list 
+                    '7':_ -> do putStr "Queue (with priorities): "
+                                doPrintPriorityQueue list
+                                doLoop list
                     _     -> do putStrLn "Enter a correct command, please"
                                 doLoop list
                                 
@@ -86,3 +90,15 @@ doPrintQueue ((QueueElement curValue curPriority):[]) = do  putStr $ show $ curV
 doPrintQueue ((QueueElement curValue curPriority):xs) = do  putStr $ show $ curValue
                                                             putStr ", "
                                                             doPrintQueue xs
+                                                            
+doPrintPriorityQueue :: [QueueElement] -> IO ()
+doPrintPriorityQueue [] = putStrLn "is empty."
+doPrintPriorityQueue ((QueueElement curValue curPriority):[]) = do putStr $ show $ curValue
+                                                                   putStr " ("
+                                                                   putStr $ show $ curPriority
+                                                                   putStrLn ")."  
+doPrintPriorityQueue ((QueueElement curValue curPriority):xs) = do putStr $ show $ curValue
+                                                                   putStr " ("
+                                                                   putStr $ show $ curPriority
+                                                                   putStr "), "
+                                                                   doPrintPriorityQueue xs                                                            
