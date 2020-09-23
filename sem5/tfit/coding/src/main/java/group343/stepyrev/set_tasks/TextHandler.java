@@ -6,7 +6,8 @@ import java.util.*;
 public class TextHandler {
     private final List<String> PUNCTUATION_MARKS = Arrays.asList(
             ",", ".", ":", "...", "?", "!", ";", "/", "<",
-            ">", "-", "(", ")", " ", "\t", "\n"
+            ">", "-", "(", ")", " ", "\t", "\n", "–", "—", "…",
+            "«", "»"
     );
 
     public Set<String> findAllSymbols(String firstText, String secondText) {
@@ -23,10 +24,11 @@ public class TextHandler {
      * @return - множество символов
      */
     public Set<String> splitIntoSymbols(String text) {
-        List<String> symbolsWithRepeat = Arrays.asList(text.split(""));
-        symbolsWithRepeat.removeAll(PUNCTUATION_MARKS);
+        List<String> symbolsWithRepeat = new ArrayList<>();
+        symbolsWithRepeat.addAll(Arrays.asList(text.split("")));
+        symbolsWithRepeat.removeIf(PUNCTUATION_MARKS::contains);
 
-        return new HashSet<String>(symbolsWithRepeat);
+        return new HashSet<>(symbolsWithRepeat);
     }
 
     /**

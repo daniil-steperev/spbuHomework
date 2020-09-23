@@ -60,6 +60,13 @@ public class Main {
     }
 
     private static StringPair getTwoTexts() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Если вы хотите использовать тестовые тексты, введите да.");
+        String answer = scanner.nextLine();
+        if (answer.equals("да")){
+            return new StringPair(TestTexts.fstTestText, TestTexts.sndTestText);
+        }
+
         System.out.println("Введите первый текст: ");
         String fstText = getText();
         System.out.println("Введите второй текст: ");
@@ -80,8 +87,11 @@ public class Main {
     }
 
     private static String getText() {
+        System.out.println("Если вы хотите использовать готовый текст, введите да.");
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
+        String answer = scanner.nextLine();
+
+        return answer.equals("да") ? TestTexts.fstTestText : answer;
     }
 
     private static boolean isCorrectTaskNumber(String task) {
