@@ -1,7 +1,10 @@
 package group343.stepyrev.set_tasks;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class TextHandler {
     private final List<String> PUNCTUATION_MARKS = Arrays.asList(
@@ -24,8 +27,7 @@ public class TextHandler {
      * @return - множество символов
      */
     public Set<String> splitIntoSymbols(String text) {
-        List<String> symbolsWithRepeat = new ArrayList<>();
-        symbolsWithRepeat.addAll(Arrays.asList(text.split("")));
+        List<String> symbolsWithRepeat = new ArrayList<>(Arrays.asList(text.split("")));
         symbolsWithRepeat.removeIf(PUNCTUATION_MARKS::contains);
 
         return new HashSet<>(symbolsWithRepeat);

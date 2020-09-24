@@ -1,11 +1,10 @@
 package group343.stepyrev.coding;
 
+import group343.stepyrev.coding.Exceptions.AbsentWordException;
+import group343.stepyrev.coding.Exceptions.OverflowException;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +15,11 @@ public class GrammaticalTranslator {
   private final Integer NOT_TERMINAL_SHIFT = 11;
   private final Integer TERMINAL_SHIFT = 51;
   private final Integer SEMANTIC_SHIFT = 101;
+
+  private final Integer NOT_TERMINAL_NUMBER = 40;
+  private final Integer TERMINAL_NUMBER = 50;
+  private final Integer SEMANTIC_NUMBER = 50;
+
   private final String EOFGRAM = "Eofgram";
 
   private Map<String, Integer> codeTable;
@@ -47,7 +51,9 @@ public class GrammaticalTranslator {
    * @return - список кодов
    * @throws FileNotFoundException - ошибка чтения файла
    */
-  public List<String> convertGrammatical(String fileName) throws FileNotFoundException {
+  public List<String> convertGrammatical(String fileName)
+      throws FileNotFoundException, OverflowException, AbsentWordException {
+    fileName = "src/" + fileName;
     File file = new File(fileName);
     readNotTerminals(file); // считываем все нетерминалы
 
@@ -56,10 +62,14 @@ public class GrammaticalTranslator {
     Scanner scanner = new Scanner(file); // тут еще разобраться
     String readLine = scanner.nextLine();
     while (!readLine.equals(EOFGRAM)) { // тут проверка пока не конец файла
-      List<String> convertedWords = convertGrammaticalLine(readLine);
-      result.addAll(convertedWords);
-      result.add("\n");
-      readLine = scanner.nextLine();
+      try {
+        List<String> convertedWords = convertGrammaticalLine(readLine);
+        result.addAll(convertedWords);
+        result.add("\n");
+        readLine = scanner.nextLine();
+      } catch (Exception e) { // нет слова Eofgram
+        throw new AbsentWordException("Отсутствует слово Eofgram");
+      }
     }
 
     result.add(String.valueOf(codeTable.get(EOFGRAM)));
@@ -67,12 +77,24 @@ public class GrammaticalTranslator {
     return result;
   }
 
-  private void readNotTerminals(File file) throws FileNotFoundException {
+  /**
+   * Метод, который считывает все нетерминалы.
+   * @param file - имя файла
+   * @throws FileNotFoundException - ошибка чтения файла
+   * @throws OverflowException - ошибка переполнения числа нетерминалов/терминалов/семантик
+   * @throws AbsentWordException - ошибка отсутсвия слова Eofgram
+   */
+  private void readNotTerminals(File file)
+      throws FileNotFoundException, OverflowException, AbsentWordException {
     Scanner scanner = new Scanner(file); // тут еще разобраться
     String readLine = scanner.nextLine();
     while (!readLine.equals(EOFGRAM)) { // тут проверка пока не конец файла
-      convertGrammaticalLine(readLine);
-      readLine = scanner.nextLine();
+      try {
+        convertGrammaticalLine(readLine);
+        readLine = scanner.nextLine();
+      } catch (Exception e) { // нет слова Eofgram
+        throw new AbsentWordException("Отсутствует слово Eofgram");
+      }
     }
 
     terminalList = new LinkedList<>();
@@ -88,7 +110,7 @@ public class GrammaticalTranslator {
    * @param line - исходная строка
    * @return - список кодов
    */
-  private List<String> convertGrammaticalLine(String line) {
+  private List<String> convertGrammaticalLine(String line) throws OverflowException {
     List<String> convertedWords = new LinkedList<>();
     String[] letters = line.split("");
 
@@ -112,7 +134,7 @@ public class GrammaticalTranslator {
         if (letter.equals("'") || letter.equals(" ")) { // конец терминала
           isTerminal = false;
           if (notTerminalList.contains(
-              currentWord.toString())) { // проверяем, не является ли текущее слово нетерминалом
+              currentWord.toString()) && !letter.equals("'")) { // проверяем, не является ли текущее слово нетерминалом
               code = getNotTerminalCode(currentWord.toString());
               convertedWords.add(String.valueOf(code));
               continue;
@@ -199,8 +221,11 @@ public class GrammaticalTranslator {
    * @param notTerminal - нетерминал
    * @return - код нетерминала
    */
-  private Integer getNotTerminalCode(String notTerminal) {
+  private Integer getNotTerminalCode(String notTerminal) throws OverflowException {
     if (!notTerminalList.contains(notTerminal)) {
+      if (notTerminalList.size() + 1 > NOT_TERMINAL_NUMBER) {
+        throw new OverflowException("Возникло переполнение нетерминалов.");
+      }
       notTerminalList.add(notTerminal);
     }
 
@@ -213,8 +238,11 @@ public class GrammaticalTranslator {
    * @param terminal - терминал
    * @return - код терминала
    */
-  private Integer getTerminalCode(String terminal) {
+  private Integer getTerminalCode(String terminal) throws OverflowException {
     if (!terminalList.contains(terminal)) {
+      if (terminalList.size() + 1 > TERMINAL_NUMBER) {
+        throw new OverflowException("Возникло переполнение терминалов.");
+      }
       terminalList.add(terminal);
     }
 
@@ -227,8 +255,11 @@ public class GrammaticalTranslator {
    * @param semantic - семантика
    * @return - код семантики
    */
-  private Integer getSemanticCode(String semantic) {
+  private Integer getSemanticCode(String semantic) throws OverflowException {
     if (!semanticList.contains(semantic)) {
+      if (semanticList.size() + 1 > SEMANTIC_NUMBER) {
+        throw new OverflowException("Возникло переполнение семантик.");
+      }
       semanticList.add(semantic);
     }
 
