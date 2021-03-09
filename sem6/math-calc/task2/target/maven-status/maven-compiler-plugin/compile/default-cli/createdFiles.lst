@@ -1,0 +1,17 @@
+praktikum\group343\stepyrev\labs\main\MatrixTransformMain.class
+praktikum\group343\stepyrev\labs\main\SeidelMain.class
+praktikum\group343\stepyrev\labs\main\SimpleIterationMain.class
+praktikum\group343\stepyrev\labs\solver\SeidelSolver.class
+praktikum\group343\stepyrev\labs\solver\LusternikSolver.class
+praktikum\group343\stepyrev\labs\solver\MatrixTransformSolver.class
+praktikum\group343\stepyrev\labs\util\NormCounter.class
+praktikum\group343\stepyrev\labs\util\ErrorCounter.class
+praktikum\group343\stepyrev\labs\solver\GaussSolver.class
+praktikum\group343\stepyrev\labs\util\PrettyPrinter.class
+praktikum\group343\stepyrev\labs\main\GaussMain.class
+praktikum\group343\stepyrev\labs\solver\SimpleIterationSolver.class
+praktikum\group343\stepyrev\labs\util\MatrixUtil.class
+praktikum\group343\stepyrev\labs\solver\UpperRelaxationSolver.class
+praktikum\group343\stepyrev\labs\main\UpperRelaxationMain.class
+praktikum\group343\stepyrev\labs\main\LusternikMain.class
+praktikum\group343\stepyrev\labs\main\Main.class
