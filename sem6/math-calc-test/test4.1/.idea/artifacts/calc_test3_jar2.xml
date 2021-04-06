@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="calc-test3:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/calc_test3_jar2</output-path>
+    <root id="archive" name="calc-test3.jar">
+      <element id="module-output" name="calc-test3" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/la4j/la4j/0.6.0/la4j-0.6.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
